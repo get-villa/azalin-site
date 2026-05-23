@@ -1,114 +1,53 @@
 ---
-import { Image } from 'astro:assets';
-import { getCollection } from 'astro:content';
-import BaseHead from '../../components/BaseHead.astro';
-import Footer from '../../components/Footer.astro';
-import FormattedDate from '../../components/FormattedDate.astro';
-import Header from '../../components/Header.astro';
-import { SITE_DESCRIPTION, SITE_TITLE } from '../../consts';
+import Base from '../../layouts/Base.astro';
+import blogPosts from '../../data/blog-posts.json';
 
-const posts = (await getCollection('blog')).sort(
-	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
-);
+// Sort posts by publish date (newest first)
+const sortedPosts = blogPosts.sort((a, b) => {
+  return new Date(b.publish_date).getTime() - new Date(a.publish_date).getTime();
+});
 ---
 
-<!doctype html>
-<html lang="en">
-	<head>
-		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
-		<style>
-			main {
-				width: 960px;
-			}
-			ul {
-				display: flex;
-				flex-wrap: wrap;
-				gap: 2rem;
-				list-style-type: none;
-				margin: 0;
-				padding: 0;
-			}
-			ul li {
-				width: calc(50% - 1rem);
-			}
-			ul li * {
-				text-decoration: none;
-				transition: 0.2s ease;
-			}
-			ul li:first-child {
-				width: 100%;
-				margin-bottom: 1rem;
-				text-align: center;
-			}
-			ul li:first-child img {
-				width: 100%;
-			}
-			ul li:first-child .title {
-				font-size: 2.369rem;
-			}
-			ul li img {
-				margin-bottom: 0.5rem;
-				border-radius: 12px;
-			}
-			ul li a {
-				display: block;
-			}
-			.title {
-				margin: 0;
-				color: rgb(var(--black));
-				line-height: 1;
-			}
-			.date {
-				margin: 0;
-				color: rgb(var(--gray));
-			}
-			ul li a:hover h4,
-			ul li a:hover .date {
-				color: rgb(var(--accent));
-			}
-			ul a:hover img {
-				box-shadow: var(--box-shadow);
-			}
-			@media (max-width: 720px) {
-				ul {
-					gap: 0.5em;
-				}
-				ul li {
-					width: 100%;
-					text-align: center;
-				}
-				ul li:first-child {
-					margin-bottom: 0;
-				}
-				ul li:first-child .title {
-					font-size: 1.563em;
-				}
-			}
-		</style>
-	</head>
-	<body>
-		<Header />
-		<main>
-			<section>
-				<ul>
-					{
-						posts.map((post) => (
-							<li>
-								<a href={`/blog/${post.id}/`}>
-									{post.data.heroImage && (
-										<Image width={720} height={360} src={post.data.heroImage} alt="" />
-									)}
-									<h4 class="title">{post.data.title}</h4>
-									<p class="date">
-										<FormattedDate date={post.data.pubDate} />
-									</p>
-								</a>
-							</li>
-						))
-					}
-				</ul>
-			</section>
-		</main>
-		<Footer />
-	</body>
-</html>
+<Base
+  title="Blog"
+  description="Weekly insights on Panama, Bitcoin, remote business management, and flag theory for high earners building location optionality."
+>
+  <!-- Blog Header -->
+  <section class="hero">
+    <div class="container">
+      <span class="eyebrow">From the Blog</span>
+      <h1>Weekly. Specific. No Filler.</h1>
+      <p class="lead" style="margin-top:20px;">Every post is designed to answer a specific question or solve a real problem. No padding. No hypotheticals.</p>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- Blog Grid -->
+  <section>
+    <div class="container">
+      <div class="grid-3" style="margin-top:32px;">
+        {sortedPosts.map((post) => (
+          <a href={`/blog/${post.slug}/`} style="text-decoration: none;">
+            <div class="blog-card">
+              <div class="blog-img" style="background-image: url('{post.featured_image}'); background-size: cover; background-position: center;">
+                {!post.featured_image && '[ IMAGE ]'}
+              </div>
+              <div class="blog-body">
+                <span class="blog-cat">{post.category}</span>
+                <div class="blog-title">{post.title}</div>
+                <div class="blog-excerpt">{post.excerpt}</div>
+              </div>
+            </div>
+          </a>
+        ))}
+      </div>
+
+      {sortedPosts.length === 0 && (
+        <div style="text-align: center; padding: 48px 0;">
+          <p>No blog posts yet. Check back soon for the first weekly insight.</p>
+        </div>
+      )}
+    </div>
+  </section>
+</Base>

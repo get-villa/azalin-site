@@ -1,0 +1,220 @@
+---
+import Base from '../layouts/Base.astro';
+---
+
+<Base
+  title="Get the Free Panama Report"
+  description="Download the complete guide to Panama's territorial tax system, Friendly Nations Visa, corporate setup, and what life actually looks like for high earners. Free. No pitch on the other side."
+>
+  <section class="hero">
+    <div class="container">
+      <div class="grid-2" style="gap:56px; align-items:start;">
+
+        <!-- Left: Value copy -->
+        <div>
+          <span class="eyebrow">Free Download</span>
+          <h1>The Panama Report</h1>
+          <p class="lead" style="margin-top:16px;">Everything a Canadian, British, or American professional earning $300K or more needs to know before making a single call to a Panama attorney.</p>
+
+          <div style="margin-top:32px;">
+            <div class="check-item"><span class="tick">✓</span><p>How Panama's territorial tax system works in plain English — and what it does and does not cover for Canadians, British nationals, and Americans specifically</p></div>
+            <div class="check-item"><span class="tick">✓</span><p>The Friendly Nations Visa: requirements, timeline, what the process actually costs, and the documents you need</p></div>
+            <div class="check-item"><span class="tick">✓</span><p>Panama corporate structure and what a Sociedad Anonima does for your tax position when your clients are international</p></div>
+            <div class="check-item"><span class="tick">✓</span><p>Property ownership, banking, healthcare, schools, and the quality of life a $300K+ earner actually finds on arrival</p></div>
+            <div class="check-item"><span class="tick">✓</span><p>The honest Bitcoin conversation: what Panama's zero capital gains rate means and what it does not</p></div>
+            <div class="check-item"><span class="tick">✓</span><p>Country-specific sections for Canada, the UK, and the USA — because the answer is different depending on where you are from</p></div>
+          </div>
+
+          <div style="margin-top:36px; padding:24px; background:var(--bg2); border:1px solid var(--border); border-radius:var(--radius);">
+            <p style="font-size:14px; font-style:italic; margin-bottom:12px;">"One week with the right guide changes what feels possible."</p>
+            <p style="font-size:13px;">A British professional I worked with in Turkey later relocated permanently to the Azores. That conversation was before any of this existed as a formal service.</p>
+          </div>
+        </div>
+
+        <!-- Right: Form -->
+        <div>
+          <div class="card" style="border-top:3px solid var(--gold);">
+
+            <!-- Success state (hidden until submit) -->
+            <div id="form-success" style="display:none; text-align:center; padding:32px 16px;">
+              <div style="font-size:40px; margin-bottom:16px;">✓</div>
+              <h3 style="color:var(--gold); margin-bottom:10px;">You're in.</h3>
+              <p style="font-size:14px; margin-bottom:8px;">The Panama Report is on its way to your inbox.</p>
+              <p style="font-size:13px;">Check your spam folder if it doesn't arrive within a few minutes.</p>
+            </div>
+
+            <!-- Form -->
+            <form id="report-form">
+              <h3 style="margin-bottom:4px;">Get Instant Access</h3>
+              <p style="font-size:13px; margin-bottom:24px;">Free. No pitch on the other side. Just the information you came for.</p>
+
+              <div class="form-group">
+                <label>First Name</label>
+                <input type="text" name="first_name" placeholder="David" required>
+              </div>
+
+              <div class="form-group">
+                <label>Email Address</label>
+                <input type="email" name="email" placeholder="david@yourfirm.com" required>
+              </div>
+
+              <div class="form-group">
+                <label>Where are you based? <span style="color:var(--muted);font-weight:400;text-transform:none;letter-spacing:0;">(changes everything about tax and residency options)</span></label>
+                <select name="country" required>
+                  <option value="" disabled selected>Select your country</option>
+                  <option>Canada</option>
+                  <option>United States</option>
+                  <option>United Kingdom</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label>Approximate annual income or business revenue</label>
+                <select name="income_range">
+                  <option value="" disabled selected>Select a range</option>
+                  <option>$300K – $500K</option>
+                  <option>$500K – $1M</option>
+                  <option>$1M – $3M</option>
+                  <option>$3M+</option>
+                  <option>Prefer not to say</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label>Business size</label>
+                <select name="business_size">
+                  <option value="" disabled selected>How many people?</option>
+                  <option>Just me</option>
+                  <option>Small team (2–10)</option>
+                  <option>Larger team (10+)</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label>Primary goal</label>
+                <select name="primary_goal">
+                  <option value="" disabled selected>What matters most right now?</option>
+                  <option>Reduce my tax liability legally</option>
+                  <option>Build genuine location freedom</option>
+                  <option>Protect wealth and assets</option>
+                  <option>Get a second passport or residency</option>
+                  <option>All of the above</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label>Family situation</label>
+                <select name="family_situation" required>
+                  <option value="" disabled selected>Select one</option>
+                  <option>Single — full flexibility</option>
+                  <option>Partner, no kids</option>
+                  <option>Partner and kids (family moves together)</option>
+                  <option>Kids involved — custody arrangements apply</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label>Current Bitcoin exposure</label>
+                <select name="bitcoin_exposure">
+                  <option value="" disabled selected>Select one</option>
+                  <option>None yet</option>
+                  <option>Some — held on an exchange</option>
+                  <option>Bitcoin ETF or similar</option>
+                  <option>Already in cold storage (self-custody)</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label>Biggest hesitation</label>
+                <select name="biggest_hesitation">
+                  <option value="" disabled selected>What's holding you back?</option>
+                  <option>Not sure if this is fully legal</option>
+                  <option>Seems too complex to execute</option>
+                  <option>Concerned about the cost</option>
+                  <option>Worried it's too disruptive to my current life</option>
+                  <option>I don't have a hesitation — I'm ready</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label>Your timeline</label>
+                <select name="timeline">
+                  <option value="" disabled selected>Where are you in the process?</option>
+                  <option>Just exploring — early stage</option>
+                  <option>Actively researching — getting serious</option>
+                  <option>Ready to act within 6 months</option>
+                </select>
+              </div>
+
+              <button type="submit" class="btn-primary" id="submit-btn" style="width:100%; margin-top:8px; font-size:15px; padding:16px;">Send Me the Panama Report</button>
+              <p class="form-note">No spam. Unsubscribe at any time.</p>
+            </form>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Country specifics -->
+  <section class="bg2">
+    <div class="container">
+      <span class="eyebrow">Tailored to Your Country</span>
+      <h2>This Is Not a General Expat Guide.</h2>
+      <p style="max-width:620px; margin-bottom:36px;">Written specifically for professionals from Canada, the UK, and the USA — because what Panama means for your tax position depends entirely on where you are from and what you are leaving.</p>
+      <div class="grid-3">
+        <div class="card card-gold">
+          <h3>🇨🇦 Canadians</h3>
+          <p style="font-size:14px;">What breaking CRA tax residency means, what you must do before you leave, and why Panama works cleanly for a Canadian corporation with international clients.</p>
+        </div>
+        <div class="card card-gold">
+          <h3>🇬🇧 British Nationals</h3>
+          <p style="font-size:14px;">The FNV process for UK passport holders, what HMRC requires on departure, and how a Panama Private Interest Foundation interacts with UK inheritance tax.</p>
+        </div>
+        <div class="card card-gold">
+          <h3>🇺🇸 Americans</h3>
+          <p style="font-size:14px;">The honest picture on US worldwide taxation, the Foreign Earned Income Exclusion, and what Panama realistically offers a US professional who cannot eliminate their US obligation.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<script is:inline>
+  const ZAPIER_WEBHOOK = 'https://hooks.zapier.com/hooks/catch/8006666/4o8f19o/';
+
+  document.getElementById('report-form').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const btn = document.getElementById('submit-btn');
+    btn.textContent = 'Sending…';
+    btn.disabled = true;
+
+    const form = e.target;
+    const payload = {
+      first_name:       form.first_name.value,
+      email:            form.email.value,
+      country:          form.country.value,
+      income_range:     form.income_range.value,
+      business_size:    form.business_size.value,
+      primary_goal:     form.primary_goal.value,
+      family_situation: form.family_situation.value,
+      bitcoin_exposure: form.bitcoin_exposure.value,
+      biggest_hesitation: form.biggest_hesitation.value,
+      timeline:         form.timeline.value,
+      submitted_at:     new Date().toISOString()
+    };
+
+    try {
+      await fetch(ZAPIER_WEBHOOK, {
+        method: 'POST',
+        body: JSON.stringify(payload)
+      });
+      form.style.display = 'none';
+      document.getElementById('form-success').style.display = 'block';
+    } catch (err) {
+      btn.textContent = 'Something went wrong — please try again';
+      btn.disabled = false;
+    }
+  });
+</script>

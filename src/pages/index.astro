@@ -1,49 +1,170 @@
 ---
-import BaseHead from '../components/BaseHead.astro';
-import Footer from '../components/Footer.astro';
-import Header from '../components/Header.astro';
-import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
+import Base from '../layouts/Base.astro';
 ---
 
-<!doctype html>
-<html lang="en">
-	<head>
-		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
-	</head>
-	<body>
-		<Header />
-		<main>
-			<h1>🧑‍🚀 Hello, Astronaut!</h1>
-			<p>
-				Welcome to the official <a href="https://astro.build/">Astro</a> blog starter template. This template
-				serves as a lightweight, minimally-styled starting point for anyone looking to build a personal
-				website, blog, or portfolio with Astro.
-			</p>
-			<p>
-				This template comes with a few integrations already configured in your
-				<code>astro.config.mjs</code> file. You can customize your setup with
-				<a href="https://astro.build/integrations">Astro Integrations</a> to add tools like Tailwind,
-				React, or Vue to your project.
-			</p>
-			<p>Here are a few ideas on how to get started with the template:</p>
-			<ul>
-				<li>Edit this page in <code>src/pages/index.astro</code></li>
-				<li>Edit the site header items in <code>src/components/Header.astro</code></li>
-				<li>Add your name to the footer in <code>src/components/Footer.astro</code></li>
-				<li>Check out the included blog posts in <code>src/content/blog/</code></li>
-				<li>Customize the blog post page layout in <code>src/layouts/BlogPost.astro</code></li>
-			</ul>
-			<p>
-				Have fun! If you get stuck, remember to
-				<a href="https://docs.astro.build/">read the docs</a>
-				or <a href="https://astro.build/chat">join us on Discord</a> to ask questions.
-			</p>
-			<p>
-				Looking for a blog template with a bit more personality? Check out
-				<a href="https://github.com/Charca/astro-blog-template">astro-blog-template</a>
-				by <a href="https://twitter.com/Charca">Maxi Ferreira</a>.
-			</p>
-		</main>
-		<Footer />
-	</body>
-</html>
+<Base
+  title="Home"
+  description="Panama relocation consulting for Canadians, British nationals, and Americans earning $300K+. Build genuine financial optionality with a second residency."
+>
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container">
+      <span class="eyebrow">For Canadians, British Nationals &amp; Americans Earning $300K+</span>
+      <h1>The Professionals Who Figure<br>This Out Do Not Wait<br><em style="color:var(--gold)">Until Retirement.</em></h1>
+      <p class="lead" style="margin-top:20px;">Panama gives high earners a clean, legal first step toward genuine financial optionality. I have lived it. I will stand beside you while you build it.</p>
+      <div class="btn-group">
+        <a class="btn-primary" href="/report/">Get the Free Panama Report</a>
+        <a class="btn-outline" href="/about/">Who I Am</a>
+      </div>
+      <div class="country-bar">
+        <span class="country-pill">🇨🇦 Canadians</span>
+        <span class="country-pill">🇬🇧 British Nationals</span>
+        <span class="country-pill">🇺🇸 Americans</span>
+        <span class="country-pill">$300K+ Annual Income</span>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- Stats -->
+  <section class="tight">
+    <div class="container">
+      <div class="stat-grid">
+        <div class="stat"><span class="stat-number">0%</span><span class="stat-label">Panama tax on foreign income</span></div>
+        <div class="stat"><span class="stat-number">3–6</span><span class="stat-label">Months to Friendly Nations Visa</span></div>
+        <div class="stat"><span class="stat-number">50</span><span class="stat-label">Nations qualify for the FNV</span></div>
+        <div class="stat"><span class="stat-number">5yr</span><span class="stat-label">Path to Panama citizenship</span></div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- Who It's For -->
+  <section>
+    <div class="container">
+      <span class="eyebrow">Who This Is For</span>
+      <h2>You Have Built Something Real.<br>Panama Is the Next Logical Move.</h2>
+      <div class="grid-3" style="margin-top:36px;">
+        <div class="avatar-card">
+          <div class="avatar-role">Financial Advisor · Canada</div>
+          <div class="avatar-name">David Chen</div>
+          <div class="avatar-location">Mississauga, Ontario</div>
+          <div class="avatar-income">$420K take-home · 280 client households</div>
+          <div class="avatar-quote">"I tell my clients to diversify their portfolios. I have never applied that logic to my own tax residency."</div>
+        </div>
+        <div class="avatar-card">
+          <div class="avatar-role">Recruitment Firm Owner · UK</div>
+          <div class="avatar-name">James Whitfield</div>
+          <div class="avatar-location">Manchester, England</div>
+          <div class="avatar-income">£240K/year · 11 staff · post-Brexit optionality</div>
+          <div class="avatar-quote">"I have been running this firm for fourteen years. I would like to know there is somewhere else I can take it if I need to."</div>
+        </div>
+        <div class="avatar-card">
+          <div class="avatar-role">Executive Coach · USA</div>
+          <div class="avatar-name">Jennifer Harlow</div>
+          <div class="avatar-location">Austin, Texas</div>
+          <div class="avatar-income">$620K revenue · solo practice · location-independent</div>
+          <div class="avatar-quote">"My entire business runs through a laptop. There is no practical reason I need to be in Austin. I just haven't built the structure to prove it."</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Three Offers -->
+  <section class="bg2">
+    <div class="container">
+      <span class="eyebrow">How We Work Together</span>
+      <h2>Three Ways In.<br>One Direction.</h2>
+      <div style="margin-top:36px;">
+        <div class="offer-step">
+          <div class="offer-num">1</div>
+          <div>
+            <span class="offer-price">FREE</span>
+            <h3>The Panama Report + Blog</h3>
+            <p>A clear, honest guide to Panama's territorial tax system, the Friendly Nations Visa, corporate setup, property ownership, and what life actually looks like for a western professional earning $300K or more. No fluff. No upsell disguised as education. Start here.</p>
+            <div class="btn-group" style="margin-top:16px;"><a class="btn-primary" href="/report/">Download the Report</a></div>
+          </div>
+        </div>
+        <div class="offer-step">
+          <div class="offer-num">2</div>
+          <div>
+            <span class="offer-price">MID-TIER</span>
+            <h3>The Scouting Trip + FNV Application</h3>
+            <p>You fly to Panama. I meet you there. Over several days, I walk you through the neighbourhoods, the banks, the legal process, and the realities of daily life at your income level. When you are ready, I sit beside you through the Friendly Nations Visa application itself. Done with you, not done for you from a distance.</p>
+          </div>
+        </div>
+        <div class="offer-step">
+          <div class="offer-num">3</div>
+          <div>
+            <span class="offer-price">HIGH TICKET</span>
+            <h3>The Panama Retreat</h3>
+            <p>A premium immersive week in Panama. Remote business management practice, Bitcoin literacy, wellness, adventure, and — for qualifying participants — the FNV application included. You leave with a residency process in motion and a remote business that runs without you being in the room. Limited seats.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Founder Teaser -->
+  <section>
+    <div class="container">
+      <div class="grid-2" style="gap:56px; align-items:center;">
+        <div>
+          <span class="eyebrow">The Founder</span>
+          <h2>I Did This Without the Resources You Already Have.</h2>
+          <p style="margin-bottom:16px;">Eight years. Seven countries. A federally incorporated Canadian company managed from a desk in Istanbul. A remote business built from scratch, scaled from $99 to $5,000, while living abroad with no budget and an unexpected child on the way.</p>
+          <p style="margin-bottom:16px;">I have filed Canadian non-resident tax returns from three countries. Navigated four concurrent immigration applications across two embassies while living in a third. Watched the Turkish lira collapse in real time. Borrowed against my Bitcoin rather than selling it.</p>
+          <p>I am not a theorist. I am a person who has actually done the thing you are thinking about.</p>
+          <div class="btn-group" style="margin-top:24px;"><a class="btn-outline" href="/about/">Read the Full Story</a></div>
+        </div>
+        <div style="background:var(--bg2); border:1px solid var(--border); border-radius:var(--radius); height:360px; display:flex; align-items:center; justify-content:center; color:var(--muted); font-size:11px; letter-spacing:2px; text-transform:uppercase;">
+          [ FOUNDER PHOTO ]
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Blog Teaser -->
+  <section class="bg2">
+    <div class="container">
+      <span class="eyebrow">From the Blog</span>
+      <h2>Weekly. Specific. No Filler.</h2>
+      <div class="grid-3" style="margin-top:32px;">
+        <div class="blog-card">
+          <div class="blog-img">[ IMAGE ]</div>
+          <div class="blog-body">
+            <span class="blog-cat">Panama · Taxes</span>
+            <div class="blog-title">Why High Earners Are Quietly Moving to Panama</div>
+            <div class="blog-excerpt">Panama taxes only income earned within its borders. For a professional earning $300K+ from international clients, the Panamanian government has no legal claim on that income.</div>
+          </div>
+        </div>
+        <div class="blog-card">
+          <div class="blog-img">[ IMAGE ]</div>
+          <div class="blog-body">
+            <span class="blog-cat">Bitcoin</span>
+            <div class="blog-title">Panama's Zero Capital Gains Rate and What It Means for Bitcoin</div>
+            <div class="blog-excerpt">When you sell Bitcoin in Panama, the capital gains tax rate on foreign-sourced income is zero. Contrast that with what a Canadian investor pays on the same transaction.</div>
+          </div>
+        </div>
+        <div class="blog-card">
+          <div class="blog-img">[ IMAGE ]</div>
+          <div class="blog-body">
+            <span class="blog-cat">Automation</span>
+            <div class="blog-title">The Stack That Lets You Run a Business From a Different Country</div>
+            <div class="blog-excerpt">200 automations. Zero budget. Three countries. This is exactly what a remotely managed professional services business actually requires.</div>
+          </div>
+        </div>
+      </div>
+      <!-- Newsletter -->
+      <div style="max-width:520px; margin:48px auto 0; text-align:center;">
+        <h3 style="margin-bottom:8px;">Get Every Post Delivered.</h3>
+        <p style="font-size:14px; margin-bottom:20px;">One email per week. No padding. Unsubscribe any time.</p>
+        <div class="form-group"><input type="email" placeholder="Your email address"></div>
+        <a class="btn-primary" style="width:100%; display:block; text-align:center;">Subscribe to the Blog</a>
+        <p class="form-note">[ Connect to MailerLite ]</p>
+      </div>
+    </div>
+  </section>
+</Base>

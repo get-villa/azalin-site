@@ -1,63 +1,143 @@
 ---
-import AboutHeroImage from '../assets/blog-placeholder-about.jpg';
-import Layout from '../layouts/BlogPost.astro';
+import Base from '../layouts/Base.astro';
 ---
 
-<Layout
-	title="About Me"
-	description="Lorem ipsum dolor sit amet"
-	pubDate={new Date('August 08 2021')}
-	heroImage={AboutHeroImage}
+<Base
+  title="About"
+  description="Joshua Allen's story: 8 years abroad, 7 countries, building Panama as the next logical step for high earners seeking financial optionality."
 >
-	<p>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-		labore et dolore magna aliqua. Vitae ultricies leo integer malesuada nunc vel risus commodo
-		viverra. Adipiscing enim eu turpis egestas pretium. Euismod elementum nisi quis eleifend quam
-		adipiscing. In hac habitasse platea dictumst vestibulum. Sagittis purus sit amet volutpat. Netus
-		et malesuada fames ac turpis egestas. Eget magna fermentum iaculis eu non diam phasellus
-		vestibulum lorem. Varius sit amet mattis vulputate enim. Habitasse platea dictumst quisque
-		sagittis. Integer quis auctor elit sed vulputate mi. Dictumst quisque sagittis purus sit amet.
-	</p>
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container">
+      <div class="grid-2" style="gap:56px; align-items:center;">
+        <div>
+          <span class="eyebrow">About</span>
+          <h1>I Did It Broke.<br>Alone.<br>With a Kid on the Way.</h1>
+          <p class="lead" style="margin-top:18px;">Which means when you arrive in Panama with your business, your team, and your resources already in place — I already know it works for you.</p>
+        </div>
+        <div style="background:var(--bg2); border:1px solid var(--border); border-radius:var(--radius); height:400px; display:flex; align-items:center; justify-content:center; color:var(--muted); font-size:11px; letter-spacing:2px; text-transform:uppercase;">
+          [ FOUNDER PHOTO ]
+        </div>
+      </div>
+    </div>
+  </section>
 
-	<p>
-		Morbi tristique senectus et netus. Id semper risus in hendrerit gravida rutrum quisque non
-		tellus. Habitasse platea dictumst quisque sagittis purus sit amet. Tellus molestie nunc non
-		blandit massa. Cursus vitae congue mauris rhoncus. Accumsan tortor posuere ac ut. Fringilla urna
-		porttitor rhoncus dolor. Elit ullamcorper dignissim cras tincidunt lobortis. In cursus turpis
-		massa tincidunt dui ut ornare lectus. Integer feugiat scelerisque varius morbi enim nunc.
-		Bibendum neque egestas congue quisque egestas diam. Cras ornare arcu dui vivamus arcu felis
-		bibendum. Dignissim suspendisse in est ante in nibh mauris. Sed tempus urna et pharetra pharetra
-		massa massa ultricies mi.
-	</p>
+  <hr class="divider">
 
-	<p>
-		Mollis nunc sed id semper risus in. Convallis a cras semper auctor neque. Diam sit amet nisl
-		suscipit. Lacus viverra vitae congue eu consequat ac felis donec. Egestas integer eget aliquet
-		nibh praesent tristique magna sit amet. Eget magna fermentum iaculis eu non diam. In vitae
-		turpis massa sed elementum. Tristique et egestas quis ipsum suspendisse ultrices. Eget lorem
-		dolor sed viverra ipsum. Vel turpis nunc eget lorem dolor sed viverra. Posuere ac ut consequat
-		semper viverra nam. Laoreet suspendisse interdum consectetur libero id faucibus. Diam phasellus
-		vestibulum lorem sed risus ultricies tristique. Rhoncus dolor purus non enim praesent elementum
-		facilisis. Ultrices tincidunt arcu non sodales neque. Tempus egestas sed sed risus pretium quam
-		vulputate. Viverra suspendisse potenti nullam ac tortor vitae purus faucibus ornare. Fringilla
-		urna porttitor rhoncus dolor purus non. Amet dictum sit amet justo donec enim.
-	</p>
+  <!-- Origin -->
+  <section>
+    <div class="container" style="max-width:720px;">
+      <div class="gold-bar"></div>
+      <h2>Where This Started</h2>
+      <p style="margin-bottom:16px;">I was in India when COVID hit. Not visiting. Living there. I watched borders close in real time and understood, at a very practical level, what it means to be in a foreign country with only one passport and no legal right to be anywhere else.</p>
+      <p style="margin-bottom:16px;">That experience changed how I think about residency. A second passport or a second permanent residency is not a luxury for the ultra-wealthy. It is the only thing that gives you a choice when the world stops cooperating with your plans.</p>
+      <p>I came back from India asking why professionals who earn more in a year than most people earn in a decade are still handing a majority of it to a single government by default.</p>
+    </div>
+  </section>
 
-	<p>
-		Mattis ullamcorper velit sed ullamcorper morbi tincidunt. Tortor posuere ac ut consequat semper
-		viverra. Tellus mauris a diam maecenas sed enim ut sem viverra. Venenatis urna cursus eget nunc
-		scelerisque viverra mauris in. Arcu ac tortor dignissim convallis aenean et tortor at. Curabitur
-		gravida arcu ac tortor dignissim convallis aenean et tortor. Egestas tellus rutrum tellus
-		pellentesque eu. Fusce ut placerat orci nulla pellentesque dignissim enim sit amet. Ut enim
-		blandit volutpat maecenas volutpat blandit aliquam etiam. Id donec ultrices tincidunt arcu. Id
-		cursus metus aliquam eleifend mi.
-	</p>
+  <div class="container" style="max-width:720px;">
+    <div class="pullquote">
+      <p>"At its core, a person really only needs a passport, credit, and a phone to do almost anything they want globally. The barriers are almost never practical. They are psychological, administrative, and informational."</p>
+    </div>
+  </div>
 
-	<p>
-		Tempus quam pellentesque nec nam aliquam sem. Risus at ultrices mi tempus imperdiet. Id porta
-		nibh venenatis cras sed felis eget velit. Ipsum a arcu cursus vitae. Facilisis magna etiam
-		tempor orci eu lobortis elementum. Tincidunt dui ut ornare lectus sit. Quisque non tellus orci
-		ac. Blandit libero volutpat sed cras. Nec tincidunt praesent semper feugiat nibh sed pulvinar
-		proin gravida. Egestas integer eget aliquet nibh praesent tristique magna.
-	</p>
-</Layout>
+  <!-- Journey -->
+  <section>
+    <div class="container" style="max-width:720px;">
+      <div class="gold-bar"></div>
+      <h2>The Journey</h2>
+      <p style="margin-bottom:16px;">Eight years. Seven countries lived in, not just visited. China, Vietnam, Thailand, Indonesia twice, India, Sri Lanka, Turkey. I held temporary residencies in two of them. I filed Canadian non-resident tax returns from three different countries.</p>
+      <p style="margin-bottom:16px;">I married an Iranian woman in Turkey and successfully navigated the entire immigration process to bring her to Canada. My son was born in Turkey. At the same time, I was managing his temporary passport, his Turkish residency, and his Canadian citizenship application — across two embassies, while living in a third country.</p>
+      <p style="margin-bottom:16px;">I built a yoga course from scratch while living abroad — launched at $99, scaled to $1,000 within three months, and to $5,000 eighteen months later. I ran a federally incorporated Canadian company with customers in eight countries from a desk in Istanbul. I built more than 200 Zapier automations in two years with no budget.</p>
+      <p>I have watched the Turkish lira lose half its value in a single year. I was in India during the rupee demonetisation. I hold Bitcoin in cold storage and I have borrowed against it rather than selling it. These are not talking points. They are the experiences that formed how I think about money, mobility, and structure.</p>
+    </div>
+  </section>
+
+  <!-- Credentials -->
+  <section class="bg2">
+    <div class="container">
+      <span class="eyebrow">Credentials</span>
+      <h2>What I Bring</h2>
+      <div class="cred-grid" style="margin-top:32px;">
+        <div class="cred"><div class="cred-icon">🌏</div><h4>7 Countries Lived In</h4><p>China, Vietnam, Thailand, Indonesia (twice), India, Sri Lanka, Turkey. Temporary residencies in two.</p></div>
+        <div class="cred"><div class="cred-icon">🏢</div><h4>Federal Canadian Corporation</h4><p>Incorporated, operated, and managed remotely across three countries. Customers in eight countries.</p></div>
+        <div class="cred"><div class="cred-icon">⚡</div><h4>200+ Automations Built</h4><p>Zero budget. Two years. The remote business management framework comes from doing it, not reading about it.</p></div>
+        <div class="cred"><div class="cred-icon">📱</div><h4>6 Years Apple Retail</h4><p>Complex products explained simply. The foundation of how I work with clients at every stage.</p></div>
+        <div class="cred"><div class="cred-icon">₿</div><h4>Bitcoin in Cold Storage</h4><p>Self-custody, Ledn-backed loans, hard money thesis from lived currency devaluation across three countries.</p></div>
+        <div class="cred"><div class="cred-icon">🛂</div><h4>Complex Immigration Navigated</h4><p>Four concurrent applications across two embassies while living in a third country. All resolved successfully.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Proto case study -->
+  <section>
+    <div class="container" style="max-width:720px;">
+      <div class="gold-bar"></div>
+      <h2>Before This Was a Business</h2>
+      <p style="margin-bottom:16px;">My first retreat was in Turkey. I recruited one participant — a British professional who had been thinking about leaving the UK but had never made the move. Over the course of a week, we talked about working online, managing a business from abroad, and what the practical steps actually look like.</p>
+      <p style="margin-bottom:24px;">He later moved permanently from the UK to the Azores, Portugal. That conversation was before I had formalised any of this. It confirmed that what I know is genuinely useful to the right person, and that one week with the right guide changes what feels possible.</p>
+      <div class="btn-group">
+        <a class="btn-primary" href="/report/">Get the Free Panama Report</a>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- Condensed Panama + FAQ -->
+  <section>
+    <div class="container">
+      <span class="eyebrow">Panama — The Essentials</span>
+      <h2>What You Actually Need to Know First.</h2>
+      <div class="grid-2" style="margin-top:36px; gap:40px; align-items:start;">
+        <div style="display: flex; flex-direction: column;">
+          <div class="stat-grid" style="grid-template-columns:1fr 1fr; margin-bottom:32px;">
+            <div class="stat"><span class="stat-number">0%</span><span class="stat-label">Tax on foreign income</span></div>
+            <div class="stat"><span class="stat-number">3–6mo</span><span class="stat-label">FNV processing time</span></div>
+            <div class="stat"><span class="stat-number">$1</span><span class="stat-label">USD economy</span></div>
+            <div class="stat"><span class="stat-number">5yr</span><span class="stat-label">To citizenship</span></div>
+          </div>
+          <div class="card card-gold" style="margin-bottom:14px;">
+            <h3>🇨🇦 For Canadians</h3>
+            <p style="font-size:14px;">Canada taxes residents, not citizens. Once you formally break Canadian tax residency, file your departure return, and demonstrate residency elsewhere, the CRA's claim on your income ends. Not a DIY process — a cross-border specialist should be engaged at least six months before departure.</p>
+          </div>
+          <div class="card card-gold" style="margin-bottom:14px;">
+            <h3>🇬🇧 For British Nationals</h3>
+            <p style="font-size:14px;">The UK Statutory Residency Test governs your departure date. A properly structured exit ends UK income tax liability on foreign earnings. UK assets and UK-sourced income may still attract UK tax after departure depending on timing. HMRC takes a close interest in offshore structures — proper disclosure is not optional.</p>
+          </div>
+          <div class="card card-gold">
+            <h3>🇺🇸 For Americans</h3>
+            <p style="font-size:14px;">The honest picture: the USA taxes citizens on worldwide income regardless of where they live. Moving to Panama does not eliminate that obligation. What Panama offers is a clean structure for international business, asset protection through a foundation, and a lifestyle many US professionals find significantly better than equivalent US city living.</p>
+          </div>
+        </div>
+        <div>
+          <h3 style="margin-bottom:20px; color:var(--gold); font-size:13px; letter-spacing:2px; text-transform:uppercase;">Common Questions</h3>
+          <div class="faq-item">
+            <button class="faq-q" onclick="toggleFaq(this)">Does Panama really tax zero percent on foreign income?<span class="faq-icon">+</span></button>
+            <div class="faq-a">Yes. Panama operates a territorial tax system, codified in the Panamanian Tax Code. A professional earning fees from clients in Canada, the UK, or the USA — with services delivered remotely from Panama — is earning foreign-sourced income. Panama has no legal claim on it. This is the written law, not a loophole.</div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-q" onclick="toggleFaq(this)">What is the Friendly Nations Visa and who qualifies?<span class="faq-icon">+</span></button>
+            <div class="faq-a">The FNV is available to citizens of 50 named countries — including Canada, the USA, the UK, and most of Western Europe. To qualify, applicants must demonstrate economic ties to Panama by forming a Panama SA, opening a Panama bank account with a qualifying deposit, or purchasing property. It leads to permanent residency and Panama citizenship eligibility after five years.</div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-q" onclick="toggleFaq(this)">Do I need to be present in Panama to apply?<span class="faq-icon">+</span></button>
+            <div class="faq-a">At minimum, one structured visit is required to complete biometrics and immigration submissions. Most applicants find that seven to ten days covers banking, attorney meetings, company or property setup, and immigration appointments efficiently. This is exactly what the Scouting Trip is designed around.</div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-q" onclick="toggleFaq(this)">Does Panama share financial data with Canada, the UK, and the USA?<span class="faq-icon">+</span></button>
+            <div class="faq-a">Yes. Panama joined the Common Reporting Standard in 2019 and now automatically exchanges financial account information with over 100 participating countries including Canada and the UK. The USA uses FATCA. Panama structures require proper disclosure in your home country. The value of a Panama structure comes from its legal design, not from opacity.</div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-q" onclick="toggleFaq(this)">What is the capital gains tax on Bitcoin in Panama?<span class="faq-icon">+</span></button>
+            <div class="faq-a">Panama taxes only income sourced within Panama. Bitcoin capital gains from transactions involving foreign parties are foreign-sourced income. The Panamanian tax rate on those gains is zero for a Panama tax resident. This does not eliminate home-country obligations for someone who has not formally broken their prior tax residency.</div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-q" onclick="toggleFaq(this)">What does it cost to live well in Panama City?<span class="faq-icon">+</span></button>
+            <div class="faq-a">A furnished apartment in San Francisco or El Cangrejo runs $1,500 to $3,000/month. Costa del Este is $2,500 to $5,000. A specialist medical consultation is $50 to $150. Comprehensive private health insurance for a healthy adult in their 40s or 50s costs $2,000 to $4,000/year. For a $300K+ earner, Panama City represents a meaningful reduction in cost of living relative to Toronto, London, or Austin.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>

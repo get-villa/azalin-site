@@ -1,20 +1,156 @@
 ---
-import { type CollectionEntry, getCollection, render } from 'astro:content';
-import BlogPost from '../../layouts/BlogPost.astro';
+import Base from '../../layouts/Base.astro';
+import blogPosts from '../../data/blog-posts.json';
 
 export async function getStaticPaths() {
-	const posts = await getCollection('blog');
-	return posts.map((post) => ({
-		params: { slug: post.id },
+	return blogPosts.map((post) => ({
+		params: { slug: post.slug },
 		props: post,
 	}));
 }
-type Props = CollectionEntry<'blog'>;
 
 const post = Astro.props;
-const { Content } = await render(post);
+const siteUrl = 'https://azalin.io';
+const postUrl = `${siteUrl}/blog/${post.slug}/`;
+
+// Parse markdown to HTML (simple parser for common cases)
+function parseMarkdown(md: string) {
+	let html = md
+		// Headers
+		.replace(/^### (.*?)$/gm, '<h3>$1</h3>')
+		.replace(/^## (.*?)$/gm, '<h2>$1</h2>')
+		.replace(/^# (.*?)$/gm, '<h1>$1</h1>')
+		// Bold
+		.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+		// Italic
+		.replace(/\*(.*?)\*/g, '<em>$1</em>')
+		// Code blocks
+		.replace(/```(.*?)```/gs, '<pre><code>$1</code></pre>')
+		// Inline code
+		.replace(/`(.*?)`/g, '<code>$1</code>')
+		// Links
+		.replace(/\[(.*?)\]\((.*?)\)/g, '<a href="$2">$1</a>')
+		// Tables - simple 2-column support
+		.replace(/\| (.*?) \| (.*?) \|\n\| --- \| --- \|/g, '<table><tr><th>$1</th><th>$2</th></tr>')
+		.replace(/\| (.*?) \| (.*?) \|/g, '<tr><td>$1</td><td>$2</td></tr></table>')
+		// Line breaks
+		.replace(/\n\n/g, '</p><p>')
+		.replace(/\n/g, '<br>');
+
+	return `<p>${html}</p>`;
+}
+
+const renderedContent = parseMarkdown(post.body);
 ---
 
-<BlogPost {...post.data}>
-	<Content />
-</BlogPost>
+<Base
+  title={post.title}
+  description={post.excerpt}
+  ogImage={post.featured_image}
+  canonicalUrl={postUrl}
+>
+  <!-- Article Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "{post.title}",
+    "description": "{post.excerpt}",
+    "image": "{post.featured_image}",
+    "datePublished": "{post.publish_date}",
+    "author": {
+      "@type": "Person",
+      "name": "{post.author}"
+    },
+    "url": "{postUrl}"
+  }
+  </script>
+
+  <!-- Blog Post Header -->
+  <section class="hero">
+    <div class="container" style="max-width: 720px;">
+      <span class="eyebrow">{post.category}</span>
+      <h1>{post.title}</h1>
+      <div style="display: flex; gap: 24px; margin-top: 20px; align-items: center; color: var(--muted); font-size: 14px;">
+        <span>{post.author}</span>
+        <span>•</span>
+        <time datetime={post.publish_date}>{new Date(post.publish_date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</time>
+        <span>•</span>
+        <span>{post.reading_time} min read</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured Image -->
+  {post.featured_image && (
+    <section style="padding: 0;">
+      <img
+        src={post.featured_image}
+        alt={post.featured_image_alt}
+        style="width: 100%; height: auto; display: block;"
+      >
+    </section>
+  )}
+
+  <!-- Article Content -->
+  <section>
+    <div class="container" style="max-width: 720px;">
+      <div set:html={renderedContent} />
+
+      {post.featured_quote && (
+        <div class="pullquote">
+          <p>"{post.featured_quote.text}"</p>
+          <small>{post.featured_quote.attribution}</small>
+        </div>
+      )}
+
+      {post.cta && (
+        <div style="margin-top: 48px; padding: 32px; background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); text-align: center;">
+          <h3 style="margin-bottom: 16px;">Ready to take the next step?</h3>
+          <a href={post.cta_link || '/report/'} class="btn-primary">{post.cta}</a>
+        </div>
+      )}
+    </div>
+  </section>
+
+  <!-- Related Posts / Newsletter -->
+  <section class="bg2">
+    <div class="container" style="max-width: 720px; text-align: center;">
+      <h2 style="margin-bottom: 8px;">Get Every Post Delivered</h2>
+      <p style="font-size: 14px; margin-bottom: 20px;">One email per week. No padding. Unsubscribe any time.</p>
+      <div class="form-group"><input type="email" placeholder="Your email address"></div>
+      <a class="btn-primary" style="display: inline-block;">Subscribe to the Blog</a>
+      <p class="form-note">[ Connect to MailerLite ]</p>
+    </div>
+  </section>
+</Base>
+
+<style>
+	code {
+		background: var(--bg2);
+		padding: 2px 6px;
+		border-radius: var(--radius);
+		font-size: 14px;
+	}
+	pre {
+		background: var(--bg2);
+		padding: 20px;
+		border-radius: var(--radius);
+		overflow-x: auto;
+		margin: 20px 0;
+	}
+	table {
+		width: 100%;
+		border-collapse: collapse;
+		margin: 20px 0;
+	}
+	th, td {
+		border: 1px solid var(--border);
+		padding: 12px;
+		text-align: left;
+	}
+	th {
+		background: var(--bg2);
+		font-weight: 600;
+	}
+</style>
