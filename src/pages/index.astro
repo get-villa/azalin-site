@@ -1,5 +1,9 @@
 ---
 import Base from '../layouts/Base.astro';
+import blogPosts from '../data/blog-posts.json';
+
+// Get the 3 most recent blog posts
+const recentPosts = blogPosts.slice(0, 3);
 ---
 
 <Base
@@ -33,7 +37,7 @@ import Base from '../layouts/Base.astro';
       <div class="stat-grid">
         <div class="stat"><span class="stat-number">0%</span><span class="stat-label">Panama tax on foreign income</span></div>
         <div class="stat"><span class="stat-number">3–6</span><span class="stat-label">Months to Friendly Nations Visa</span></div>
-        <div class="stat"><span class="stat-number">50</span><span class="stat-label">Nations qualify for the FNV</span></div>
+        <div class="stat"><span class="stat-number">3–6</span><span class="stat-label">Months to permanent residency</span></div>
         <div class="stat"><span class="stat-number">5yr</span><span class="stat-label">Path to Panama citizenship</span></div>
       </div>
     </div>
@@ -44,8 +48,8 @@ import Base from '../layouts/Base.astro';
   <!-- Who It's For -->
   <section>
     <div class="container">
-      <span class="eyebrow">Who This Is For</span>
-      <h2>You Have Built Something Real.<br>Panama Is the Next Logical Move.</h2>
+      <span class="eyebrow">The Three Types</span>
+      <h2>You Recognize Yourself Here.</h2>
       <div class="grid-3" style="margin-top:36px;">
         <div class="avatar-card">
           <div class="avatar-role">Financial Advisor · Canada</div>
@@ -72,11 +76,11 @@ import Base from '../layouts/Base.astro';
     </div>
   </section>
 
-  <!-- Three Offers -->
+  <!-- Four Offers -->
   <section class="bg2">
     <div class="container">
       <span class="eyebrow">How We Work Together</span>
-      <h2>Three Ways In.<br>One Direction.</h2>
+      <h2>Four Ways In.<br>One Direction.</h2>
       <div style="margin-top:36px;">
         <div class="offer-step">
           <div class="offer-num">1</div>
@@ -90,17 +94,25 @@ import Base from '../layouts/Base.astro';
         <div class="offer-step">
           <div class="offer-num">2</div>
           <div>
-            <span class="offer-price">MID-TIER</span>
-            <h3>The Scouting Trip + FNV Application</h3>
-            <p>You fly to Panama. I meet you there. Over several days, I walk you through the neighbourhoods, the banks, the legal process, and the realities of daily life at your income level. When you are ready, I sit beside you through the Friendly Nations Visa application itself. Done with you, not done for you from a distance.</p>
+            <span class="offer-price">PAID</span>
+            <h3>Bitcoin Mini-Course + Cold Storage</h3>
+            <p>Self-custody is not optional for the wealthy. This is a practical guide to Bitcoin security, hardware wallets, and how to move your first coins into cold storage. Includes a Tangem card to get you started immediately. Perfect for professionals who want to understand what they are holding.</p>
           </div>
         </div>
         <div class="offer-step">
           <div class="offer-num">3</div>
           <div>
+            <span class="offer-price">MID-TIER</span>
+            <h3>The Scouting Trip</h3>
+            <p>You fly to Panama. I meet you there. Over several days, I walk you through the neighbourhoods, the banks, the legal process, and the realities of daily life at your income level. You leave with a clear picture of whether Panama is the next move. Optional: add the Friendly Nations Visa application and I sit beside you through the process itself.</p>
+          </div>
+        </div>
+        <div class="offer-step">
+          <div class="offer-num">4</div>
+          <div>
             <span class="offer-price">HIGH TICKET</span>
             <h3>The Panama Retreat</h3>
-            <p>A premium immersive week in Panama. Remote business management practice, Bitcoin literacy, wellness, adventure, and — for qualifying participants — the FNV application included. You leave with a residency process in motion and a remote business that runs without you being in the room. Limited seats.</p>
+            <p>A premium immersive week in Panama. Remote business management practice, Bitcoin literacy, wellness, adventure, and the Friendly Nations Visa application guided from start to finish. You leave with a residency process in motion and a remote business that runs without you being in the room. Limited seats.</p>
           </div>
         </div>
       </div>
@@ -114,7 +126,7 @@ import Base from '../layouts/Base.astro';
         <div>
           <span class="eyebrow">The Founder</span>
           <h2>I Did This Without the Resources You Already Have.</h2>
-          <p style="margin-bottom:16px;">Eight years. Seven countries. A federally incorporated Canadian company managed from a desk in Istanbul. A remote business built from scratch, scaled from $99 to $5,000, while living abroad with no budget and an unexpected child on the way.</p>
+          <p style="margin-bottom:16px;">Eight years. Seven countries. A federally incorporated Canadian company managed from a desk in Antalya, Turkey. A remote business built from scratch, scaled from a $99 course to $5,000, while living abroad with feast-or-famine income and an unexpected child on the way.</p>
           <p style="margin-bottom:16px;">I have filed Canadian non-resident tax returns from three countries. Navigated four concurrent immigration applications across two embassies while living in a third. Watched the Turkish lira collapse in real time. Borrowed against my Bitcoin rather than selling it.</p>
           <p>I am not a theorist. I am a person who has actually done the thing you are thinking about.</p>
           <div class="btn-group" style="margin-top:24px;"><a class="btn-outline" href="/about/">Read the Full Story</a></div>
@@ -130,41 +142,71 @@ import Base from '../layouts/Base.astro';
   <section class="bg2">
     <div class="container">
       <span class="eyebrow">From the Blog</span>
-      <h2>Weekly. Specific. No Filler.</h2>
+      <h2>Insights on Panama, Bitcoin, and Remote Business.</h2>
       <div class="grid-3" style="margin-top:32px;">
-        <div class="blog-card">
-          <div class="blog-img">[ IMAGE ]</div>
-          <div class="blog-body">
-            <span class="blog-cat">Panama · Taxes</span>
-            <div class="blog-title">Why High Earners Are Quietly Moving to Panama</div>
-            <div class="blog-excerpt">Panama taxes only income earned within its borders. For a professional earning $300K+ from international clients, the Panamanian government has no legal claim on that income.</div>
-          </div>
-        </div>
-        <div class="blog-card">
-          <div class="blog-img">[ IMAGE ]</div>
-          <div class="blog-body">
-            <span class="blog-cat">Bitcoin</span>
-            <div class="blog-title">Panama's Zero Capital Gains Rate and What It Means for Bitcoin</div>
-            <div class="blog-excerpt">When you sell Bitcoin in Panama, the capital gains tax rate on foreign-sourced income is zero. Contrast that with what a Canadian investor pays on the same transaction.</div>
-          </div>
-        </div>
-        <div class="blog-card">
-          <div class="blog-img">[ IMAGE ]</div>
-          <div class="blog-body">
-            <span class="blog-cat">Automation</span>
-            <div class="blog-title">The Stack That Lets You Run a Business From a Different Country</div>
-            <div class="blog-excerpt">200 automations. Zero budget. Three countries. This is exactly what a remotely managed professional services business actually requires.</div>
-          </div>
-        </div>
+        {recentPosts.map((post) => (
+          <a href={`/blog/${post.slug}/`} style="text-decoration: none;">
+            <div class="blog-card">
+              {post.featured_image && (
+                <img
+                  src={post.featured_image}
+                  alt={post.featured_image_alt}
+                  style="height: 160px; width: 100%; object-fit: cover; display: block;"
+                />
+              )}
+              {!post.featured_image && (
+                <div class="blog-img">[ IMAGE ]</div>
+              )}
+              <div class="blog-body">
+                <span class="blog-cat">{post.category}</span>
+                <div class="blog-title">{post.title}</div>
+                <div class="blog-excerpt">{post.excerpt}</div>
+              </div>
+            </div>
+          </a>
+        ))}
       </div>
       <!-- Newsletter -->
       <div style="max-width:520px; margin:48px auto 0; text-align:center;">
         <h3 style="margin-bottom:8px;">Get Every Post Delivered.</h3>
         <p style="font-size:14px; margin-bottom:20px;">One email per week. No padding. Unsubscribe any time.</p>
-        <div class="form-group"><input type="email" placeholder="Your email address"></div>
-        <a class="btn-primary" style="width:100%; display:block; text-align:center;">Subscribe to the Blog</a>
-        <p class="form-note">[ Connect to MailerLite ]</p>
+        <form id="blog-form">
+          <div class="form-group">
+            <input type="email" name="email" placeholder="Your email address" required>
+          </div>
+          <button type="submit" class="btn-primary" style="width:100%; display:block; text-align:center; margin-top:8px; cursor:pointer;">Subscribe to the Blog</button>
+        </form>
+        <p class="form-note" id="blog-success" style="display:none; color:var(--gold);">✓ Check your inbox to confirm</p>
       </div>
+
+      <script is:inline>
+        const BLOG_WEBHOOK = 'https://hooks.zapier.com/hooks/catch/8006666/4oqqhyu/';
+
+        document.getElementById('blog-form').addEventListener('submit', async function(e) {
+          e.preventDefault();
+          const btn = this.querySelector('button');
+          const form = e.target;
+
+          btn.textContent = 'Subscribing…';
+          btn.disabled = true;
+
+          try {
+            await fetch(BLOG_WEBHOOK, {
+              method: 'POST',
+              body: JSON.stringify({
+                email: form.email.value,
+                subscribed_at: new Date().toISOString()
+              })
+            });
+
+            form.style.display = 'none';
+            document.getElementById('blog-success').style.display = 'block';
+          } catch (err) {
+            btn.textContent = 'Try again';
+            btn.disabled = false;
+          }
+        });
+      </script>
     </div>
   </section>
 </Base>
