@@ -279,7 +279,7 @@ const finalCanonicalUrl = canonicalUrl || Astro.url.href;
     <a href="/blog/">Blog</a>
     <a class="nav-cta" href="/report/">Get the Free Report</a>
   </div>
-  <div class="hamburger" id="hamburger" onclick="toggleMenu()">
+  <div class="hamburger" id="hamburger">
     <span></span><span></span><span></span>
   </div>
 </nav>
@@ -340,6 +340,9 @@ const finalCanonicalUrl = canonicalUrl || Astro.url.href;
     document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
     if (!wasOpen) item.classList.add('open');
   }
+
+  // Hamburger menu click handler
+  document.getElementById('hamburger').addEventListener('click', toggleMenu);
 
   // Close mobile menu when clicking nav links
   document.querySelectorAll('.mobile-menu a').forEach(link => {
