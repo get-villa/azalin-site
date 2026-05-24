@@ -1,5 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
+
+const ZAPIER_WEBHOOK = import.meta.env.PUBLIC_REPORT_WEBHOOK;
 ---
 
 <Base
@@ -181,8 +183,8 @@ import Base from '../layouts/Base.astro';
   </section>
 </Base>
 
-<script is:inline>
-  const ZAPIER_WEBHOOK = 'https://hooks.zapier.com/hooks/catch/8006666/4o8f19o/';
+<script is:inline define:vars={{ZAPIER_WEBHOOK}}>
+  // ZAPIER_WEBHOOK is injected via define:vars
 
   document.getElementById('report-form').addEventListener('submit', async function(e) {
     e.preventDefault();

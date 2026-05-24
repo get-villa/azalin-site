@@ -2,6 +2,8 @@
 import Base from '../../layouts/Base.astro';
 import blogPosts from '../../data/blog-posts.json';
 
+const BLOG_WEBHOOK = import.meta.env.PUBLIC_BLOG_WEBHOOK;
+
 export async function getStaticPaths() {
 	return blogPosts.map((post) => ({
 		params: { slug: post.slug },
@@ -118,11 +120,42 @@ const renderedContent = parseMarkdown(post.body);
     <div class="container" style="max-width: 720px; text-align: center;">
       <h2 style="margin-bottom: 8px;">Get Every Post Delivered</h2>
       <p style="font-size: 14px; margin-bottom: 20px;">One email per week. No padding. Unsubscribe any time.</p>
-      <div class="form-group"><input type="email" placeholder="Your email address"></div>
-      <a class="btn-primary" style="display: inline-block;">Subscribe to the Blog</a>
-      <p class="form-note">[ Connect to MailerLite ]</p>
+      <form id="blog-post-form">
+        <div class="form-group">
+          <input type="email" name="email" placeholder="Your email address" required>
+        </div>
+        <button type="submit" class="btn-primary" style="display: inline-block;">Subscribe to the Blog</button>
+      </form>
+      <p class="form-note" id="blog-post-success" style="display:none; color:var(--gold);">✓ Check your inbox to confirm</p>
     </div>
   </section>
+
+  <script is:inline define:vars={{BLOG_WEBHOOK}}>
+    document.getElementById('blog-post-form').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const btn = this.querySelector('button');
+      const form = e.target;
+
+      btn.textContent = 'Subscribing…';
+      btn.disabled = true;
+
+      try {
+        await fetch(BLOG_WEBHOOK, {
+          method: 'POST',
+          body: JSON.stringify({
+            email: form.email.value,
+            subscribed_at: new Date().toISOString()
+          })
+        });
+
+        form.style.display = 'none';
+        document.getElementById('blog-post-success').style.display = 'block';
+      } catch (err) {
+        btn.textContent = 'Try again';
+        btn.disabled = false;
+      }
+    });
+  </script>
 </Base>
 
 <style>

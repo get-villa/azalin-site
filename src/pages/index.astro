@@ -4,6 +4,8 @@ import blogPosts from '../data/blog-posts.json';
 
 // Get the 3 most recent blog posts
 const recentPosts = blogPosts.slice(0, 3);
+
+const BLOG_WEBHOOK = import.meta.env.PUBLIC_BLOG_WEBHOOK;
 ---
 
 <Base
@@ -179,8 +181,8 @@ const recentPosts = blogPosts.slice(0, 3);
         <p class="form-note" id="blog-success" style="display:none; color:var(--gold);">✓ Check your inbox to confirm</p>
       </div>
 
-      <script is:inline>
-        const BLOG_WEBHOOK = 'https://hooks.zapier.com/hooks/catch/8006666/4oqqhyu/';
+      <script is:inline define:vars={{BLOG_WEBHOOK}}>
+        // BLOG_WEBHOOK is injected via define:vars
 
         document.getElementById('blog-form').addEventListener('submit', async function(e) {
           e.preventDefault();
