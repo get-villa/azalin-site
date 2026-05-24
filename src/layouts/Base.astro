@@ -26,6 +26,9 @@ const finalCanonicalUrl = canonicalUrl || Astro.url.href;
   <!-- Canonical -->
   <link rel="canonical" href={finalCanonicalUrl}>
 
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+
   <!-- Open Graph -->
   <meta property="og:title" content={fullTitle}>
   <meta property="og:description" content={description}>
