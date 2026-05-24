@@ -96,13 +96,12 @@ const ZAPIER_WEBHOOK = import.meta.env.PUBLIC_REPORT_WEBHOOK;
 
               <div class="form-group">
                 <label>Approximate annual income or business revenue</label>
-                <select name="income_range">
+                <select name="income_range" required>
                   <option value="" disabled selected>Select a range</option>
                   <option>$300K – $500K</option>
                   <option>$500K – $1M</option>
                   <option>$1M – $3M</option>
                   <option>$3M+</option>
-                  <option>Prefer not to say</option>
                 </select>
               </div>
 
