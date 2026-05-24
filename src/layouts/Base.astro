@@ -66,8 +66,8 @@ const finalCanonicalUrl = canonicalUrl || Astro.url.href;
       --bg2:     #112035;
       --bg3:     #1A2E44;
       --border:  #2A4060;
-      --gold:    #C9A84C;
-      --gold-lt: #E4C97A;
+      --gold:    #DAA520;
+      --gold-lt: #E8B835;
       --text:    #EDE9E3;
       --muted:   #7A9BB5;
       --radius:  6px;
@@ -87,8 +87,9 @@ const finalCanonicalUrl = canonicalUrl || Astro.url.href;
       display: flex; align-items: center; justify-content: space-between;
       height: 64px;
     }
-    .nav-logo { font-family: 'Playfair Display', serif; font-size: 22px; color: var(--gold); letter-spacing: 1px; text-decoration: none; cursor: pointer; }
-    .nav-logo span { font-size: 10px; display: block; color: var(--muted); letter-spacing: 3px; text-transform: uppercase; font-family: 'Inter', sans-serif; margin-top: -4px; }
+    .nav-logo { display: flex; align-items: center; text-decoration: none; cursor: pointer; gap: 12px; }
+    .nav-logo img { height: 40px; width: auto; }
+    .nav-logo span { font-size: 9px; color: var(--gold); letter-spacing: 2px; text-transform: uppercase; font-family: 'Inter', sans-serif; margin-top: 2px; }
     .nav-links { display: flex; gap: 28px; align-items: center; }
     .nav-links a { color: var(--muted); text-decoration: none; font-size: 14px; font-weight: 500; cursor: pointer; transition: color 0.2s; }
     .nav-links a:hover { color: var(--text); }
@@ -270,8 +271,11 @@ const finalCanonicalUrl = canonicalUrl || Astro.url.href;
 <!-- ═══════════════ NAV ═══════════════ -->
 <nav>
   <a href="/" class="nav-logo">
-    Azalin
-    <span>Panama First. Done Beside You.</span>
+    <img src="/logo.svg" alt="Azalin" style="height: 40px; margin-right: 12px;">
+    <div>
+      <div style="font-size: 18px; font-weight: 700; color: var(--gold); letter-spacing: 1px;">Azalin</div>
+      <div style="font-size: 9px; color: var(--gold); letter-spacing: 2px; text-transform: uppercase; margin-top: 2px;">Strategic Moves. Revealed.</div>
+    </div>
   </a>
   <div class="nav-links">
     <a href="/">Home</a>
@@ -301,7 +305,13 @@ const finalCanonicalUrl = canonicalUrl || Astro.url.href;
   <div class="container">
     <div class="footer-inner">
       <div class="footer-col">
-        <div style="font-family:'Playfair Display',serif; font-size:20px; color:var(--gold); margin-bottom:10px;">Azalin</div>
+        <div style="display:flex; align-items:center; gap:10px; margin-bottom:10px;">
+          <img src="/logo.svg" alt="Azalin" style="height:32px; width:auto;">
+          <div>
+            <div style="font-family:'Playfair Display',serif; font-size:18px; color:var(--gold);">Azalin</div>
+            <div style="font-size:9px; color:var(--gold); letter-spacing:1px;">Strategic Moves. Revealed.</div>
+          </div>
+        </div>
         <p>Panama first. Done beside you. For Canadians, British nationals, and Americans earning $300K or more who are ready to build a life with genuine options.</p>
       </div>
       <div class="footer-col">

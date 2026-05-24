@@ -1,0 +1,49 @@
+<svg viewBox="0 0 400 420" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="goldGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#F4E4A6;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#DAA520;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#B8860B;stop-opacity:1" />
+    </linearGradient>
+    <filter id="shadow">
+      <feDropShadow dx="0" dy="4" stdDeviation="3" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+
+  <!-- Base/Stand -->
+  <ellipse cx="200" cy="280" rx="60" ry="14" fill="url(#goldGradient)" filter="url(#shadow)"/>
+  <path d="M 155 280 L 165 255 L 235 255 L 245 280 Z" fill="url(#goldGradient)"/>
+  <rect x="155" y="255" width="90" height="10" rx="2" fill="url(#goldGradient)"/>
+
+  <!-- Neck/Shaft -->
+  <path d="M 170 255 Q 170 180 200 140 Q 230 180 230 255" fill="url(#goldGradient)" filter="url(#shadow)"/>
+  <ellipse cx="200" cy="140" rx="32" ry="14" fill="url(#goldGradient)"/>
+
+  <!-- Crown Band -->
+  <ellipse cx="200" cy="125" rx="44" ry="12" fill="url(#goldGradient)"/>
+  <rect x="160" y="118" width="80" height="10" rx="2" fill="url(#goldGradient)"/>
+
+  <!-- Second Crown Band -->
+  <ellipse cx="200" cy="105" rx="42" ry="11" fill="url(#goldGradient)"/>
+  <rect x="162" y="98" width="76" height="8" rx="1" fill="url(#goldGradient)"/>
+
+  <!-- Left Prong -->
+  <path d="M 170 115 Q 155 85 148 50 Q 145 38 150 36 Q 160 34 170 60 Q 180 90 185 115 Z" fill="url(#goldGradient)" filter="url(#shadow)"/>
+  <circle cx="148" cy="48" r="10" fill="url(#goldGradient)"/>
+
+  <!-- Center Prong (tallest) -->
+  <path d="M 200 105 Q 200 70 203 25 Q 203 8 209 7 Q 215 6 215 30 Q 215 75 203 105 Z" fill="url(#goldGradient)" filter="url(#shadow)"/>
+  <circle cx="207" cy="18" r="11" fill="url(#goldGradient)"/>
+
+  <!-- Right Prong -->
+  <path d="M 230 115 Q 245 85 252 50 Q 255 38 250 36 Q 240 34 230 60 Q 220 90 215 115 Z" fill="url(#goldGradient)" filter="url(#shadow)"/>
+  <circle cx="252" cy="48" r="10" fill="url(#goldGradient)"/>
+
+  <!-- Crown Front (top triangular part) -->
+  <path d="M 165 125 L 200 75 L 235 125 Z" fill="url(#goldGradient)" filter="url(#shadow)"/>
+
+  <!-- Domain Text -->
+  <text x="200" y="370" font-family="'Playfair Display', serif" font-size="42" font-weight="700" text-anchor="middle" fill="url(#goldGradient)" letter-spacing="3">
+    AZALIN.IO
+  </text>
+</svg>
