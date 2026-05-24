@@ -71,6 +71,30 @@ const ZAPIER_WEBHOOK = import.meta.env.PUBLIC_REPORT_WEBHOOK;
               </div>
 
               <div class="form-group">
+                <label>How do you earn your income?</label>
+                <select name="business_type" required>
+                  <option value="" disabled selected>Select your income type</option>
+                  <option>Self-employed / freelancer / consultant</option>
+                  <option>Business owner (you operate a company)</option>
+                  <option>Employee of a company</option>
+                  <option>Investor / passive income primarily</option>
+                  <option>Combination / multiple income sources</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label>What's your current effective tax rate? <span style="color:var(--muted);font-weight:400;text-transform:none;letter-spacing:0;">(approximate — check your last tax return or ask your accountant)</span></label>
+                <select name="tax_rate" required>
+                  <option value="" disabled selected>Select a range</option>
+                  <option>Under 20%</option>
+                  <option>20–30%</option>
+                  <option>30–40%</option>
+                  <option>40–50%</option>
+                  <option>Over 50%</option>
+                </select>
+              </div>
+
+              <div class="form-group">
                 <label>Approximate annual income or business revenue</label>
                 <select name="income_range">
                   <option value="" disabled selected>Select a range</option>
@@ -197,6 +221,8 @@ const ZAPIER_WEBHOOK = import.meta.env.PUBLIC_REPORT_WEBHOOK;
       first_name:       form.first_name.value,
       email:            form.email.value,
       country:          form.country.value,
+      business_type:    form.business_type.value,
+      tax_rate:         form.tax_rate.value,
       income_range:     form.income_range.value,
       business_size:    form.business_size.value,
       primary_goal:     form.primary_goal.value,
