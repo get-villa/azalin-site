@@ -208,13 +208,19 @@ const ZAPIER_WEBHOOK = import.meta.env.PUBLIC_REPORT_WEBHOOK;
     };
 
     try {
-      await fetch(ZAPIER_WEBHOOK, {
+      const response = await fetch(ZAPIER_WEBHOOK, {
         method: 'POST',
         body: JSON.stringify(payload)
       });
+
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+      }
+
       form.style.display = 'none';
       document.getElementById('form-success').style.display = 'block';
     } catch (err) {
+      console.error('Form submission error:', err);
       btn.textContent = 'Something went wrong — please try again';
       btn.disabled = false;
     }

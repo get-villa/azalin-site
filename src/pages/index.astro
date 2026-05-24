@@ -193,7 +193,7 @@ const BLOG_WEBHOOK = import.meta.env.PUBLIC_BLOG_WEBHOOK;
           btn.disabled = true;
 
           try {
-            await fetch(BLOG_WEBHOOK, {
+            const response = await fetch(BLOG_WEBHOOK, {
               method: 'POST',
               body: JSON.stringify({
                 email: form.email.value,
@@ -201,9 +201,14 @@ const BLOG_WEBHOOK = import.meta.env.PUBLIC_BLOG_WEBHOOK;
               })
             });
 
+            if (!response.ok) {
+              throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+            }
+
             form.style.display = 'none';
             document.getElementById('blog-success').style.display = 'block';
           } catch (err) {
+            console.error('Subscription error:', err);
             btn.textContent = 'Try again';
             btn.disabled = false;
           }
