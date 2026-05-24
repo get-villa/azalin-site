@@ -87,8 +87,9 @@ const finalCanonicalUrl = canonicalUrl || Astro.url.href;
       display: flex; align-items: center; justify-content: space-between;
       height: 64px;
     }
-    .nav-logo { display: flex; flex-direction: column; align-items: center; text-decoration: none; cursor: pointer; gap: 4px; }
-    .nav-logo img { height: 48px; width: auto; }
+    .nav-logo { display: flex; align-items: center; text-decoration: none; cursor: pointer; gap: 0; }
+    .nav-logo img { height: 48px; width: auto; flex-shrink: 0; }
+    .nav-branding { display: flex; flex-direction: column; justify-content: center; height: 48px; gap: 1px; }
     .nav-logo span { font-size: 9px; color: var(--text); letter-spacing: 2px; text-transform: uppercase; font-family: 'Inter', sans-serif; }
     .nav-links { display: flex; gap: 28px; align-items: center; }
     .nav-links a { color: var(--muted); text-decoration: none; font-size: 14px; font-weight: 500; cursor: pointer; transition: color 0.2s; }
@@ -271,8 +272,11 @@ const finalCanonicalUrl = canonicalUrl || Astro.url.href;
 <!-- ═══════════════ NAV ═══════════════ -->
 <nav>
   <a href="/" class="nav-logo">
-    <img src="/azalin-logo.png" alt="Azalin" style="height: 48px; margin-right: 8px;">
-    <div style="font-size: 9px; color: var(--text); letter-spacing: 2px; text-transform: uppercase; margin-top: 4px;">Strategic Moves. Revealed.</div>
+    <img src="/azalin-logo.png" alt="Azalin" style="height: 48px; margin-right: 16px;">
+    <div class="nav-branding">
+      <div style="font-size: 16px; font-weight: 700; color: var(--gold); letter-spacing: 1px; line-height: 1.1;">Azalin</div>
+      <div style="font-size: 8px; color: var(--text); letter-spacing: 1.5px; text-transform: uppercase; line-height: 1.1;">Strategic Moves. Revealed.</div>
+    </div>
   </a>
   <div class="nav-links">
     <a href="/">Home</a>
@@ -302,7 +306,7 @@ const finalCanonicalUrl = canonicalUrl || Astro.url.href;
   <div class="container">
     <div class="footer-inner">
       <div class="footer-col">
-        <img src="/azalin-logo.png" alt="Azalin" style="height:40px; width:auto; margin-bottom:8px;">
+        <img src="/azalin-logo.png" alt="Azalin" style="height:80px; width:auto; margin-bottom:12px;">
         <div style="font-size:9px; color:var(--text); letter-spacing:1px; text-transform:uppercase; margin-bottom:12px;">Strategic Moves. Revealed.</div>
         <p>Panama first. Done beside you. For Canadians, British nationals, and Americans earning $300K or more who are ready to build a life with genuine options.</p>
       </div>
