@@ -11,7 +11,7 @@ interface Props {
 const { title, description, ogImage, canonicalUrl } = Astro.props;
 const fullTitle = `${title} — Azalin`;
 const siteUrl = 'https://azalin.io';
-const finalOgImage = ogImage || `${siteUrl}/azalin-logo.png`;
+const finalOgImage = ogImage || `${siteUrl}/azalin-og-image.png`;
 const finalCanonicalUrl = canonicalUrl || Astro.url.href;
 ---
 

@@ -4,6 +4,41 @@ import Base from '../layouts/Base.astro';
 const ZAPIER_WEBHOOK = import.meta.env.PUBLIC_REPORT_WEBHOOK;
 ---
 
+<style is:global>
+  /* Panama Report Form Styling */
+  #report-form label {
+    color: var(--muted);
+    display: block;
+    font-weight: 600;
+    margin-bottom: 8px;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  #report-form input,
+  #report-form select {
+    color: var(--text);
+  }
+
+  #report-form input::placeholder,
+  #report-form select::placeholder {
+    color: var(--text);
+    opacity: 0.7;
+  }
+
+  /* Required field indicator */
+  #report-form label::after {
+    content: attr(data-required);
+  }
+
+  /* Visual distinction for required fields */
+  #report-form input[required],
+  #report-form select[required] {
+    border-color: var(--gold);
+  }
+</style>
+
 <Base
   title="Get the Free Panama Report"
   description="Download the complete guide to Panama's territorial tax system, Friendly Nations Visa, corporate setup, and what life actually looks like for high earners. Free. No pitch on the other side."
@@ -128,6 +163,16 @@ const ZAPIER_WEBHOOK = import.meta.env.PUBLIC_REPORT_WEBHOOK;
               </div>
 
               <div class="form-group">
+                <label>Your relocation strategy</label>
+                <select name="relocation_strategy" required>
+                  <option value="" disabled selected>Which describes your plan?</option>
+                  <option>Full relocation</option>
+                  <option>Split residency</option>
+                  <option>Undecided</option>
+                </select>
+              </div>
+
+              <div class="form-group">
                 <label>Family situation</label>
                 <select name="family_situation" required>
                   <option value="" disabled selected>Select one</option>
@@ -217,19 +262,20 @@ const ZAPIER_WEBHOOK = import.meta.env.PUBLIC_REPORT_WEBHOOK;
 
     const form = e.target;
     const payload = {
-      first_name:       form.first_name.value,
-      email:            form.email.value,
-      country:          form.country.value,
-      business_type:    form.business_type.value,
-      tax_rate:         form.tax_rate.value,
-      income_range:     form.income_range.value,
-      business_size:    form.business_size.value,
-      primary_goal:     form.primary_goal.value,
-      family_situation: form.family_situation.value,
-      bitcoin_exposure: form.bitcoin_exposure.value,
+      first_name:         form.first_name.value,
+      email:              form.email.value,
+      country:            form.country.value,
+      business_type:      form.business_type.value,
+      tax_rate:           form.tax_rate.value,
+      income_range:       form.income_range.value,
+      business_size:      form.business_size.value,
+      primary_goal:       form.primary_goal.value,
+      relocation_strategy: form.relocation_strategy.value,
+      family_situation:   form.family_situation.value,
+      bitcoin_exposure:   form.bitcoin_exposure.value,
       biggest_hesitation: form.biggest_hesitation.value,
-      timeline:         form.timeline.value,
-      submitted_at:     new Date().toISOString()
+      timeline:           form.timeline.value,
+      submitted_at:       new Date().toISOString()
     };
 
     try {
