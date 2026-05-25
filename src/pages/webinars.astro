@@ -1,0 +1,316 @@
+---
+import Base from '../layouts/Base.astro';
+
+const ZAPIER_WEBHOOK = import.meta.env.PUBLIC_WEBINAR_WEBHOOK;
+
+const webinars = [
+  {
+    title: 'Bitcoin as Hard Money vs. Fiat',
+    subtitle: 'Your Wealth Outside the System',
+    duration: '60 minutes',
+    description: 'Understand why Bitcoin is a rational financial decision. Learn how to safely store Bitcoin in cold storage and why sophisticated wealth-builders are quietly doing this.',
+    emoji: '₿'
+  },
+  {
+    title: 'Citizenship vs. Residency',
+    subtitle: 'How to Legally Reduce Your Tax Burden',
+    duration: '75 minutes',
+    description: 'Understand the three different tax systems and how corporate structures legally change your tax position. Move from "taxation is inevitable" to "my tax structure is a choice."',
+    emoji: '⚖️'
+  },
+  {
+    title: 'Why Panama',
+    subtitle: 'The Complete Location Thesis',
+    duration: '60 minutes',
+    description: 'Understand why Panama is the optimal second residency vs. alternatives. Get practical details on visa, cost of living, healthcare, schools, and real estate.',
+    emoji: '🇵🇦'
+  }
+];
+---
+
+<style is:global>
+  /* Webinar carousel styles */
+  .webinar-carousel {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .webinar-track {
+    display: flex;
+    gap: 24px;
+    scroll-behavior: smooth;
+    scroll-snap-type: x mandatory;
+    overflow-x: auto;
+    padding-bottom: 12px;
+    scrollbar-width: thin;
+  }
+
+  .webinar-track::-webkit-scrollbar {
+    height: 4px;
+  }
+
+  .webinar-track::-webkit-scrollbar-track {
+    background: var(--bg2);
+  }
+
+  .webinar-track::-webkit-scrollbar-thumb {
+    background: var(--gold);
+    border-radius: 2px;
+  }
+
+  .webinar-card {
+    flex-shrink: 0;
+    width: 100%;
+    scroll-snap-align: start;
+  }
+
+  @media (min-width: 768px) {
+    .webinar-track {
+      overflow-x: visible;
+      overflow-y: visible;
+      scroll-snap-type: none;
+      padding-bottom: 0;
+    }
+
+    .webinar-carousel {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .webinar-card {
+      width: auto;
+      scroll-snap-align: unset;
+    }
+  }
+
+  /* Webinar card styling */
+  .webinar-avatar {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 28px;
+    border-top: 3px solid var(--gold);
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  .webinar-emoji {
+    font-size: 44px;
+    margin-bottom: 16px;
+    display: block;
+  }
+
+  .webinar-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 19px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 4px;
+    line-height: 1.3;
+  }
+
+  .webinar-subtitle {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 14px;
+  }
+
+  .webinar-description {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.6;
+    margin-bottom: 12px;
+    flex-grow: 1;
+  }
+
+  .webinar-duration {
+    font-size: 12px;
+    color: var(--gold);
+    font-weight: 600;
+    letter-spacing: 0.5px;
+  }
+
+  /* Form styling */
+  #webinar-form label {
+    color: var(--muted);
+    display: block;
+    font-weight: 600;
+    margin-bottom: 8px;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  #webinar-form input,
+  #webinar-form select {
+    color: var(--text);
+  }
+
+  #webinar-form input::placeholder,
+  #webinar-form select::placeholder {
+    color: var(--text);
+    opacity: 0.7;
+  }
+
+  #webinar-form input[required],
+  #webinar-form select[required] {
+    border-color: var(--gold);
+  }
+
+  .form-group {
+    margin-bottom: 20px;
+  }
+
+  .form-group input,
+  .form-group select {
+    width: 100%;
+    background: transparent;
+    border: 1px solid var(--border);
+    padding: 12px 16px;
+    border-radius: var(--radius);
+    font-size: 16px;
+    font-family: 'Inter', sans-serif;
+  }
+
+  .form-group input:focus,
+  .form-group select:focus {
+    outline: none;
+    border-color: var(--gold);
+  }
+</style>
+
+<Base
+  title="Live Webinars"
+  description="Join Joshua Allen for live webinars on Bitcoin, tax strategy, and Panama relocation. Free registration, instant access."
+>
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container">
+      <span class="eyebrow">Live Webinars</span>
+      <h1>Master the Strategy. Join Live.</h1>
+      <p class="lead" style="margin-top: 16px; max-width: 700px;">Three foundational webinars on Bitcoin, tax optimization, and Panama relocation. Choose the one that matters most to you right now. Register for instant access.</p>
+    </div>
+  </section>
+
+  <!-- Webinar Cards -->
+  <section>
+    <div class="container">
+      <div class="webinar-carousel">
+        {webinars.map((webinar) => (
+          <div class="webinar-card">
+            <div class="webinar-avatar">
+              <span class="webinar-emoji">{webinar.emoji}</span>
+              <h3 class="webinar-title">{webinar.title}</h3>
+              <span class="webinar-subtitle">{webinar.subtitle}</span>
+              <p class="webinar-description">{webinar.description}</p>
+              <span class="webinar-duration">{webinar.duration}</span>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Registration Form -->
+  <section class="bg2">
+    <div class="container">
+      <div style="max-width: 500px; margin: 0 auto;">
+        <h2 style="margin-bottom: 8px;">Get Instant Access</h2>
+        <p style="margin-bottom: 32px; color: var(--muted);">Select which webinar you'd like to join and register. You'll receive immediate access.</p>
+
+        <!-- Success state (hidden until submit) -->
+        <div id="form-success" style="display: none; text-align: center; padding: 40px 24px;">
+          <div style="font-size: 40px; margin-bottom: 16px;">✓</div>
+          <h3 style="color: var(--gold); margin-bottom: 10px;">You're registered.</h3>
+          <p style="font-size: 14px; margin-bottom: 16px;">Redirecting to your webinar...</p>
+          <p style="font-size: 13px; color: var(--muted);">If you're not automatically redirected, <a href="#" id="manual-redirect" style="color: var(--gold); text-decoration: none;">click here</a>.</p>
+        </div>
+
+        <!-- Form -->
+        <form id="webinar-form">
+          <div class="form-group">
+            <label>First Name</label>
+            <input type="text" name="first_name" placeholder="David" required>
+          </div>
+
+          <div class="form-group">
+            <label>Email Address</label>
+            <input type="email" name="email" placeholder="david@yourfirm.com" required>
+          </div>
+
+          <div class="form-group">
+            <label>Which Webinar?</label>
+            <select name="webinar_selection" id="webinar-selection" required>
+              <option value="" disabled selected>Select a webinar</option>
+              <option>Bitcoin as Hard Money vs. Fiat</option>
+              <option>Citizenship vs. Residency</option>
+              <option>Why Panama</option>
+            </select>
+          </div>
+
+          <button type="submit" class="btn-primary" id="submit-btn" style="width: 100%; margin-top: 8px; font-size: 15px; padding: 16px;">Register for Webinar</button>
+          <p class="form-note" style="font-size: 12px; margin-top: 12px; color: var(--muted);">Instant access upon registration.</p>
+        </form>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<script is:inline define:vars={{ZAPIER_WEBHOOK}}>
+  // Webinar URLs (fill these in once they're ready)
+  const webinarUrls = {
+    'Bitcoin as Hard Money vs. Fiat': 'https://your-webinar-url-1.com', // TODO: Update with actual URL
+    'Citizenship vs. Residency': 'https://your-webinar-url-2.com',       // TODO: Update with actual URL
+    'Why Panama': 'https://your-webinar-url-3.com'                       // TODO: Update with actual URL
+  };
+
+  document.getElementById('webinar-form').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const btn = document.getElementById('submit-btn');
+    btn.textContent = 'Registering…';
+    btn.disabled = true;
+
+    const form = e.target;
+    const selectedWebinar = form.webinar_selection.value;
+
+    const payload = {
+      first_name: form.first_name.value,
+      email: form.email.value,
+      webinar_selection: selectedWebinar,
+      submitted_at: new Date().toISOString()
+    };
+
+    try {
+      const response = await fetch(ZAPIER_WEBHOOK, {
+        method: 'POST',
+        body: JSON.stringify(payload)
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}: ${response.statusStatus}`);
+      }
+
+      // Show success state
+      form.style.display = 'none';
+      document.getElementById('form-success').style.display = 'block';
+
+      // Get the webinar URL and redirect
+      const webinarUrl = webinarUrls[selectedWebinar];
+      document.getElementById('manual-redirect').href = webinarUrl;
+
+      // Redirect after 2 seconds
+      setTimeout(() => {
+        window.location.href = webinarUrl;
+      }, 2000);
+    } catch (err) {
+      console.error('Form submission error:', err);
+      btn.textContent = 'Something went wrong — please try again';
+      btn.disabled = false;
+    }
+  });
+</script>
