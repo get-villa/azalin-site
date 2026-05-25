@@ -6,7 +6,62 @@ import blogPosts from '../data/blog-posts.json';
 const recentPosts = blogPosts.slice(0, 3);
 
 const BLOG_WEBHOOK = import.meta.env.PUBLIC_BLOG_WEBHOOK;
+const BITCOIN_WEBHOOK = import.meta.env.PUBLIC_BITCOIN_MINI_COURSE_WEBHOOK;
+const SCOUTING_WEBHOOK = import.meta.env.PUBLIC_SCOUTING_TRIP_WAITLIST_WEBHOOK;
+const RETREAT_WEBHOOK = import.meta.env.PUBLIC_PANAMA_RETREAT_WAITLIST_WEBHOOK;
 ---
+
+<style is:global>
+  .waitlist-form {
+    margin-top: 16px;
+    display: flex;
+    gap: 8px;
+  }
+
+  .waitlist-form input {
+    flex: 1;
+    background: transparent;
+    border: 1px solid var(--border);
+    padding: 10px 14px;
+    border-radius: var(--radius);
+    font-size: 14px;
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+  }
+
+  .waitlist-form input::placeholder {
+    color: var(--text);
+    opacity: 0.6;
+  }
+
+  .waitlist-form input:focus {
+    outline: none;
+    border-color: var(--gold);
+  }
+
+  .waitlist-form button {
+    background: var(--gold);
+    color: #0B1826;
+    border: none;
+    padding: 10px 20px;
+    border-radius: var(--radius);
+    font-weight: 700;
+    font-size: 13px;
+    cursor: pointer;
+    transition: background 0.2s;
+    white-space: nowrap;
+  }
+
+  .waitlist-form button:hover {
+    background: var(--gold-lt);
+  }
+
+  .waitlist-success {
+    color: var(--gold);
+    font-size: 13px;
+    margin-top: 8px;
+  }
+</style>
 
 <Base
   title="Home"
@@ -99,6 +154,11 @@ const BLOG_WEBHOOK = import.meta.env.PUBLIC_BLOG_WEBHOOK;
             <span class="offer-price">PAID</span>
             <h3>Bitcoin Mini-Course + Cold Storage</h3>
             <p>Self-custody is not optional for the wealthy. This is a practical guide to Bitcoin security, hardware wallets, and how to move your first coins into cold storage. Includes a Tangem card to get you started immediately. Perfect for professionals who want to understand what they are holding.</p>
+            <form class="waitlist-form" data-webhook="bitcoin">
+              <input type="email" placeholder="your@email.com" required>
+              <button type="submit">Join Waitlist</button>
+              <div class="waitlist-success" style="display:none;">✓ You're on the list</div>
+            </form>
           </div>
         </div>
         <div class="offer-step">
@@ -107,6 +167,11 @@ const BLOG_WEBHOOK = import.meta.env.PUBLIC_BLOG_WEBHOOK;
             <span class="offer-price">MID-TIER</span>
             <h3>The Scouting Trip</h3>
             <p>You fly to Panama. I meet you there. Over several days, I walk you through the neighbourhoods, the banks, the legal process, and the realities of daily life at your income level. You leave with a clear picture of whether Panama is the next move. Optional: add the Friendly Nations Visa application and I sit beside you through the process itself.</p>
+            <form class="waitlist-form" data-webhook="scouting">
+              <input type="email" placeholder="your@email.com" required>
+              <button type="submit">Join Waitlist</button>
+              <div class="waitlist-success" style="display:none;">✓ You're on the list</div>
+            </form>
           </div>
         </div>
         <div class="offer-step">
@@ -115,6 +180,11 @@ const BLOG_WEBHOOK = import.meta.env.PUBLIC_BLOG_WEBHOOK;
             <span class="offer-price">HIGH TICKET</span>
             <h3>The Panama Retreat</h3>
             <p>A premium immersive week in Panama. Remote business management practice, Bitcoin literacy, wellness, adventure, and the Friendly Nations Visa application guided from start to finish. You leave with a residency process in motion and a remote business that runs without you being in the room. Limited seats.</p>
+            <form class="waitlist-form" data-webhook="retreat">
+              <input type="email" placeholder="your@email.com" required>
+              <button type="submit">Join Waitlist</button>
+              <div class="waitlist-success" style="display:none;">✓ You're on the list</div>
+            </form>
           </div>
         </div>
       </div>
@@ -212,6 +282,52 @@ const BLOG_WEBHOOK = import.meta.env.PUBLIC_BLOG_WEBHOOK;
             btn.textContent = 'Try again';
             btn.disabled = false;
           }
+        });
+      </script>
+
+      <!-- Waitlist Forms Script -->
+      <script is:inline define:vars={{BITCOIN_WEBHOOK, SCOUTING_WEBHOOK, RETREAT_WEBHOOK}}>
+        const webhooks = {
+          bitcoin: BITCOIN_WEBHOOK,
+          scouting: SCOUTING_WEBHOOK,
+          retreat: RETREAT_WEBHOOK
+        };
+
+        document.querySelectorAll('.waitlist-form').forEach(form => {
+          form.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const btn = this.querySelector('button');
+            const input = this.querySelector('input');
+            const successMsg = this.querySelector('.waitlist-success');
+            const webhookType = this.getAttribute('data-webhook');
+            const webhook = webhooks[webhookType];
+
+            btn.textContent = 'Joining…';
+            btn.disabled = true;
+
+            try {
+              const response = await fetch(webhook, {
+                method: 'POST',
+                body: JSON.stringify({
+                  email: input.value,
+                  list_type: webhookType,
+                  joined_at: new Date().toISOString()
+                })
+              });
+
+              if (!response.ok) {
+                throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+              }
+
+              input.style.display = 'none';
+              btn.style.display = 'none';
+              successMsg.style.display = 'block';
+            } catch (err) {
+              console.error('Waitlist error:', err);
+              btn.textContent = 'Try again';
+              btn.disabled = false;
+            }
+          });
         });
       </script>
     </div>
