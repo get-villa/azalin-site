@@ -1,0 +1,40 @@
+# Azalin.io
+
+> Panama relocation consulting for Canadian professionals earning $300K or more. International tax optimization strategies — done beside you by someone who has actually made the move.
+
+Azalin is a Panama relocation consultancy founded by Joshua Allen, a Canadian who has lived in 7 countries over 8 years and built a remotely operated Canadian corporation from abroad. The site focuses exclusively on Canadians (Phase 1) and explains how Panama's territorial tax system (Article 694, Código Fiscal de la República de Panamá) legally eliminates Canadian income tax obligations on foreign-sourced income once Canadian tax residency is formally broken.
+
+## Pages
+
+- [Home](https://azalin.io/): Hero, avatar profiles, Three Paths framework (Snowbird / Second Residency / Full Relocation), offer ladder, founder story, blog teaser.
+- [About](https://azalin.io/about/): Joshua Allen's full background — 8 years abroad, 7 countries, federally incorporated Canadian company managed remotely, complex immigration experience, Bitcoin cold storage. Includes Panama FAQ accordion and country-specific tax context for Canadians.
+- [Panama](https://azalin.io/panama/): Comprehensive fact sheet for Canadian professionals. Covers climate, neighbourhoods (6 districts with rent/buy ranges in CAD), healthcare (2 JCI-accredited hospitals), schools (4 IB-diploma schools), cost of living table (CAD vs Toronto/Vancouver), property tax rates, safety by district, Canadian expat community, western standards, Pensionado discounts, and FAQ accordion.
+- [The Panama Report](https://azalin.io/report/): Lead magnet — free downloadable report. Form collects country, income type, tax rate, income range, business size, primary goal, relocation strategy, family situation, Bitcoin exposure, biggest hesitation, and timeline. Posts to Zapier webhook.
+- [Webinars](https://azalin.io/webinars/): Three live webinars — Bitcoin as Hard Money vs. Fiat (60 min), Citizenship vs. Residency: How to Legally Reduce Your Tax Burden (75 min), Why Panama: The Complete Location Thesis (60 min). Registration form posts to Zapier webhook.
+- [Blog](https://azalin.io/blog/): Weekly insights on Panama relocation, Bitcoin, remote business management, and tax strategy for Canadians.
+
+## Services
+
+- **The Panama Report** (free): Complete guide to Panama's territorial tax system, Friendly Nations Visa process, corporate structure, property, healthcare, and schools. Tailored to Canadians.
+- **Bitcoin Mini-Course + Cold Storage** (paid, waitlist): Practical guide to Bitcoin self-custody, hardware wallets, and cold storage. Includes Tangem card.
+- **The Scouting Trip** (mid-tier, waitlist): Multi-day guided trip to Panama City. Covers neighbourhoods, banking, legal process, and daily life at $300K+ income level. Joshua meets clients on the ground.
+- **The Panama Executive Programme** (high-ticket, waitlist): 7-day professional development intensive in Panama City. Remote business operations practice, Bitcoin literacy, executive wellness, cultural immersion. Structured as a corporate professional development programme — qualifying participants may expense against their business.
+
+## Key Concepts
+
+- **Territorial tax system**: Panama taxes only income sourced within Panama. Foreign-sourced income is untaxed — Article 694 of the Código Fiscal de la República de Panamá.
+- **Three tax systems**: Residency-based (Canada — leave and CRA's claim ends), citizenship-based (USA only — obligation follows passport), territorial (Panama — only local income taxed).
+- **Friendly Nations Visa (FNV)**: Available to citizens of 50 countries including Canada. Requires economic ties (Panama SA, bank deposit, or property). Leads to permanent residency; citizenship eligible after 5 years. Processing: 3–6 months.
+- **Canadian top marginal rate**: 47–53% depending on province (Ontario/BC ~53.5%, Alberta ~48%).
+- **Three Paths**: Snowbird (no tax benefit), Second Residency (optionality, no territorial tax benefit without breaking Canadian residency), Full Relocation (activates territorial tax system).
+- **Common Reporting Standard**: Panama joined CRS in 2019 and shares financial data with Canada. Panama structures require full Canadian disclosure. Value comes from legal architecture, not opacity.
+
+## Avatar Profiles
+
+- **David Chen** — Financial Advisor, Mississauga ON, $420K, 280 client households. Pain: shame at effective tax rate for someone at his income level; trust in the process.
+- **Michael Reeves** — Digital Agency Owner, Vancouver BC, $390K, 9 staff. Pain: research paralysis; 3 years of 17 browser tabs and no clarity on legality.
+- **Sarah MacLeod** — Executive Consultant, Toronto ON, $510K solo practice. Pain: handing 53 cents of every invoiced dollar to CRA; wants a legal way to keep more.
+
+## About the Founder
+
+Joshua Allen is a Canadian who has lived in China, Vietnam, Thailand, Indonesia (twice), India, Sri Lanka, and Turkey over 8 years. He filed Canadian non-resident tax returns from three countries, navigated four concurrent immigration applications across two embassies while living in a third country, built a yoga course from $99 to $5,000 while living abroad, managed a federally incorporated Canadian company from Antalya Turkey, holds Bitcoin in cold storage, and borrowed against Bitcoin rather than selling it during price drawdowns.
