@@ -116,6 +116,21 @@ Every git push → Cloudflare auto-builds & deploys in ~2 minutes.
 
 See `DEPLOYMENT_GUIDE.md` for full setup.
 
+## Session Log
+
+### 2026-05-31 — Canadian-Only Pivot (Phase 1)
+
+**Scope:** Removed all UK/US copy across index.astro, about.astro, report.astro. webinars.astro was clean — no changes needed.
+
+**Changes made:**
+- **index.astro**: Updated meta description; rewrote hero lead to hit "accountant ceiling" pain point; removed 🇬🇧/🇺🇸 country pills; updated stat to "47–53%" with Canadian-specific label; replaced James Whitfield (UK) with Michael Reeves (Vancouver agency owner, research paralysis quote); replaced Jennifer Harlow (USA) with Sarah MacLeod (Toronto consultant, "fifty-three cents to CRA" quote); inserted new **Three Paths section** (Snowbird / Second Residency / Full Relocation with Article 694 citation); renamed The Panama Retreat → **The Panama Executive Programme** (7-day, remote ops + Bitcoin + wellness, corporate deductibility language, FNV removed).
+- **about.astro**: Replaced single Canadian card (simple) with expanded card explaining all three taxation systems (residency-based/Canada, citizenship-based/USA only, territorial/Panama); removed British Nationals and Americans cards entirely; updated CRS FAQ title and answer to Canada-only; updated cost of living to Vancouver/Toronto + western standards paragraph (JCI hospitals, English, USD); added two new FAQ items: "My accountant says I'm already doing the main things" and "Is this only for billionaires?" (Article 694 citation).
+- **report.astro**: Updated hero lead to Canadians-only; updated territorial tax check item to Canadian-specific framing; replaced country-specific bullet with Three Paths bullet; updated dropdown to Canada / US (coming soon) / UK (coming soon); replaced three-card "Tailored to Your Country" section with single expanded Canadian card.
+
+**Note:** The British professional case study in about.astro (lines ~82–83) was intentionally kept — it pre-dates formal services and illustrates the consulting origin story.
+
+---
+
 ## Zapier Integration
 
 ### Blog Post Workflow
