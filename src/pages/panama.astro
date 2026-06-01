@@ -1,0 +1,1080 @@
+---
+import Base from '../layouts/Base.astro';
+---
+
+<style is:global>
+  /* Panama page specific styles */
+  .data-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    margin-top: 32px;
+  }
+
+  @media (min-width: 768px) {
+    .data-grid {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  .data-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px;
+    border-top: 3px solid var(--gold);
+  }
+
+  .data-number {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--gold);
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  .data-label {
+    font-size: 12px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: 600;
+    line-height: 1.4;
+  }
+
+  .currency-callout {
+    margin-top: 28px;
+    padding: 14px 20px;
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--gold);
+    border-radius: var(--radius);
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .currency-callout .rate-tag {
+    font-family: 'Playfair Display', serif;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--gold);
+    white-space: nowrap;
+  }
+
+  .currency-callout p {
+    font-size: 11px;
+    color: var(--muted);
+    margin: 0;
+    line-height: 1.5;
+  }
+
+  .neighbourhood-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+    margin-top: 32px;
+  }
+
+  @media (min-width: 768px) {
+    .neighbourhood-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .neighbourhood-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px;
+  }
+
+  .neighbourhood-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+
+  .neighbourhood-tag {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 12px;
+    display: block;
+  }
+
+  .neighbourhood-price {
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 10px;
+    padding: 8px 12px;
+    background: var(--bg);
+    border-radius: 4px;
+    font-weight: 600;
+  }
+
+  .neighbourhood-desc {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  .hospital-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+    margin-top: 28px;
+  }
+
+  @media (min-width: 768px) {
+    .hospital-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  .hospital-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px;
+    border-top: 3px solid var(--gold);
+  }
+
+  .cost-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+  }
+
+  .cost-table th {
+    text-align: left;
+    padding: 10px 14px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--muted);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .cost-table td {
+    padding: 12px 14px;
+    border-bottom: 1px solid var(--border);
+    color: var(--text);
+    vertical-align: top;
+  }
+
+  .cost-table tr:last-child td {
+    border-bottom: none;
+  }
+
+  .cost-table .cost-category {
+    font-weight: 600;
+  }
+
+  .cost-table .cost-panama {
+    color: var(--gold);
+    font-weight: 600;
+  }
+
+  .cost-table .cost-canada {
+    color: var(--muted);
+  }
+
+  .cost-cards-row {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+    margin-top: 24px;
+  }
+
+  @media (min-width: 768px) {
+    .cost-cards-row {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .school-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 22px;
+    margin-bottom: 16px;
+  }
+
+  .school-name {
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 4px;
+    font-size: 15px;
+  }
+
+  .school-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin: 8px 0 10px;
+  }
+
+  .school-tag {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: var(--bg);
+    background: var(--gold);
+    padding: 2px 8px;
+    border-radius: 3px;
+  }
+
+  .school-desc {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  .safety-bar-wrap {
+    margin-bottom: 16px;
+  }
+
+  .safety-bar-label {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 6px;
+    font-size: 13px;
+  }
+
+  .safety-bar-label span:first-child {
+    color: var(--text);
+    font-weight: 600;
+  }
+
+  .safety-bar-label span:last-child {
+    color: var(--muted);
+  }
+
+  .safety-bar-track {
+    height: 6px;
+    background: var(--bg);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+
+  .safety-bar-fill {
+    height: 100%;
+    border-radius: 3px;
+    background: var(--gold);
+  }
+
+  .climate-strip {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-top: 28px;
+  }
+
+  @media (max-width: 767px) {
+    .climate-strip {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  .climate-month {
+    text-align: center;
+    padding: 16px 8px;
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+  }
+
+  .climate-month-name {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 6px;
+  }
+
+  .climate-temp {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--gold);
+  }
+
+  .climate-icon {
+    font-size: 16px;
+    margin-top: 4px;
+  }
+
+  .pensionado-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 20px;
+  }
+
+  @media (max-width: 767px) {
+    .pensionado-list {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .pensionado-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 12px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+  }
+
+  .pensionado-discount {
+    font-weight: 700;
+    color: var(--gold);
+    font-size: 15px;
+    white-space: nowrap;
+  }
+
+  .pensionado-on {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.4;
+  }
+
+  .community-section {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  @media (min-width: 768px) {
+    .community-section {
+      grid-template-columns: 1fr 1fr;
+      gap: 56px;
+    }
+  }
+
+  /* Hero image placeholder */
+  .hero-image-placeholder {
+    width: 100%;
+    height: 320px;
+    background: var(--bg2);
+    border: 2px dashed var(--border);
+    border-radius: var(--radius);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 0;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .hero-image-placeholder img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .hero-image-placeholder .placeholder-label {
+    font-size: 12px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 600;
+  }
+
+  .hero-image-placeholder .placeholder-icon {
+    font-size: 32px;
+    opacity: 0.4;
+  }
+
+  /* Quick-nav section jump bar */
+  .section-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 28px;
+  }
+
+  .section-nav a {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-decoration: none;
+    padding: 6px 14px;
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    background: var(--bg2);
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+
+  .section-nav a:hover {
+    color: var(--gold);
+    border-color: var(--gold);
+    background: var(--bg);
+  }
+
+  /* Neighbourhood expand */
+  .neighbourhood-extra {
+    display: none;
+    grid-column: 1 / -1;
+  }
+
+  .neighbourhood-extra.open {
+    display: contents;
+  }
+
+  .expand-btn {
+    grid-column: 1 / -1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 4px;
+    padding: 12px 24px;
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    color: var(--gold);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: 'Inter', sans-serif;
+  }
+
+  .expand-btn:hover {
+    border-color: var(--gold);
+    background: var(--bg2);
+  }
+
+  .expand-btn .expand-icon {
+    font-size: 16px;
+    transition: transform 0.2s;
+    display: inline-block;
+  }
+
+  .expand-btn.open .expand-icon {
+    transform: rotate(180deg);
+  }
+</style>
+
+<Base
+  title="Panama — The Complete Picture"
+  description="Facts, data, and real numbers for Canadian professionals considering Panama. Climate, safety, real estate, schools, healthcare, and cost of living — no fluff."
+>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container">
+      <span class="eyebrow">The Country, Plainly Stated</span>
+      <h1>Panama.<br>What It Actually Is.</h1>
+      <p class="lead" style="margin-top:16px; max-width:680px;">Not a promotional pitch. Not a tax brochure. A factual picture of a modern, USD-denominated country with JCI-accredited hospitals, IB schools, fibre internet, and a territorial tax system that changes the math for Canadians earning internationally.</p>
+    </div>
+  </section>
+
+  <!-- Key numbers strip -->
+  <section class="tight">
+    <div class="container">
+      <div class="data-grid">
+        <div class="data-card">
+          <span class="data-number">27–31°C</span>
+          <span class="data-label">Year-round temperature range</span>
+        </div>
+        <div class="data-card">
+          <span class="data-number">$1 USD</span>
+          <span class="data-label">Official currency — no exchange rate risk</span>
+        </div>
+        <div class="data-card">
+          <span class="data-number">2 × JCI</span>
+          <span class="data-label">Internationally accredited hospitals in Panama City</span>
+        </div>
+        <div class="data-card">
+          <span class="data-number">#1</span>
+          <span class="data-label">InterNations Expat Insider ranking 2024 & 2025</span>
+        </div>
+        <div class="data-card">
+          <span class="data-number">~CA$60</span>
+          <span class="data-label">400 Mbps fibre internet per month</span>
+        </div>
+        <div class="data-card">
+          <span class="data-number">5.5 hrs</span>
+          <span class="data-label">Toronto to Panama City by air</span>
+        </div>
+        <div class="data-card">
+          <span class="data-number">30–50%</span>
+          <span class="data-label">Lower cost of living vs. Toronto or Vancouver</span>
+        </div>
+        <div class="data-card">
+          <span class="data-number">0%</span>
+          <span class="data-label">Tax on foreign-sourced income (Art. 694)</span>
+        </div>
+      </div>
+
+      <!-- Section quick-nav -->
+      <nav class="section-nav" aria-label="Jump to section">
+        <a href="#climate">🌡️ Climate</a>
+        <a href="#neighbourhoods">🏙️ Neighbourhoods</a>
+        <a href="#healthcare">🏥 Healthcare</a>
+        <a href="#schools">🎓 Schools</a>
+        <a href="#cost-of-living">💰 Cost of Living</a>
+        <a href="#safety">🔒 Safety</a>
+        <a href="#community">🇨🇦 Community</a>
+        <a href="#faq">❓ FAQ</a>
+      </nav>
+
+      <!-- Currency callout -->
+      <div class="currency-callout">
+        <span class="rate-tag">1 USD ≈ CA$1.38</span>
+        <p>All prices on this page are shown in Canadian dollars (CAD) unless marked USD. Panama operates on US dollars — the CAD figures use an approximate conversion rate. Verify the current rate before financial planning; the ratio has historically ranged from CA$1.25 to CA$1.45 over the past five years.</p>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- Why It Works for Canadians — tax card moved here -->
+  <section>
+    <div class="container">
+      <div class="grid-2" style="gap:56px; align-items:center;">
+        <div>
+          <span class="eyebrow">Why This Works for Canadians Specifically</span>
+          <h2>The Tax System Difference.</h2>
+          <p style="margin-bottom:16px;">Not every country benefits from a Panama move equally. It works cleanly for Canadians because of a specific structural difference between how Canada and Panama tax income. There are three tax systems in the world:</p>
+          <p style="font-size:14px; margin-bottom:10px;"><strong>Residency-based (Canada)</strong> — you pay tax based on where you live. Leave Canada, establish residence elsewhere, file your departure return, and CRA's claim on your foreign income ends. No obligation follows you.</p>
+          <p style="font-size:14px; margin-bottom:10px;"><strong>Citizenship-based (USA only)</strong> — you pay tax based on your passport regardless of where you live. Americans cannot eliminate their US tax obligation by moving to Panama. This page is not relevant to them.</p>
+          <p style="font-size:14px; margin-bottom:24px;"><strong>Territorial (Panama)</strong> — you pay tax only on income sourced within Panama. Foreign-sourced income is untaxed by Panamanian law — Article 694 of the Código Fiscal. This is the system that changes everything for a Canadian professional earning from international clients.</p>
+          <p style="font-size:14px;">The result: a Canadian who formally breaks Canadian tax residency and establishes Panama as their primary residence has no income tax obligation on foreign-sourced earnings in either country. Not a DIY process — a cross-border specialist should be engaged at least six months before departure.</p>
+        </div>
+        <div>
+          <div class="stat-grid" style="grid-template-columns:1fr 1fr;">
+            <div class="stat"><span class="stat-number">0%</span><span class="stat-label">Panama tax on foreign income</span></div>
+            <div class="stat"><span class="stat-number">47–53%</span><span class="stat-label">Canadian top marginal rate</span></div>
+            <div class="stat"><span class="stat-number">3–6mo</span><span class="stat-label">FNV processing time</span></div>
+            <div class="stat"><span class="stat-number">5yr</span><span class="stat-label">To Panama citizenship</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- Climate -->
+  <section class="bg2" id="climate">
+    <div class="container">
+      <div class="grid-2" style="gap:56px; align-items:start;">
+        <div>
+          <span class="eyebrow">Climate</span>
+          <h2>Tropical. Consistent. Not What You Think.</h2>
+          <p style="margin-bottom:16px;">Panama City sits 9° north of the equator. Daytime highs hold between 29–31°C (84–88°F) year-round. Nights cool to 24–25°C. There is no winter. There is no snow. There is no seasonal affective disorder.</p>
+          <p style="margin-bottom:16px;">The country has two seasons — a dry season running January through April (the months most Canadians visit first), and a rainy season May through December. The rainy season means afternoon downpours of 45–90 minutes, not all-day grey. Mornings are typically clear.</p>
+          <p>Panama City sits on the Pacific coast, where humidity is substantially lower than the Caribbean side. For reference: Panama City is less humid in July than Toronto is in August.</p>
+          <div class="climate-strip">
+            <div class="climate-month">
+              <div class="climate-month-name">Jan–Apr</div>
+              <div class="climate-temp">31°C</div>
+              <div class="climate-icon">☀️</div>
+            </div>
+            <div class="climate-month">
+              <div class="climate-month-name">May–Jun</div>
+              <div class="climate-temp">29°C</div>
+              <div class="climate-icon">🌤️</div>
+            </div>
+            <div class="climate-month">
+              <div class="climate-month-name">Jul–Sep</div>
+              <div class="climate-temp">28°C</div>
+              <div class="climate-icon">🌦️</div>
+            </div>
+            <div class="climate-month">
+              <div class="climate-month-name">Oct–Dec</div>
+              <div class="climate-temp">27°C</div>
+              <div class="climate-icon">🌧️</div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="card" style="margin-bottom:16px;">
+            <h3 style="margin-bottom:10px; font-size:15px;">vs. Toronto, January</h3>
+            <p style="font-size:14px; color:var(--muted); margin-bottom:8px;">Toronto average: <strong style="color:var(--text);">−6°C</strong></p>
+            <p style="font-size:14px; color:var(--muted); margin-bottom:8px;">Panama City average: <strong style="color:var(--gold);">30°C</strong></p>
+            <p style="font-size:13px; color:var(--muted);">A $300K earner spending January through March in Panama City instead of Toronto is not a lifestyle sacrifice. It is a lifestyle upgrade — while the structural work of residency runs in the background.</p>
+          </div>
+          <div class="card">
+            <h3 style="margin-bottom:10px; font-size:15px;">Mountain Alternative: Boquete</h3>
+            <p style="font-size:13px; color:var(--muted);">For those who prefer a cooler climate, Boquete in the western highlands sits at 1,200m elevation. Year-round temperatures of 16–24°C with no AC required. Significant expat community — primarily North American and European. A two-hour drive from Panama City's international airport.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- Neighbourhoods -->
+  <section id="neighbourhoods">
+    <div class="container">
+      <span class="eyebrow">Where Expats Actually Live</span>
+      <h2>Neighbourhoods.<br>Honest Descriptions.</h2>
+      <p style="max-width:640px; margin-bottom:0;">Panama City is a modern metropolis of 1.5 million people. The districts where international professionals live are distinct from the areas that generate crime statistics. These are the neighbourhoods relevant to you. <em style="color:var(--muted); font-size:13px;">All prices in CAD.</em></p>
+      <div class="neighbourhood-grid">
+        <div class="neighbourhood-card">
+          <div class="neighbourhood-name">Costa del Este</div>
+          <span class="neighbourhood-tag">Families · Executives · Premium</span>
+          <div class="neighbourhood-price">Rent: CA$3,500–$6,900/mo · Buy: CA$485K–$1.65M</div>
+          <p class="neighbourhood-desc">Panama's equivalent of a master-planned North American suburb — gated residential streets, international schools within the district, modern commercial centres. Preferred by families with school-age children. Quiet, walkable, high security. Homogeneous in the way that Oakville or Westmount is homogeneous.</p>
+        </div>
+        <div class="neighbourhood-card">
+          <div class="neighbourhood-name">El Cangrejo / San Francisco</div>
+          <span class="neighbourhood-tag">Professionals · Solo · Walkable</span>
+          <div class="neighbourhood-price">Rent: CA$2,100–$4,150/mo · Buy: CA$305K–$895K</div>
+          <p class="neighbourhood-desc">The urban professional district. Dense with restaurants, coffee shops, co-working spaces, supermarkets, and walkable infrastructure. Comparable to downtown Toronto's Annex or the Plateau in Montreal. Mid-to-upper condos. Strong English-speaking professional density. Where most first-year expats land.</p>
+        </div>
+        <div class="neighbourhood-card">
+          <div class="neighbourhood-name">Punta Pacifica / Marbella</div>
+          <span class="neighbourhood-tag">Luxury · Medical · Finance</span>
+          <div class="neighbourhood-price">Rent: CA$4,150–$9,650/mo · Buy: CA$690K–$4.1M+</div>
+          <p class="neighbourhood-desc">Panama's premium waterfront district. Home to Hospital Punta Pacifica (Johns Hopkins affiliate) and Panama's private banking corridor. High-rise towers with ocean views. The neighbourhood of choice for wealth managers, senior executives, and those relocating with significant assets to structure.</p>
+        </div>
+        <button class="expand-btn" id="neighbourhood-expand-btn" onclick="toggleNeighbourhoods(this)" aria-expanded="false">
+          <span>Show 3 more neighbourhoods</span>
+          <span class="expand-icon">↓</span>
+        </button>
+
+        <div class="neighbourhood-extra" id="neighbourhood-extra">
+          <div class="neighbourhood-card">
+            <div class="neighbourhood-name">Casco Viejo</div>
+            <span class="neighbourhood-tag">Creative · Heritage · Social</span>
+            <div class="neighbourhood-price">Rent: CA$2,500–$5,500/mo · Buy: CA$385K–$1.24M</div>
+            <p class="neighbourhood-desc">UNESCO World Heritage listed colonial district. Renovated townhouses, rooftop bars, boutique hotels, galleries. A creative and diplomatic district — not a typical family neighbourhood. Strong cultural life. Attracts entrepreneurs and digital nomads who want Panama City's social scene at arm's reach.</p>
+          </div>
+          <div class="neighbourhood-card">
+            <div class="neighbourhood-name">Clayton</div>
+            <span class="neighbourhood-tag">Families · Schools · Green</span>
+            <div class="neighbourhood-price">Rent: CA$2,750–$5,500/mo · Buy: CA$415K–$1.24M</div>
+            <p class="neighbourhood-desc">Former US Canal Zone military base, now converted into a residential and university district. Exceptionally green — the former base retained forest coverage that Panama City's other districts lost. Home to King's College and City of Knowledge. Spacious houses with yards. Popular with families wanting outdoor space.</p>
+          </div>
+          <div class="neighbourhood-card">
+            <div class="neighbourhood-name">Coronado / Beaches</div>
+            <span class="neighbourhood-tag">Lifestyle · Weekend · Retreat</span>
+            <div class="neighbourhood-price">Rent: CA$1,650–$4,150/mo · Buy: CA$250K–$1.10M</div>
+            <p class="neighbourhood-desc">Pacific beach communities 80km southwest of Panama City. The weekend destination for Panama City professionals. Several established Canadian expat communities in this corridor. Good for those who want a primary residence outside the capital with a weekend/coastal lifestyle. Slower pace than the city.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- Healthcare -->
+  <section class="bg2" id="healthcare">
+    <div class="container">
+      <span class="eyebrow">Healthcare</span>
+      <h2>JCI-Accredited. English-Speaking. US-Affiliated.</h2>
+      <p style="max-width:680px;">Panama City has two Joint Commission International (JCI) accredited hospitals — the same standard that certifies elite hospitals in the US, UK, and Canada. JCI accreditation is not self-reported; it requires a rigorous third-party audit every three years covering over 1,300 safety and quality standards.</p>
+
+      <div class="hospital-grid">
+        <div class="hospital-card">
+          <div class="school-name" style="font-size:16px; margin-bottom:8px;">Hospital Punta Pacifica</div>
+          <div class="school-tags">
+            <span class="school-tag">JCI Accredited</span>
+            <span class="school-tag">Johns Hopkins Affiliate</span>
+            <span class="school-tag">English-speaking staff</span>
+          </div>
+          <p class="school-desc">Latin America's most technically advanced private hospital. Affiliated with Johns Hopkins Medicine International — clinical protocols, physician training standards, and quality benchmarks aligned with one of the world's top medical institutions. Located in Punta Pacifica, Panama City's medical and financial district. Specialist consultations: CA$105–$205. Surgical procedures run 50–70% below US prices for equivalent care.</p>
+        </div>
+        <div class="hospital-card">
+          <div class="school-name" style="font-size:16px; margin-bottom:8px;">Clinica Hospital San Fernando</div>
+          <div class="school-tags">
+            <span class="school-tag">JCI Accredited since 2011</span>
+            <span class="school-tag">Tulane Medical Affiliate</span>
+            <span class="school-tag">Baptist Health Affiliate</span>
+          </div>
+          <p class="school-desc">Founded 1949. First hospital in Panama to receive JCI accreditation. Affiliated with Tulane Medical Center and Baptist Health South Florida. Comprehensive specialist coverage including cardiology, oncology, and paediatrics. Multiple children's hospital affiliations for families relocating with dependents.</p>
+        </div>
+      </div>
+
+      <div style="margin-top:36px;">
+        <h3 style="margin-bottom:16px; color:var(--gold); font-size:13px; letter-spacing:2px; text-transform:uppercase;">What You Will Pay (CAD)</h3>
+        <table class="cost-table">
+          <thead>
+            <tr>
+              <th>Service</th>
+              <th>Panama</th>
+              <th>Toronto equiv.</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="cost-category">GP consultation</td>
+              <td class="cost-panama">CA$55–110</td>
+              <td class="cost-canada">CA$0 (wait months)</td>
+            </tr>
+            <tr>
+              <td class="cost-category">Specialist consult</td>
+              <td class="cost-panama">CA$105–205</td>
+              <td class="cost-canada">CA$300+ private</td>
+            </tr>
+            <tr>
+              <td class="cost-category">Full blood panel</td>
+              <td class="cost-panama">CA$110–205</td>
+              <td class="cost-canada">CA$250–400 private</td>
+            </tr>
+            <tr>
+              <td class="cost-category">Dental cleaning</td>
+              <td class="cost-panama">CA$70–110</td>
+              <td class="cost-canada">CA$180–280</td>
+            </tr>
+            <tr>
+              <td class="cost-category">Private health insurance (age 40–55)</td>
+              <td class="cost-panama">CA$2,750–5,500/yr</td>
+              <td class="cost-canada">Covered by OHIP</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="card" style="margin-top:16px;">
+          <p style="font-size:13px; color:var(--muted);">Most expats maintain comprehensive private health insurance in Panama and retain the ability to return to Canada for major elective procedures if preferred. The two-track approach — Panama private care for routine and specialist access, Canadian public health as backstop — is the standard model for Canadian residents with maintained ties. Annual private coverage for a healthy adult in their 40s or 50s runs CA$2,750–$5,500 and covers the full private network including both JCI hospitals.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- Schools -->
+  <section id="schools">
+    <div class="container">
+      <span class="eyebrow">For Families</span>
+      <h2>Schools That Keep University Options Open.</h2>
+      <p style="max-width:640px; margin-bottom:36px;">The most common concern from families: will my children's education translate back? The answer, with the right school, is yes. Panama City has multiple internationally accredited schools offering curricula formally recognised by Canadian, US, and UK university admissions.</p>
+      <div style="max-width:780px;">
+        <div class="school-card">
+          <div class="school-name">MET Panama (Nord Anglia Education)</div>
+          <div class="school-tags">
+            <span class="school-tag">IB Diploma</span>
+            <span class="school-tag">Ages 3–18</span>
+            <span class="school-tag">British Framework</span>
+            <span class="school-tag">93% IB success rate</span>
+          </div>
+          <p class="school-desc">Nord Anglia's Panama campus. All-through IB curriculum taught in English. IB Diploma (IBDP) accepted for university admission across Canada, the US, and the UK — including Western, McGill, UofT, UBC, Oxford, and the Ivy League. A 93% IB Diploma pass rate versus a global average of 80%. Graduates regularly enter North American universities with advanced standing and scholarship offers.</p>
+        </div>
+        <div class="school-card">
+          <div class="school-name">King's College School Panama</div>
+          <div class="school-tags">
+            <span class="school-tag">IB Diploma</span>
+            <span class="school-tag">British IGCSE</span>
+            <span class="school-tag">Ages 2–18</span>
+            <span class="school-tag">35 pts avg vs 30.3 global</span>
+          </div>
+          <p class="school-desc">British international school in Clayton. British National Curriculum through primary, IGCSE at secondary, and IB Diploma at sixth form — an identical pathway to elite British independent schools. IGCSE qualifications are recognised by Canadian universities as equivalent to Grade 12. 2024 average IB score: 35 points (global average: 30.3).</p>
+        </div>
+        <div class="school-card">
+          <div class="school-name">International School of Panama (ISP)</div>
+          <div class="school-tags">
+            <span class="school-tag">IB Diploma</span>
+            <span class="school-tag">AP Courses</span>
+            <span class="school-tag">American Curriculum</span>
+            <span class="school-tag">Ages 3–18</span>
+          </div>
+          <p class="school-desc">American-curriculum school offering both the IB Diploma Programme and Advanced Placement (AP) courses — the standard pathway for US university admission and broadly recognised by Canadian universities. AP credits are transferable to most North American institutions. Longest-established international school in Panama City.</p>
+        </div>
+        <div class="school-card">
+          <div class="school-name">Knightsbridge Schools International Panama</div>
+          <div class="school-tags">
+            <span class="school-tag">IB Primary Years</span>
+            <span class="school-tag">IB Middle Years</span>
+            <span class="school-tag">IB Diploma</span>
+            <span class="school-tag">Bilingual</span>
+          </div>
+          <p class="school-desc">Full IB continuum from Early Years through Diploma Programme — one of the few schools in Panama offering all three IB programmes. Bilingual instruction (English and Spanish). IB qualification provides direct admission pathways to universities in Canada, the US, the UK, and Europe.</p>
+        </div>
+      </div>
+      <div class="card card-gold" style="max-width:780px; margin-top:20px;">
+        <h3 style="margin-bottom:8px; font-size:15px;">The Short Answer on Canadian University Admission</h3>
+        <p style="font-size:14px;">The IB Diploma Programme is formally recognised by every Canadian university, including U of T, UBC, McGill, Western, and all provincial institutions. A student completing the IB Diploma in Panama is not disadvantaged in Canadian university applications. In practice, IB students often receive advanced standing — entering second year directly at several institutions. Tuition for international schools in Panama City: CA$14,000–$34,500/year.</p>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- Cost of Living -->
+  <section class="bg2" id="cost-of-living">
+    <div class="container">
+      <span class="eyebrow">Cost of Living</span>
+      <h2>The Real Numbers.<br>Not the Promotional Version.</h2>
+      <p style="max-width:640px; margin-bottom:28px;">These figures represent what a $300K+ Canadian professional would actually spend in Panama City, living in an expat-appropriate district with private healthcare, international school fees if relevant, and western consumption habits. <em style="color:var(--muted); font-size:13px;">All figures in CAD. Panama prices converted at 1 USD ≈ CA$1.38.</em></p>
+
+      <table class="cost-table">
+        <thead>
+          <tr>
+            <th>Category</th>
+            <th>Panama City (CAD)</th>
+            <th>Toronto / Vancouver (CAD)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="cost-category">Furnished apartment (2BR, expat district)</td>
+            <td class="cost-panama">CA$2,750–$4,850/mo</td>
+            <td class="cost-canada">CA$3,500–$6,000/mo</td>
+          </tr>
+          <tr>
+            <td class="cost-category">Groceries (couple, western habits)</td>
+            <td class="cost-panama">CA$485–$760/mo</td>
+            <td class="cost-canada">CA$700–$1,100/mo</td>
+          </tr>
+          <tr>
+            <td class="cost-category">Utilities incl. AC</td>
+            <td class="cost-panama">CA$180–$485/mo</td>
+            <td class="cost-canada">CA$250–$450/mo</td>
+          </tr>
+          <tr>
+            <td class="cost-category">Fibre internet (400 Mbps)</td>
+            <td class="cost-panama">~CA$60/mo</td>
+            <td class="cost-canada">CA$110–$140/mo</td>
+          </tr>
+          <tr>
+            <td class="cost-category">Dining out (couple, mid-range)</td>
+            <td class="cost-panama">CA$55–$110</td>
+            <td class="cost-canada">CA$90–$160</td>
+          </tr>
+          <tr>
+            <td class="cost-category">Private health insurance (age 40–55)</td>
+            <td class="cost-panama">CA$2,750–$5,500/yr</td>
+            <td class="cost-canada">Covered by OHIP</td>
+          </tr>
+          <tr>
+            <td class="cost-category">International school tuition</td>
+            <td class="cost-panama">CA$14,000–$34,500/yr</td>
+            <td class="cost-canada">Public: CA$0 / Private: CA$18,000–$35,000</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="cost-cards-row">
+        <div class="card card-gold">
+          <h3 style="margin-bottom:10px; font-size:15px;">The Math for a CA$300K Earner</h3>
+          <p style="font-size:14px; margin-bottom:10px;">A Canadian earning CA$300K in Ontario pays approximately CA$159,000 to CRA and the province. Take-home: ~CA$141,000.</p>
+          <p style="font-size:14px; margin-bottom:10px;">A Panama tax resident earning CA$300K from foreign sources pays CA$0 in Panama tax on that income (Article 694). Gross = net.</p>
+          <p style="font-size:14px;">Cost of living savings of 30–50% on top of a zero foreign income tax rate is a fundamentally different financial position — not a marginal improvement.</p>
+        </div>
+        <div class="card">
+          <h3 style="margin-bottom:8px; font-size:15px;">USD Economy — No Exchange Rate Risk</h3>
+          <p style="font-size:13px; color:var(--muted);">Panama's official currency is the Balboa, fixed 1:1 to the US dollar. In practice, USD is the currency in circulation. Every rent payment, grocery receipt, and restaurant bill is in USD. For professionals billing internationally in USD — or converting CAD to USD to fund expenses — there is no exchange rate exposure on the Panama side. Living costs are denominated in USD; CAD fluctuations affect your purchasing power at the conversion point, not within Panama itself.</p>
+        </div>
+        <div class="card">
+          <h3 style="margin-bottom:8px; font-size:15px;">Property Tax — What You'll Pay</h3>
+          <p style="font-size:13px; color:var(--muted); margin-bottom:8px;">Primary residence under CA$165,000: <strong style="color:var(--text);">exempt</strong></p>
+          <p style="font-size:13px; color:var(--muted); margin-bottom:8px;">CA$165K–$345K primary residence: <strong style="color:var(--gold);">0.5% annually</strong></p>
+          <p style="font-size:13px; color:var(--muted); margin-bottom:8px;">CA$345K+ primary residence: <strong style="color:var(--gold);">0.7% annually</strong></p>
+          <p style="font-size:13px; color:var(--muted);">Foreigners hold the same property rights as Panamanian citizens. Titled property may be purchased directly in your own name. No additional foreign buyer taxes or restrictions.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- Safety -->
+  <section id="safety">
+    <div class="container">
+      <div class="grid-2" style="gap:56px; align-items:start;">
+        <div>
+          <span class="eyebrow">Safety</span>
+          <h2>Context Matters More Than the Headline Number.</h2>
+          <p style="margin-bottom:16px;">Panama's headline homicide rate — approximately 11 per 100,000 — is higher than Canada's 1.8. That statistic requires context: violent crime in Panama is heavily concentrated in specific districts (El Chorrillo, Colón Province, San Miguelito) that are not where expat professionals live, work, or spend their time.</p>
+          <p style="margin-bottom:16px;">The expat-facing districts — Costa del Este, El Cangrejo, San Francisco, Marbella, Punta Pacifica, Clayton — have crime profiles comparable to mid-tier North American urban neighbourhoods. Petty theft (opportunistic phone snatching, pickpocketing in crowded areas) is the primary concern. Violent crime against expats in these districts is rare and consistently reported as such.</p>
+          <p>Practical measures: avoid unfamiliar areas after midnight, use Uber rather than unmarked taxis, secure laptops and phones as you would in any major city. These are the same sensible habits used in Toronto's entertainment district on a Saturday night.</p>
+        </div>
+        <div>
+          <h3 style="margin-bottom:20px; color:var(--gold); font-size:13px; letter-spacing:2px; text-transform:uppercase;">Safety by District</h3>
+          <div class="safety-bar-wrap">
+            <div class="safety-bar-label"><span>Costa del Este</span><span>Very safe for expats</span></div>
+            <div class="safety-bar-track"><div class="safety-bar-fill" style="width:88%"></div></div>
+          </div>
+          <div class="safety-bar-wrap">
+            <div class="safety-bar-label"><span>Punta Pacifica / Marbella</span><span>Very safe for expats</span></div>
+            <div class="safety-bar-track"><div class="safety-bar-fill" style="width:85%"></div></div>
+          </div>
+          <div class="safety-bar-wrap">
+            <div class="safety-bar-label"><span>El Cangrejo / San Francisco</span><span>Safe — normal urban caution</span></div>
+            <div class="safety-bar-track"><div class="safety-bar-fill" style="width:75%"></div></div>
+          </div>
+          <div class="safety-bar-wrap">
+            <div class="safety-bar-label"><span>Casco Viejo</span><span>Safe in renovated zones</span></div>
+            <div class="safety-bar-track"><div class="safety-bar-fill" style="width:68%"></div></div>
+          </div>
+          <div class="safety-bar-wrap">
+            <div class="safety-bar-label"><span>Clayton</span><span>Very safe — gated district</span></div>
+            <div class="safety-bar-track"><div class="safety-bar-fill" style="width:87%"></div></div>
+          </div>
+          <div class="safety-bar-wrap">
+            <div class="safety-bar-label"><span>Boquete (highland town)</span><span>Very safe — small expat town</span></div>
+            <div class="safety-bar-track"><div class="safety-bar-fill" style="width:90%"></div></div>
+          </div>
+          <div class="card" style="margin-top:20px;">
+            <p style="font-size:13px; color:var(--muted);">Panama ranked #1 globally in the InterNations Expat Insider survey for both 2024 and 2025, with 94% of expats reporting happiness with their life abroad. Panama scores above Spain, Portugal, and Australia on expat satisfaction.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- Canadian Community + Western Standards — reformatted -->
+  <section class="bg2" id="community">
+    <div class="container">
+      <span class="eyebrow">Life on the Ground</span>
+      <h2>You Will Not Be the First.<br>And the Adjustment Is Smaller Than You Think.</h2>
+      <div style="margin-top:36px;">
+        <h3 style="margin-bottom:16px; font-size:15px; color:var(--gold); letter-spacing:2px; text-transform:uppercase;">The Canadian Community</h3>
+        <div class="community-section" style="margin-bottom:40px;">
+          <p style="margin-bottom:0;">Panama does not publish country-of-origin breakdowns for its permanent resident population. What is documented: Panama's total registered foreign resident population exceeds 300,000, with North Americans comprising one of the largest groups. Net migration into Panama has been consistently positive — more people are arriving than leaving annually.</p>
+          <p style="margin-bottom:0;">Established Canadian expat communities exist in Panama City (Costa del Este, El Cangrejo), Coronado (Pacific beach corridor), and Boquete (western highlands). Canadian Facebook groups, expat forums, and in-person communities in these areas are active — the social infrastructure already exists. The country ranked first in the global expat satisfaction index back-to-back in 2024 and 2025, with 94% saying they would do it again.</p>
+        </div>
+
+        <h3 style="margin-bottom:20px; font-size:15px; color:var(--gold); letter-spacing:2px; text-transform:uppercase;">What Doesn't Change When You Move</h3>
+        <div class="cred-grid">
+          <div class="cred"><div class="cred-icon">🏥</div><h4>JCI Hospitals</h4><p>Two internationally accredited hospitals. Johns Hopkins and Tulane affiliates. English-speaking staff throughout both facilities.</p></div>
+          <div class="cred"><div class="cred-icon">🎓</div><h4>IB Schools</h4><p>Four IB-accredited schools. Diplomas recognised by every Canadian university. Tuition CA$14,000–$34,500/yr.</p></div>
+          <div class="cred"><div class="cred-icon">🌐</div><h4>English First</h4><p>English is the working language of the professional, medical, banking, and residential districts where expats operate.</p></div>
+          <div class="cred"><div class="cred-icon">📶</div><h4>Fibre Internet</h4><p>400 Mbps for ~CA$60/month. Consistent coverage across Panama City, Coronado, and Boquete.</p></div>
+          <div class="cred"><div class="cred-icon">🛒</div><h4>Familiar Brands</h4><p>Costco, Pricemart, Apple resellers, McDonald's, Starbucks, H&M, Zara. North American supply chain. Familiar products available.</p></div>
+          <div class="cred"><div class="cred-icon">✈️</div><h4>Hub Connectivity</h4><p>Tocumen International Airport. Flights to Toronto (~5.5 hrs), Miami (1 hr), New York (~4 hrs). Maintaining Canadian business relationships and family visits is straightforward.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- Pensionado discounts -->
+  <section>
+    <div class="container">
+      <span class="eyebrow">A Detail Most Guides Miss</span>
+      <h2>The Pensionado Programme.<br>Real Discounts. Written Into Law.</h2>
+      <p style="max-width:640px; margin-bottom:8px;">Panama's Pensionado Visa (available to anyone with provable pension or passive income over $1,000 USD/month) comes with a formal discount programme embedded in Panamanian law. These are not discretionary — merchants are legally required to honour them.</p>
+      <p style="max-width:640px; margin-bottom:32px; color:var(--muted); font-size:14px;">Most of our clients do not lead with the Pensionado — the Friendly Nations Visa is typically faster and cleaner for working professionals. But the discounts apply to FNV permanent residents as well once they qualify for the corresponding status.</p>
+      <div class="pensionado-list">
+        <div class="pensionado-item">
+          <span class="pensionado-discount">50%</span>
+          <span class="pensionado-on">off hotel stays anywhere in Panama</span>
+        </div>
+        <div class="pensionado-item">
+          <span class="pensionado-discount">30%</span>
+          <span class="pensionado-on">off public and private bus fares, boats, and trains</span>
+        </div>
+        <div class="pensionado-item">
+          <span class="pensionado-discount">25%</span>
+          <span class="pensionado-on">off airline tickets purchased in Panama</span>
+        </div>
+        <div class="pensionado-item">
+          <span class="pensionado-discount">25%</span>
+          <span class="pensionado-on">off meals at restaurants</span>
+        </div>
+        <div class="pensionado-item">
+          <span class="pensionado-discount">20%</span>
+          <span class="pensionado-on">off medical consultations, including specialist fees</span>
+        </div>
+        <div class="pensionado-item">
+          <span class="pensionado-discount">15%</span>
+          <span class="pensionado-on">off hospital care</span>
+        </div>
+        <div class="pensionado-item">
+          <span class="pensionado-discount">15%</span>
+          <span class="pensionado-on">off dental and optometric services</span>
+        </div>
+        <div class="pensionado-item">
+          <span class="pensionado-discount">20%</span>
+          <span class="pensionado-on">off professional and technical services</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- FAQ — accordion only, no duplicate stats or For Canadians card -->
+  <section class="bg2" id="faq">
+    <div class="container">
+      <span class="eyebrow">Common Questions</span>
+      <h2>What People Ask Before They Commit.</h2>
+      <div style="max-width:680px; margin-top:36px;">
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">Does Panama really tax zero percent on foreign income?<span class="faq-icon">+</span></button>
+          <div class="faq-a">Yes. Panama operates a territorial tax system, codified in the Panamanian Tax Code (Article 694). A professional earning fees from clients in Canada, the UK, or the USA — with services delivered remotely from Panama — is earning foreign-sourced income. Panama has no legal claim on it. This is the written law, not a loophole.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">What is the Friendly Nations Visa and who qualifies?<span class="faq-icon">+</span></button>
+          <div class="faq-a">The FNV is available to citizens of 50 named countries — including Canada. To qualify, applicants must demonstrate economic ties to Panama by forming a Panama SA, opening a Panama bank account with a qualifying deposit, or purchasing property. It leads to permanent residency and Panama citizenship eligibility after five years.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">Do I need to be present in Panama to apply?<span class="faq-icon">+</span></button>
+          <div class="faq-a">At minimum, one structured visit is required to complete biometrics and immigration submissions. Most applicants find that seven to ten days covers banking, attorney meetings, company or property setup, and immigration appointments efficiently. This is exactly what the Scouting Trip is designed around.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">Does Panama share financial data with Canada?<span class="faq-icon">+</span></button>
+          <div class="faq-a">Yes. Panama joined the Common Reporting Standard in 2019 and now automatically exchanges financial account information with over 100 participating countries, including Canada. Panama structures require full disclosure in your home country. The value of a properly designed Panama structure comes from its legal architecture — not from opacity. This is not a hiding strategy. It is a residency strategy.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">What is the capital gains tax on Bitcoin in Panama?<span class="faq-icon">+</span></button>
+          <div class="faq-a">Panama taxes only income sourced within Panama. Bitcoin capital gains from transactions involving foreign parties are foreign-sourced income. The Panamanian tax rate on those gains is zero for a Panama tax resident. This does not eliminate home-country obligations for someone who has not formally broken their prior tax residency.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">My accountant says I am already doing the main things. Is he right?<span class="faq-icon">+</span></button>
+          <div class="faq-a">Probably. Within Canada, your accountant likely has you optimised — holding company, income splitting where applicable, maximising registered accounts. "The main things" is not bad advice. It is the ceiling of what is available inside the Canadian tax system. Panama is not an extension of that system. It is a different system entirely. The question your accountant cannot answer is: what would your effective rate be if your primary tax residency were Panama rather than Canada?</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">Is this only for billionaires hiding money offshore?<span class="faq-icon">+</span></button>
+          <div class="faq-a">No. Panama's territorial tax system is codified law — Article 694 of the Código Fiscal de la República de Panamá. It applies to any tax resident of Panama earning income from foreign sources. The practical barrier has historically been access to credible guidance — not eligibility.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section>
+    <div class="container" style="text-align:center; max-width:600px; margin:0 auto;">
+      <span class="eyebrow">Next Step</span>
+      <h2>The Panama Report Goes Deeper.</h2>
+      <p style="margin-bottom:32px;">The full breakdown of the Friendly Nations Visa process, what breaking Canadian tax residency actually requires, the Three Paths framework, and what this looks like in practice for your specific income and business structure. Free. No pitch on the other side.</p>
+      <div class="btn-group" style="justify-content:center;">
+        <a class="btn-primary" href="/report/">Download the Panama Report</a>
+        <a class="btn-outline" href="/about/">About Joshua</a>
+      </div>
+    </div>
+  </section>
+
+
+<script is:inline>
+  function toggleNeighbourhoods(btn) {
+    const extra = document.getElementById('neighbourhood-extra');
+    const isOpen = extra.classList.contains('open');
+    extra.classList.toggle('open');
+    btn.classList.toggle('open');
+    btn.setAttribute('aria-expanded', !isOpen);
+    const label = btn.querySelector('span:first-child');
+    label.textContent = isOpen ? 'Show 3 more neighbourhoods' : 'Show fewer neighbourhoods';
+  }
+</script>
+
+</Base>
