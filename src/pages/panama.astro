@@ -421,12 +421,41 @@ import Base from '../layouts/Base.astro';
     background: var(--bg2);
     transition: all 0.2s;
     white-space: nowrap;
+    flex-shrink: 0;
   }
 
   .section-nav a:hover {
     color: var(--gold);
     border-color: var(--gold);
     background: var(--bg);
+  }
+
+  @media (max-width: 767px) {
+    /* Nav: single scrollable row — prevents viewport overflow that shifts grid/tables */
+    .section-nav {
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      padding-bottom: 4px;
+      margin-bottom: 0;
+      /* hide scrollbar visually */
+      scrollbar-width: none;
+    }
+    .section-nav::-webkit-scrollbar { display: none; }
+
+    /* Tables: scroll horizontally inside container rather than overflow */
+    .cost-table {
+      display: block;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      max-width: 100%;
+    }
+
+    /* Data grid: ensure it never exceeds container width */
+    .data-grid {
+      width: 100%;
+      box-sizing: border-box;
+    }
   }
 
   /* Neighbourhood expand */
