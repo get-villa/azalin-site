@@ -103,8 +103,10 @@ const finalCanonicalUrl = canonicalUrl || Astro.url.href;
     .nav-links { display: flex; gap: 28px; align-items: center; }
     .nav-links a { color: var(--muted); text-decoration: none; font-size: 14px; font-weight: 500; cursor: pointer; transition: color 0.2s; }
     .nav-links a:hover { color: var(--text); }
-    .nav-cta { background: var(--gold); color: #0B1826 !important; padding: 9px 22px; border-radius: var(--radius); font-size: 13px; font-weight: 700; letter-spacing: 0.5px; cursor: pointer; transition: background 0.2s; }
+    .nav-cta { background: var(--gold); color: #0B1826 !important; padding: 9px 22px; border-radius: var(--radius); font-size: 13px; font-weight: 700; letter-spacing: 0.5px; cursor: pointer; transition: background 0.2s; white-space: nowrap; }
     .nav-cta:hover { background: var(--gold-lt) !important; }
+    .cta-short { display: none; }
+    @media (max-width: 1020px) { .cta-full { display: none; } .cta-short { display: inline; } }
 
     /* ── HAMBURGER ── */
     .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; }
@@ -294,7 +296,7 @@ const finalCanonicalUrl = canonicalUrl || Astro.url.href;
     <a href="/bitcoin/">Bitcoin</a>
     <a href="/blog/">Blog</a>
     <a href="/webinars/">Webinars</a>
-    <a class="nav-cta" href="/report/">Get the Free Report</a>
+    <a class="nav-cta" href="/report/"><span class="cta-full">Get the Free Report</span><span class="cta-short">Panama Report</span></a>
   </div>
   <div class="hamburger" id="hamburger">
     <span></span><span></span><span></span>
