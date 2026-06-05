@@ -1,6 +1,5 @@
 ---
 import Base from '../layouts/Base.astro';
-const REPORT_WEBHOOK = import.meta.env.PUBLIC_REPORT_WEBHOOK;
 const BITCOIN_WEBHOOK = import.meta.env.PUBLIC_BITCOIN_MINI_COURSE_WEBHOOK;
 ---
 
@@ -312,6 +311,48 @@ const BITCOIN_WEBHOOK = import.meta.env.PUBLIC_BITCOIN_MINI_COURSE_WEBHOOK;
     }
     .section-nav::-webkit-scrollbar { display: none; }
   }
+
+  /* Bitcoin page nav — clean 3-column grid, FAQ centred on its own row */
+  nav.btc-nav {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin-top: 28px;
+    margin-bottom: 4px;
+  }
+  nav.btc-nav a {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-decoration: none;
+    padding: 6px 14px;
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    background: var(--bg2);
+    transition: all 0.2s;
+    text-align: center;
+  }
+  nav.btc-nav a:hover {
+    color: var(--gold);
+    border-color: var(--gold);
+    background: var(--bg);
+  }
+  nav.btc-nav a.nav-faq {
+    grid-column: 1 / -1;
+    justify-self: center;
+    padding-left: 32px;
+    padding-right: 32px;
+  }
+  @media (max-width: 600px) {
+    nav.btc-nav {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    nav.btc-nav a.nav-faq {
+      grid-column: 1 / -1;
+    }
+  }
 </style>
 
 <Base
@@ -351,17 +392,17 @@ const BITCOIN_WEBHOOK = import.meta.env.PUBLIC_BITCOIN_MINI_COURSE_WEBHOOK;
       </div>
 
       <!-- Section quick-nav -->
-      <nav class="section-nav" aria-label="Jump to section">
+      <nav class="btc-nav" aria-label="Jump to section">
         <a href="#measuring-stick">📉 The Problem</a>
         <a href="#supply">🔢 Fixed Supply</a>
-        <a href="#iphone">📱 iPhone Data</a>
+        <a href="#iphone">📱 iPhone in BTC</a>
         <a href="#ownership">🔐 Self-Custody</a>
         <a href="#panama-bitcoin">🇵🇦 Panama Tax</a>
-        <a href="#protocol">⚙️ Protocol</a>
+        <a href="#protocol">⚙️ BTC Protocol</a>
         <a href="#advocates">💼 Who Holds It</a>
         <a href="#criticisms">🛡️ Objections</a>
         <a href="#accumulation">📈 Stack Sats</a>
-        <a href="#faq">❓ FAQ</a>
+        <a href="#faq" class="nav-faq">❓ FAQ</a>
       </nav>
     </div>
   </section>
@@ -899,11 +940,7 @@ const BITCOIN_WEBHOOK = import.meta.env.PUBLIC_BITCOIN_MINI_COURSE_WEBHOOK;
         <p style="font-size:14px; margin-bottom:10px;">Panama tax resident. Territorial tax system. Bitcoin gains from transactions involving foreign parties: 0%.</p>
         <p style="font-size:14px; margin-bottom:10px;">On a CA$500,000 Bitcoin gain: a Canadian resident pays ~CA$132,500 to CRA. A Panama resident pays CA$0. That is not a loophole. It is the legal structure of two countries applied simultaneously.</p>
         <p style="font-size:14px; margin-bottom:20px; color:var(--muted);">The combination works at the moment Canadian tax residency is formally broken and Panama residency is established. The Panama Report explains how to build it — the visas, the timeline, the banking, the structure.</p>
-        <form id="panama-report-form" style="display:flex; gap:8px; flex-wrap:wrap;">
-          <input type="email" name="email" placeholder="your@email.com" required style="flex:1; min-width:200px; background:rgba(255,255,255,0.1); border:1px solid rgba(201,168,76,0.5); color:var(--text); padding:10px 14px; border-radius:var(--radius); font-size:14px; font-family:'Inter',sans-serif;">
-          <button type="submit" id="panama-report-btn" style="background:#0B1826; color:var(--gold); border:1px solid var(--gold); padding:10px 20px; border-radius:var(--radius); font-weight:700; font-size:13px; cursor:pointer; white-space:nowrap; font-family:'Inter',sans-serif;">Get the Free Panama Report</button>
-        </form>
-        <p id="panama-report-success" style="display:none; font-size:13px; color:#0B1826; font-weight:600; margin-top:10px;">✓ Check your inbox — the report is on its way.</p>
+        <a href="/report/" class="btn-primary" style="display:inline-block;">Get the Free Panama Report →</a>
       </div>
 
     </div>
@@ -1004,7 +1041,7 @@ const BITCOIN_WEBHOOK = import.meta.env.PUBLIC_BITCOIN_MINI_COURSE_WEBHOOK;
     </div>
   </section>
 
-<script is:inline define:vars={{REPORT_WEBHOOK, BITCOIN_WEBHOOK}}>
+<script is:inline define:vars={{BITCOIN_WEBHOOK}}>
   // FAQ accordion
   document.querySelectorAll('.faq-q').forEach(function(btn) {
     btn.addEventListener('click', function() {
@@ -1021,25 +1058,6 @@ const BITCOIN_WEBHOOK = import.meta.env.PUBLIC_BITCOIN_MINI_COURSE_WEBHOOK;
         answer.classList.add('open');
       }
     });
-  });
-
-  document.getElementById('panama-report-form').addEventListener('submit', async function(e) {
-    e.preventDefault();
-    const btn = document.getElementById('panama-report-btn');
-    btn.textContent = 'Sending…';
-    btn.disabled = true;
-    try {
-      const res = await fetch(REPORT_WEBHOOK, {
-        method: 'POST',
-        body: JSON.stringify({ email: this.email.value, source: 'bitcoin-page', submitted_at: new Date().toISOString() })
-      });
-      if (!res.ok) throw new Error();
-      this.style.display = 'none';
-      document.getElementById('panama-report-success').style.display = 'block';
-    } catch {
-      btn.textContent = 'Try again';
-      btn.disabled = false;
-    }
   });
 
   document.getElementById('bitcoin-course-form').addEventListener('submit', async function(e) {
