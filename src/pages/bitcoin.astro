@@ -1,0 +1,903 @@
+---
+import Base from '../layouts/Base.astro';
+---
+
+<style is:global>
+  /* Bitcoin page styles */
+  .btc-stat-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    margin-top: 32px;
+  }
+  @media (min-width: 768px) {
+    .btc-stat-grid { grid-template-columns: repeat(4, 1fr); }
+  }
+
+  .btc-stat-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px;
+    border-top: 3px solid var(--gold);
+    text-align: center;
+  }
+  .btc-stat-number {
+    font-family: 'Playfair Display', serif;
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--gold);
+    display: block;
+    margin-bottom: 4px;
+  }
+  .btc-stat-label {
+    font-size: 12px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: 600;
+    line-height: 1.4;
+  }
+
+  /* Supply comparison */
+  .supply-compare {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-top: 28px;
+  }
+  .supply-card {
+    padding: 28px;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+  }
+  .supply-card.bitcoin { background: var(--bg2); border-top: 4px solid var(--gold); }
+  .supply-card.fiat { background: var(--bg); border-top: 4px solid var(--border); }
+  .supply-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .supply-label.bitcoin-label { color: var(--gold); }
+  .supply-label.fiat-label { color: var(--muted); }
+  .supply-number {
+    font-family: 'Playfair Display', serif;
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+  .supply-number.btc-num { color: var(--gold); }
+  .supply-number.fiat-num { color: var(--muted); }
+
+  /* iPhone table */
+  .iphone-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+    margin-top: 24px;
+  }
+  .iphone-table th {
+    text-align: left;
+    padding: 10px 14px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--muted);
+    border-bottom: 1px solid var(--border);
+  }
+  .iphone-table td {
+    padding: 11px 14px;
+    border-bottom: 1px solid var(--border);
+    color: var(--text);
+  }
+  .iphone-table tr:last-child td { border-bottom: none; }
+  .iphone-table tr:hover td { background: var(--bg2); }
+  .iphone-table .btc-col { color: var(--gold); font-weight: 700; font-family: 'Playfair Display', serif; }
+  .iphone-table .year-col { color: var(--muted); font-weight: 600; }
+  @media (max-width: 767px) {
+    .iphone-table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  }
+
+  /* Sound money properties */
+  .money-props {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    margin-top: 24px;
+  }
+  @media (min-width: 768px) {
+    .money-props { grid-template-columns: repeat(3, 1fr); }
+  }
+  .money-prop {
+    padding: 20px;
+    border-right: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+  .money-prop:nth-child(2n) { border-right: none; }
+  @media (min-width: 768px) {
+    .money-prop:nth-child(3n) { border-right: none; }
+    .money-prop:nth-child(2n) { border-right: 1px solid var(--border); }
+    .money-prop:nth-last-child(-n+3) { border-bottom: none; }
+  }
+  .money-prop-name {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 4px;
+  }
+  .money-prop-desc {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  /* Advocate cards */
+  .advocate-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 14px;
+    margin-top: 28px;
+  }
+  @media (min-width: 768px) {
+    .advocate-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  .advocate-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 18px 20px;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+  }
+  .advocate-role {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 2px;
+  }
+  .advocate-name {
+    font-weight: 700;
+    font-size: 15px;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+  .advocate-quote {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.5;
+    font-style: italic;
+  }
+
+  /* Nation state table */
+  .nation-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+    margin-top: 24px;
+  }
+  .nation-table th {
+    text-align: left;
+    padding: 10px 14px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--muted);
+    border-bottom: 1px solid var(--border);
+  }
+  .nation-table td {
+    padding: 12px 14px;
+    border-bottom: 1px solid var(--border);
+    color: var(--text);
+    vertical-align: top;
+  }
+  .nation-table tr:last-child td { border-bottom: none; }
+  .nation-entity { font-weight: 600; }
+  .nation-type {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+  @media (max-width: 767px) {
+    .nation-table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    .supply-compare { grid-template-columns: 1fr; }
+  }
+
+  /* Protocol comparison */
+  .protocol-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .protocol-row:last-child { border-bottom: none; }
+  .protocol-name {
+    font-weight: 700;
+    color: var(--text);
+    width: 120px;
+    flex-shrink: 0;
+    font-family: 'Playfair Display', serif;
+  }
+  .protocol-desc { font-size: 14px; color: var(--muted); }
+
+  /* Sats callout */
+  .sats-explainer {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 28px;
+    border-left: 4px solid var(--gold);
+    margin-top: 28px;
+  }
+  .sats-math {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--gold);
+    margin: 12px 0;
+  }
+
+  /* Transfer explainer */
+  .transfer-steps {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+    margin-top: 24px;
+  }
+  @media (min-width: 768px) {
+    .transfer-steps { grid-template-columns: repeat(3, 1fr); }
+  }
+  .transfer-step {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px;
+    text-align: center;
+  }
+  .transfer-step-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--gold);
+    margin-bottom: 8px;
+  }
+  .transfer-step-title {
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--text);
+    margin-bottom: 6px;
+  }
+  .transfer-step-desc {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+</style>
+
+<Base
+  title="Bitcoin — Sound Money for Serious Professionals"
+  description="What Bitcoin actually is, how it works, why Panama doesn't tax it, and why the world's largest institutions and nation states are holding it. Framed for Canadian professionals earning $300K+."
+>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container">
+      <span class="eyebrow">Sound Money</span>
+      <h1>Bitcoin.<br>What It Actually Is.</h1>
+      <p class="lead" style="margin-top:16px; max-width:700px;">For someone earning $300K+ in Canada, the question is not whether Bitcoin is real. It is whether you have been measuring your wealth in the right currency — and whether the measuring stick itself is the problem.</p>
+    </div>
+  </section>
+
+  <!-- Key stats -->
+  <section class="tight">
+    <div class="container">
+      <div class="btc-stat-grid">
+        <div class="btc-stat-card">
+          <span class="btc-stat-number">21M</span>
+          <span class="btc-stat-label">Maximum Bitcoin that will ever exist</span>
+        </div>
+        <div class="btc-stat-card">
+          <span class="btc-stat-number">−99.99%</span>
+          <span class="btc-stat-label">Drop in iPhone cost in BTC terms (162 BTC → 0.0072 BTC). In USD terms: +23%. Same phone. Different measuring stick.</span>
+        </div>
+        <div class="btc-stat-card">
+          <span class="btc-stat-number">100M</span>
+          <span class="btc-stat-label">Satoshis in one Bitcoin — divisible to 8 decimal places</span>
+        </div>
+        <div class="btc-stat-card">
+          <span class="btc-stat-number">23+</span>
+          <span class="btc-stat-label">Nation states with Bitcoin reserves or formal adoption strategies</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- The Measuring Stick -->
+  <section>
+    <div class="container">
+      <div class="grid-2" style="gap:56px; align-items:start;">
+        <div>
+          <span class="eyebrow">The Measuring Stick Problem</span>
+          <h2>You Are Pricing Everything in a Currency That Is Shrinking.</h2>
+          <p style="margin-bottom:16px;">A $300K income feels like a lot. And it is — until you account for what the measuring stick does to the number. The Canadian dollar, like every fiat currency, is not a fixed unit. It is a claim on a pool of money that central banks can and do expand. When the pool expands, each unit buys less. That is not inflation — that is the mechanism.</p>
+          <p style="margin-bottom:16px;">Between 2020 and 2022, Canada's money supply grew by more than 20% in 24 months. The price of your house, your groceries, and your professional services increased not because those things became more valuable — but because the measuring stick got shorter.</p>
+          <p style="margin-bottom:16px;">Bitcoin operates on a different principle. Its supply is fixed by code, not by decree. When you price things in Bitcoin rather than Canadian dollars, a very different picture emerges: nearly everything has gotten cheaper, not more expensive, over the past decade.</p>
+          <p>The iPhone table on this page illustrates that directly. An iPhone 4S cost 162 BTC in 2011. The iPhone 17 costs 0.0072 BTC in 2025. The iPhone hasn't gotten cheaper. The measuring stick hasn't shrunk. Bitcoin has gotten harder to produce and more sought after — so less of it buys the same phone.</p>
+        </div>
+        <div>
+          <div class="pullquote">
+            <p>"In a world where every currency can be printed, the asset that cannot be printed becomes the reference point."</p>
+          </div>
+          <div class="card" style="margin-top:20px;">
+            <h3 style="margin-bottom:10px; font-size:15px;">The Advisor's Version</h3>
+            <p style="font-size:13px; color:var(--muted);">You tell your clients to diversify across asset classes, geographies, and currencies. A Canadian portfolio fully denominated in Canadian dollars — real estate, equities, registered accounts — is concentrated in a single currency issued by a single government. That is not a diversified portfolio. That is a portfolio with a currency risk that most advisors never name.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- Fixed vs Infinite Supply -->
+  <section class="bg2" id="supply">
+    <div class="container">
+      <span class="eyebrow">Fixed Supply vs. Infinite Supply</span>
+      <h2>Why Prices Go Up in Fiat Terms.<br>Why They Go Down in Bitcoin Terms.</h2>
+      <p style="max-width:640px; margin-bottom:0;">This is the single most important concept. Everything else follows from it.</p>
+      <div class="supply-compare">
+        <div class="supply-card bitcoin">
+          <div class="supply-label bitcoin-label">Bitcoin</div>
+          <div class="supply-number btc-num">21,000,000</div>
+          <p style="font-size:14px; margin-bottom:12px;">The maximum number of Bitcoin that will ever exist is written into the protocol. It cannot be changed by any government, central bank, or company. As of 2025, approximately 19.7 million have been mined. The remaining 1.3 million will be released on a fixed, decreasing schedule until around 2140.</p>
+          <p style="font-size:14px; margin-bottom:12px;"><strong>Energy-backed.</strong> Each Bitcoin is produced through real computational work — proof-of-work mining — that consumes electricity. You cannot create Bitcoin from nothing. The process has a physical cost floor.</p>
+          <p style="font-size:14px; color:var(--gold); font-weight:600;">Supply is fixed. Demand has increased. Simple arithmetic.</p>
+        </div>
+        <div class="supply-card fiat">
+          <div class="supply-label fiat-label">Fiat Currency (CAD/USD/GBP)</div>
+          <div class="supply-number fiat-num">∞</div>
+          <p style="font-size:14px; margin-bottom:12px;">The supply of fiat currency has no hard cap. Central banks can and do expand the money supply through bond purchases, reserve policy, and direct credit creation. Canada's M2 money supply grew from approximately $1.5T in 2015 to over $2.5T by 2023.</p>
+          <p style="font-size:14px; margin-bottom:12px;"><strong>Decree-backed.</strong> Fiat currency derives its value from government mandate — you must accept it as legal tender. Its value is maintained by institutional trust and monetary policy, both of which are subject to political decisions.</p>
+          <p style="font-size:14px; color:var(--muted); font-weight:600;">Supply is unlimited. Purchasing power dilutes over time by design.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- Sound Money Properties -->
+  <section id="sound-money">
+    <div class="container">
+      <span class="eyebrow">Hard Money / Sound Money</span>
+      <h2>What Makes Money Good at Being Money.</h2>
+      <p style="max-width:680px; margin-bottom:0;">Economists have long identified a set of properties that distinguish good money from bad money. Gold held its position as the global reserve asset for centuries because it satisfies most of them. Bitcoin satisfies all of them — and improves on gold in the areas that matter most for a globally connected professional.</p>
+      <div class="money-props">
+        <div class="money-prop">
+          <div class="money-prop-name">Scarce</div>
+          <div class="money-prop-desc">Hard cap of 21M. Cannot be inflated away. Gold has this but is still mined; Bitcoin's issuance is mathematically fixed.</div>
+        </div>
+        <div class="money-prop">
+          <div class="money-prop-name">Durable</div>
+          <div class="money-prop-desc">A private key stored on a hardware device will hold Bitcoin indefinitely. No rust, no rot, no degradation.</div>
+        </div>
+        <div class="money-prop">
+          <div class="money-prop-name">Divisible</div>
+          <div class="money-prop-desc">1 Bitcoin = 100,000,000 satoshis. Divisible to 8 decimal places — better than gold, better than cash.</div>
+        </div>
+        <div class="money-prop">
+          <div class="money-prop-name">Portable</div>
+          <div class="money-prop-desc">$1 million in Bitcoin crosses a border in your head. $1 million in gold weighs 20 kilograms and triggers customs declarations.</div>
+        </div>
+        <div class="money-prop">
+          <div class="money-prop-name">Verifiable</div>
+          <div class="money-prop-desc">Anyone can verify any transaction, any balance, and the total supply on the public ledger — in real time, without asking anyone's permission.</div>
+        </div>
+        <div class="money-prop">
+          <div class="money-prop-name">Censorship-resistant</div>
+          <div class="money-prop-desc">No government, bank, or intermediary can freeze a Bitcoin wallet or block a transaction on the base protocol. The network processes valid transactions regardless of sender or receiver.</div>
+        </div>
+      </div>
+      <div class="grid-2" style="gap:24px; margin-top:28px; align-items:start;">
+        <div class="card card-gold">
+          <h3 style="margin-bottom:10px; font-size:15px;">The Gold Comparison</h3>
+          <p style="font-size:14px; margin-bottom:10px;">Gold has been humanity's default store of value for 5,000 years because it is scarce, durable, and requires energy to produce. Bitcoin inherits all three properties and adds portability, divisibility, and verifiability that gold cannot match.</p>
+          <p style="font-size:14px; margin-bottom:10px;">Paul Tudor Jones — the billionaire hedge fund manager with $55B under management — described Bitcoin as "the fastest horse" in the race against inflation, and holds it alongside gold in his portfolio.</p>
+          <p style="font-size:14px;">Stanley Druckenmiller — former chief strategist for George Soros and one of the most respected macro investors alive — stated he prefers Bitcoin to gold as a store of value for the next generation.</p>
+        </div>
+        <div class="card">
+          <h3 style="margin-bottom:8px; font-size:15px;">What "Outside the System" Actually Means</h3>
+          <p style="font-size:13px; color:var(--muted); margin-bottom:10px;">Bitcoin is not anti-government. It is not an ideology. It is a protocol — like TCP/IP or HTTP — that operates independently of any single institution. No central bank issues it. No government backs it. No company owns it.</p>
+          <p style="font-size:13px; color:var(--muted);">This means its supply characteristics and transaction rules cannot be changed by political decisions. For a professional who has watched a single government determine their purchasing power, retirement viability, and tax burden — that independence is a feature, not a bug.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- iPhone Table -->
+  <section class="bg2" id="iphone">
+    <div class="container">
+      <span class="eyebrow">The Measuring Stick in Action</span>
+      <h2>What an iPhone Has Cost in Bitcoin<br>Every Year Since 2011.</h2>
+      <p style="max-width:640px; margin-bottom:0;">The iPhone hasn't changed much in price. What has changed is how much Bitcoin you need to buy one. This is not an argument for buying iPhones with Bitcoin. It is a demonstration of what happens when you use a currency with a fixed supply as your unit of account. Data: CoinGecko, launch-day prices.</p>
+      <div style="overflow-x: auto; -webkit-overflow-scrolling: touch;">
+        <table class="iphone-table">
+          <thead>
+            <tr>
+              <th>Year</th>
+              <th>iPhone Model</th>
+              <th>Price (USD)</th>
+              <th>BTC Cost</th>
+              <th>BTC Price That Day</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="year-col">2011</td><td>iPhone 4S</td><td>$649</td>
+              <td class="btc-col">162.25</td><td>$4.00</td>
+            </tr>
+            <tr>
+              <td class="year-col">2012</td><td>iPhone 5</td><td>$649</td>
+              <td class="btc-col">52.76</td><td>$12.30</td>
+            </tr>
+            <tr>
+              <td class="year-col">2013</td><td>iPhone 5S</td><td>$649</td>
+              <td class="btc-col">5.05</td><td>$128.57</td>
+            </tr>
+            <tr>
+              <td class="year-col">2014</td><td>iPhone 6</td><td>$649</td>
+              <td class="btc-col">1.65</td><td>$393.26</td>
+            </tr>
+            <tr>
+              <td class="year-col">2015</td><td>iPhone 6S</td><td>$649</td>
+              <td class="btc-col">2.76</td><td>$234.98</td>
+            </tr>
+            <tr>
+              <td class="year-col">2016</td><td>iPhone 7</td><td>$649</td>
+              <td class="btc-col">1.07</td><td>$606.55</td>
+            </tr>
+            <tr>
+              <td class="year-col">2017</td><td>iPhone X</td><td>$999</td>
+              <td class="btc-col">0.138</td><td>$7,234.74</td>
+            </tr>
+            <tr>
+              <td class="year-col">2018</td><td>iPhone XS</td><td>$999</td>
+              <td class="btc-col">0.154</td><td>$6,491.89</td>
+            </tr>
+            <tr>
+              <td class="year-col">2019</td><td>iPhone 11</td><td>$699</td>
+              <td class="btc-col">0.0682</td><td>$10,253.23</td>
+            </tr>
+            <tr>
+              <td class="year-col">2020</td><td>iPhone 12</td><td>$829</td>
+              <td class="btc-col">0.0510</td><td>$16,265.15</td>
+            </tr>
+            <tr>
+              <td class="year-col">2021</td><td>iPhone 13</td><td>$799</td>
+              <td class="btc-col">0.0178</td><td>$44,980.90</td>
+            </tr>
+            <tr>
+              <td class="year-col">2022</td><td>iPhone 14</td><td>$799</td>
+              <td class="btc-col">0.0424</td><td>$18,859.50</td>
+            </tr>
+            <tr>
+              <td class="year-col">2023</td><td>iPhone 15</td><td>$799</td>
+              <td class="btc-col">0.0309</td><td>$25,867.60</td>
+            </tr>
+            <tr>
+              <td class="year-col">2024</td><td>iPhone 16</td><td>$799</td>
+              <td class="btc-col">0.0140</td><td>$57,049.43</td>
+            </tr>
+            <tr style="background: var(--bg2);">
+              <td class="year-col">2025</td><td>iPhone 17</td><td>$799</td>
+              <td class="btc-col">0.0072</td><td>$111,033.00</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="card card-gold" style="max-width:680px; margin-top:20px;">
+        <p style="font-size:14px; margin-bottom:10px;">If you had purchased 5 Bitcoin in 2013 — enough to buy two iPhones at the time — those 5 BTC would today purchase approximately 694 iPhone 17s.</p>
+        <p style="font-size:14px;">The same 5 BTC in 2013 would have cost approximately $640 USD. At 2025 prices, those 5 BTC are worth approximately CA$775,000. Not because iPhones became more affordable. Because you changed the measuring stick.</p>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- You Own the Asset -->
+  <section id="ownership">
+    <div class="container">
+      <div style="max-width:720px;">
+        <span class="eyebrow">Self-Custody vs. an IOU</span>
+        <h2>Your Bank Account Is Not an Asset.<br>It Is a Claim on One.</h2>
+        <p style="margin-bottom:16px;">When you deposit $500,000 in a bank, you do not own $500,000. You own an unsecured claim against a financial institution — a legal promise that, under normal conditions, will be honoured when you ask for it back. The bank loans your money out, invests it, and manages its own solvency. Your deposit is their liability.</p>
+        <p style="margin-bottom:16px;">Canada Deposit Insurance Corporation (CDIC) insures up to $100,000 per depositor, per category. A $300K+ earner with liquidity concentrated in a single institution has meaningful uninsured exposure. This is not a fringe concern — it is the plain structure of the banking system.</p>
+        <p style="margin-bottom:16px;">Bitcoin held in cold storage — on a hardware device you control, with a private key only you hold — is not a claim. It is the asset itself. There is no counterparty. There is no institution between you and the asset. No one can freeze it, lend it out, or deny you access to it.</p>
+        <p style="margin-bottom:24px;">This is the most important distinction in Bitcoin ownership. Holding Bitcoin on an exchange is the equivalent of a bank deposit — you hold a claim, not the asset. Cold storage is ownership.</p>
+        <div class="card">
+          <h3 style="margin-bottom:14px; font-size:15px;">Bank Deposit vs. Bitcoin Cold Storage</h3>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; font-size:13px;">
+            <div>
+              <div style="font-weight:700; color:var(--muted); text-transform:uppercase; font-size:11px; letter-spacing:1px; margin-bottom:8px;">Bank Deposit</div>
+              <p style="color:var(--muted); margin-bottom:6px;">You hold: a legal claim</p>
+              <p style="color:var(--muted); margin-bottom:6px;">Counterparty: your bank</p>
+              <p style="color:var(--muted); margin-bottom:6px;">CDIC insured: up to $100K</p>
+              <p style="color:var(--muted); margin-bottom:6px;">Can be frozen: yes</p>
+              <p style="color:var(--muted);">Lent out by bank: yes</p>
+            </div>
+            <div>
+              <div style="font-weight:700; color:var(--gold); text-transform:uppercase; font-size:11px; letter-spacing:1px; margin-bottom:8px;">Bitcoin Cold Storage</div>
+              <p style="color:var(--text); margin-bottom:6px;">You hold: the asset itself</p>
+              <p style="color:var(--text); margin-bottom:6px;">Counterparty: none</p>
+              <p style="color:var(--text); margin-bottom:6px;">Protection: cryptographic key</p>
+              <p style="color:var(--text); margin-bottom:6px;">Can be frozen: no</p>
+              <p style="color:var(--text);">Lent out: only if you choose</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- How It Works -->
+  <section class="bg2" id="how-it-works">
+    <div class="container">
+      <span class="eyebrow">Satoshis, Wallets, Transfers</span>
+      <h2>How Bitcoin Actually Works.</h2>
+
+      <div class="sats-explainer">
+        <h3 style="margin-bottom:8px; font-size:15px;">Satoshis vs. Bitcoin</h3>
+        <p style="font-size:14px; color:var(--muted); margin-bottom:8px;">1 Bitcoin is divisible into 100,000,000 smaller units called Satoshis (sats), named after Bitcoin's anonymous creator.</p>
+        <div class="sats-math">1 BTC = 100,000,000 satoshis</div>
+        <p style="font-size:14px; color:var(--muted); margin-bottom:12px;">You do not need to buy a whole Bitcoin. At CA$150,000 per BTC, a CA$150 purchase gets you approximately 100,000 sats (100K sats). Most accumulation strategies use sats, not whole coins, as the unit.</p>
+        <p style="font-size:14px; font-weight:600; color:var(--text);">The metric that matters: how many sats you add each month. Not the price. Not the headlines. The number of sats you hold goes up, or it doesn't.</p>
+      </div>
+
+      <div class="transfer-steps">
+        <div class="transfer-step">
+          <div class="transfer-step-num">On-chain</div>
+          <div class="transfer-step-title">Base layer settlement</div>
+          <div class="transfer-step-desc">Bitcoin transactions settle directly on the Bitcoin blockchain. Irreversible, globally accessible, no intermediary. Settlement typically in 10–60 minutes. Suitable for large transfers. Fees vary with network congestion.</div>
+        </div>
+        <div class="transfer-step">
+          <div class="transfer-step-num">Lightning</div>
+          <div class="transfer-step-title">Instant micropayments</div>
+          <div class="transfer-step-desc">The Lightning Network is a second layer built on Bitcoin. It enables near-instant transfers of any amount — including fractions of a cent — at negligible fees. Suitable for daily spending, salary payments, and machine-to-machine transactions.</div>
+        </div>
+        <div class="transfer-step">
+          <div class="transfer-step-num">Cold storage</div>
+          <div class="transfer-step-title">Long-term custody</div>
+          <div class="transfer-step-desc">Hardware wallets (Ledger, Trezor, Tangem) store your private key offline. Sending requires physical confirmation on the device. Eliminates exchange and custodian risk entirely. This is where long-term holdings belong.</div>
+        </div>
+      </div>
+
+      <div class="grid-2" style="gap:40px; align-items:start; margin-top:28px;">
+        <div class="card">
+          <h3 style="margin-bottom:8px; font-size:15px;">What a "Wallet" Actually Is</h3>
+          <p style="font-size:13px; color:var(--muted);">A Bitcoin wallet does not store Bitcoin. It stores the private key — the cryptographic proof of your right to move the coins associated with a public address on the blockchain. The Bitcoin itself lives on the distributed ledger. Your key is proof of ownership. Lose the key, lose access. Control the key, control the asset.</p>
+        </div>
+        <div class="card">
+          <h3 style="margin-bottom:8px; font-size:15px;">Sending Bitcoin — the Practical Version</h3>
+          <p style="font-size:13px; color:var(--muted);">You send Bitcoin by signing a transaction with your private key and broadcasting it to the network. The recipient's wallet address (a string of characters derived from their public key) is the destination. No bank approval. No settlement window. No wire transfer fees. No correspondent bank intermediaries. The transaction either confirms or it doesn't.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- Panama + Bitcoin -->
+  <section id="panama-bitcoin">
+    <div class="container">
+      <div class="grid-2" style="gap:56px; align-items:center;">
+        <div>
+          <span class="eyebrow">Panama + Bitcoin</span>
+          <h2>Zero Capital Gains Tax.<br>On the Asset That Keeps Appreciating.</h2>
+          <p style="margin-bottom:16px;">Panama's territorial tax system (Article 694, Código Fiscal de la República de Panamá) taxes only income sourced within Panama. Bitcoin capital gains from transactions involving foreign parties are foreign-sourced income. The Panamanian tax rate on those gains is zero for a Panama tax resident.</p>
+          <p style="margin-bottom:16px;">By contrast, a Canadian tax resident paying 53% marginal rate who sells Bitcoin at a gain faces a 50% inclusion rate — meaning capital gains are taxed at approximately 26.5% of the gain. On a CA$500,000 Bitcoin gain, that is approximately CA$132,500 to CRA.</p>
+          <p>A Panama tax resident with the same CA$500,000 gain pays CA$0 in Panama tax. The combination of territorial tax residency and Bitcoin cold storage is one of the most powerful legal structures available to a Canadian professional with meaningful crypto exposure.</p>
+        </div>
+        <div>
+          <div class="stat-grid" style="grid-template-columns:1fr 1fr;">
+            <div class="stat">
+              <span class="stat-number">0%</span>
+              <span class="stat-label">Panama capital gains tax on Bitcoin</span>
+            </div>
+            <div class="stat">
+              <span class="stat-number">~26.5%</span>
+              <span class="stat-label">Canadian effective rate on Bitcoin gains</span>
+            </div>
+            <div class="stat">
+              <span class="stat-number">Art. 694</span>
+              <span class="stat-label">Panamanian Fiscal Code provision</span>
+            </div>
+            <div class="stat">
+              <span class="stat-number">CA$0</span>
+              <span class="stat-label">Tax on a CA$500K Bitcoin gain for Panama resident</span>
+            </div>
+          </div>
+          <div class="card" style="margin-top:16px;">
+            <p style="font-size:13px; color:var(--muted);">This does not apply to someone who has not formally broken Canadian tax residency. The obligation to report and pay tax on Bitcoin gains follows the residency, not the passport or the coin's location. The Panama structure works at the moment Canadian residency is formally broken and Panama residency is established.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- Protocol -->
+  <section class="bg2" id="protocol">
+    <div class="container">
+      <div class="grid-2" style="gap:56px; align-items:start;">
+        <div>
+          <span class="eyebrow">Infrastructure, Not a Company</span>
+          <h2>Bitcoin Is a Protocol.<br>Protocols Don't Go Bankrupt.</h2>
+          <p style="margin-bottom:16px;">Bitcoin is not a company. It has no CEO, no headquarters, no board of directors, and no customer service. It is an open-source protocol — a set of rules that nodes on a distributed network agree to follow — that has been running continuously since January 3, 2009, without a single hour of downtime.</p>
+          <p>The internet runs on protocols — agreed-upon rules for how data moves between computers. You have never worried that HTTP would be shut down, or that TCP/IP would go bankrupt, or that SMTP would pivot to a subscription model. Bitcoin operates on the same principle: it is infrastructure, not a product.</p>
+
+          <div style="margin-top:28px;">
+            <div class="protocol-row">
+              <div class="protocol-name">HTTP</div>
+              <div class="protocol-desc">How web pages are requested and delivered. Runs the internet. No owner. Cannot be shut down.</div>
+            </div>
+            <div class="protocol-row">
+              <div class="protocol-name">SMTP</div>
+              <div class="protocol-desc">How email is transmitted. Billions of messages per day. No company owns it.</div>
+            </div>
+            <div class="protocol-row">
+              <div class="protocol-name">TCP/IP</div>
+              <div class="protocol-desc">The foundational data transport protocol of the internet. No board. No shareholders.</div>
+            </div>
+            <div class="protocol-row">
+              <div class="protocol-name">Bitcoin</div>
+              <div class="protocol-desc">How value is transmitted and stored without a trusted intermediary. 15+ years. No downtime. No owner.</div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="card" style="margin-bottom:16px;">
+            <h3 style="margin-bottom:8px; font-size:15px;">What Backs It</h3>
+            <p style="font-size:13px; color:var(--muted);">Bitcoin is secured by proof-of-work: computers around the world compete to validate transactions by solving a computationally expensive puzzle. The winner earns newly issued Bitcoin. This process consumes real energy, making it prohibitively expensive to attack the network. As of 2025, the Bitcoin network's hash rate — its total computational power — is equivalent to every computer humanity has ever built, running simultaneously, performing only Bitcoin calculations.</p>
+          </div>
+          <div class="card">
+            <h3 style="margin-bottom:8px; font-size:15px;">Why AI Cannot Duplicate It</h3>
+            <p style="font-size:13px; color:var(--muted); margin-bottom:10px;">AI can generate text, images, code, music, and increasingly most forms of intellectual output. It cannot generate Bitcoin. Bitcoin's scarcity is enforced by mathematics and energy — not by copyright, not by trust, not by agreement. A language model trained on the internet cannot produce valid Bitcoin any more than it can produce gold atoms.</p>
+            <p style="font-size:13px; color:var(--muted);">This makes Bitcoin uniquely resistant to the general pattern of AI-driven abundance and price deflation that will affect most asset classes. When AI can replicate nearly everything, the things it categorically cannot replicate become more, not less, valuable.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- AI + Commerce -->
+  <section id="ai-commerce">
+    <div class="container">
+      <span class="eyebrow">AI Agents and the Future of Payments</span>
+      <h2>The Commerce Layer AI Defaults To.</h2>
+      <p style="max-width:680px; margin-bottom:36px;">Autonomous AI agents — software that takes actions, spends money, and transacts on behalf of users and businesses — are not a future scenario. They are a current deployment. And when they need to transact without a human in the loop, they reach for crypto rails.</p>
+      <div class="grid-2" style="gap:48px; align-items:start;">
+        <div>
+          <div class="card" style="margin-bottom:16px;">
+            <h3 style="margin-bottom:8px; font-size:15px;">What the Data Shows</h3>
+            <p style="font-size:13px; color:var(--muted); margin-bottom:10px;">AI agents settled over $73 million across approximately 176 million transactions on blockchain rails between May 2025 and April 2026, according to a May 2026 CoinDesk/Keyrock report.</p>
+            <p style="font-size:13px; color:var(--muted); margin-bottom:10px;">When given a choice of payment rail with no other constraints, AI models chose Bitcoin in 48.3% of responses for long-term value preservation — the dominant preference by a wide margin (Bitcoin Policy Institute research).</p>
+            <p style="font-size:13px; color:var(--muted);">Coinbase, Stripe, Google, Visa, and Amazon Web Services have all launched competing infrastructure for machine-to-machine payments on crypto rails. This is no longer research — it is production infrastructure at scale.</p>
+          </div>
+          <div class="card">
+            <h3 style="margin-bottom:8px; font-size:15px;">Why Crypto Rails, Not Banks</h3>
+            <p style="font-size:13px; color:var(--muted);">An AI agent that needs to pay a contractor in Singapore, settle a micro-invoice in milliseconds, or move funds across jurisdictions without human approval cannot use a bank account. Banks require account holders, compliance checks, and business hours. Bitcoin and Lightning Network have none of those constraints. The protocol doesn't ask who is sending.</p>
+          </div>
+        </div>
+        <div>
+          <div class="card card-gold">
+            <h3 style="margin-bottom:12px; font-size:15px;">The Long Position</h3>
+            <p style="font-size:14px; margin-bottom:12px;">The MarketsandMarkets forecast projects the AI agents market growing from $7.84 billion in 2025 to $52.62 billion by 2030 — a 46% compound annual growth rate. Every one of those agents needs to transact.</p>
+            <p style="font-size:14px; margin-bottom:12px;">The transaction volume from AI agents alone — not human users — represents a structural increase in demand for a payment layer with no account requirements, no geographic restrictions, and no counterparty approval. Bitcoin is the only asset where the supply side of that equation is fixed.</p>
+            <p style="font-size:14px;">More demand. Fixed supply. That is the investment thesis in two sentences.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- Who Believes This -->
+  <section class="bg2" id="advocates">
+    <div class="container">
+      <span class="eyebrow">Who Holds Bitcoin</span>
+      <h2>The People Who Have Done the Analysis.</h2>
+      <p style="max-width:640px; margin-bottom:0;">These are not retail speculators. They are the managers of some of the largest pools of capital in the world — people whose professional reputation rests on getting asset allocation right.</p>
+      <div class="advocate-grid">
+        <div class="advocate-card">
+          <div>
+            <div class="advocate-role">Billionaire Hedge Fund Manager · Tudor Investment Corp (~$55B AUM)</div>
+            <div class="advocate-name">Paul Tudor Jones</div>
+            <div class="advocate-quote">"Bitcoin, gold, and stocks are the best portfolio to fight inflation. It is the fastest horse in the race."</div>
+          </div>
+        </div>
+        <div class="advocate-card">
+          <div>
+            <div class="advocate-role">Legendary Macro Investor · Former Soros Chief Strategist</div>
+            <div class="advocate-name">Stanley Druckenmiller</div>
+            <div class="advocate-quote">"I own more Bitcoin than gold now. It has a much better brand for the millennial generation."</div>
+          </div>
+        </div>
+        <div class="advocate-card">
+          <div>
+            <div class="advocate-role">CEO · BlackRock (world's largest asset manager, ~$10T AUM)</div>
+            <div class="advocate-name">Larry Fink</div>
+            <div class="advocate-quote">"Bitcoin is digital gold. I believe it is a legitimate financial instrument and a store of value." Forecasts Bitcoin at $700K if institutions allocate 2–5% of portfolios.</div>
+          </div>
+        </div>
+        <div class="advocate-card">
+          <div>
+            <div class="advocate-role">Executive Chairman · Strategy (formerly MicroStrategy)</div>
+            <div class="advocate-name">Michael Saylor</div>
+            <div class="advocate-quote">Converted Strategy's treasury into the world's largest corporate Bitcoin position — over 550,000 BTC as of 2025. Personally convinced Larry Fink to study Bitcoin when Strategy "was in the teens."</div>
+          </div>
+        </div>
+        <div class="advocate-card">
+          <div>
+            <div class="advocate-role">CEO · ARK Invest</div>
+            <div class="advocate-name">Cathie Wood</div>
+            <div class="advocate-quote">Projects Bitcoin reaching $1.5M by 2030 under institutional adoption scenarios. ARK Invest holds Bitcoin across multiple funds and was among the first institutional ETF applicants.</div>
+          </div>
+        </div>
+        <div class="advocate-card">
+          <div>
+            <div class="advocate-role">Co-founder Twitter (X) · CEO Block</div>
+            <div class="advocate-name">Jack Dorsey</div>
+            <div class="advocate-quote">"Bitcoin changes absolutely everything. I don't think there is anything more important in my lifetime to work on." Block invests significant engineering resources in Bitcoin development and custody tools.</div>
+          </div>
+        </div>
+        <div class="advocate-card">
+          <div>
+            <div class="advocate-role">Founder · Bridgewater Associates (world's largest hedge fund)</div>
+            <div class="advocate-name">Ray Dalio</div>
+            <div class="advocate-quote">Moved from critic to holder. Holds Bitcoin as part of a diversified portfolio, citing government debt concerns and the appeal of a non-sovereign store of value.</div>
+          </div>
+        </div>
+        <div class="advocate-card">
+          <div>
+            <div class="advocate-role">Legendary Value Investor · Miller Value Partners</div>
+            <div class="advocate-name">Bill Miller</div>
+            <div class="advocate-quote">"Every major bank, every major investment bank, and every major high-net-worth firm is going to eventually have some exposure to Bitcoin." Held over 50% of his personal portfolio in Bitcoin.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- Nation States & Institutions -->
+  <section id="institutions">
+    <div class="container">
+      <span class="eyebrow">Institutional and Sovereign Adoption</span>
+      <h2>This Is No Longer a Retail Asset Class.</h2>
+      <p style="max-width:680px; margin-bottom:0;">When the world's largest asset manager launches an ETF, the world's largest sovereign wealth fund increases its exposure by 153% in a year, and the United States creates a Strategic Bitcoin Reserve — the asset class has crossed a threshold that does not reverse.</p>
+      <div style="overflow-x: auto; -webkit-overflow-scrolling: touch;">
+        <table class="nation-table">
+          <thead>
+            <tr>
+              <th>Entity</th>
+              <th>Type</th>
+              <th>Action / Position</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="nation-entity">United States Government</td>
+              <td><span class="nation-type">Nation State</span></td>
+              <td>Established US Strategic Bitcoin Reserve via executive order 2025. All government-seized Bitcoin held as a strategic asset rather than auctioned.</td>
+            </tr>
+            <tr>
+              <td class="nation-entity">El Salvador</td>
+              <td><span class="nation-type">Nation State</span></td>
+              <td>First country to adopt Bitcoin as legal tender (2021). Holds over 6,000 BTC in public treasury. Operates a public Bitcoin explorer tracking holdings.</td>
+            </tr>
+            <tr>
+              <td class="nation-entity">Czech Republic, Brazil, Luxembourg, Saudi Arabia, Taiwan</td>
+              <td><span class="nation-type">Nation States</span></td>
+              <td>Among 23+ nations formally studying or implementing Bitcoin reserve strategies as of late 2025.</td>
+            </tr>
+            <tr>
+              <td class="nation-entity">BlackRock (iShares Bitcoin Trust)</td>
+              <td><span class="nation-type">Asset Manager</span></td>
+              <td>Bitcoin ETF launched January 2024. The US spot Bitcoin ETF market reached $102B+ AUM by February 2025 — the fastest ETF category to $100B in history.</td>
+            </tr>
+            <tr>
+              <td class="nation-entity">Norway Government Pension Fund Global</td>
+              <td><span class="nation-type">Sovereign Wealth Fund</span></td>
+              <td>World's largest sovereign wealth fund. Indirect Bitcoin exposure grew 153% in 2024, rising from 1,507 BTC equivalent to 3,821 BTC through holdings in Bitcoin-adjacent equities.</td>
+            </tr>
+            <tr>
+              <td class="nation-entity">Abu Dhabi Mubadala Investment</td>
+              <td><span class="nation-type">Sovereign Wealth Fund</span></td>
+              <td>Holds 8.2 million shares of iShares Bitcoin Trust, valued at approximately $436.9M as of February 2025.</td>
+            </tr>
+            <tr>
+              <td class="nation-entity">Wisconsin State Investment Board</td>
+              <td><span class="nation-type">US State Pension</span></td>
+              <td>First US state pension to invest in spot Bitcoin ETFs. Held 6 million shares of iShares Bitcoin Trust (~$321M) as of February 2025.</td>
+            </tr>
+            <tr>
+              <td class="nation-entity">Strategy (formerly MicroStrategy)</td>
+              <td><span class="nation-type">Corporation</span></td>
+              <td>Largest corporate Bitcoin holder. Over 550,000 BTC as of 2025. Executive Chairman Michael Saylor personally converted BlackRock CEO Larry Fink to the thesis.</td>
+            </tr>
+            <tr>
+              <td class="nation-entity">Fidelity Investments</td>
+              <td><span class="nation-type">Asset Manager</span></td>
+              <td>Operates its own Bitcoin custody service (Fidelity Digital Assets), runs a spot Bitcoin ETF, and has held Bitcoin on its own balance sheet.</td>
+            </tr>
+            <tr>
+              <td class="nation-entity">Tesla</td>
+              <td><span class="nation-type">Corporation</span></td>
+              <td>Holds approximately 9,720 BTC on its balance sheet. Was among the earliest major public companies to adopt Bitcoin as a treasury reserve asset.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- The Metric That Matters -->
+  <section class="bg2" id="accumulation">
+    <div class="container" style="max-width:720px;">
+      <span class="eyebrow">The Only Number That Matters</span>
+      <h2>Sats Per Month.<br>Everything Else Is Noise.</h2>
+      <div class="gold-bar"></div>
+      <p style="margin-bottom:16px;">The price of Bitcoin in Canadian dollars is volatile. It has declined 80%+ from peak to trough three times in its history. It has also recovered to a new all-time high after every single drawdown. If you measure performance in fiat terms over a single month or year, you will make poor decisions.</p>
+      <p style="margin-bottom:16px;">The metric that matters is simple: does the number of satoshis you hold go up each month? Not the fiat price. Not your portfolio value in CAD. The number of sats.</p>
+      <p style="margin-bottom:16px;">Dollar-cost averaging — purchasing a fixed CAD amount of Bitcoin at regular intervals — removes the timing problem entirely. A $1,000/month DCA strategy started in January 2018 (the top of the previous bull market, the worst possible entry point) would have been deeply underwater for 18 months. By 2024, it would have produced a substantial profit in fiat terms and a much larger position in sats.</p>
+      <p>The goal is not to time the market. The goal is to gradually shift a portion of your net worth from a currency with unlimited supply to a currency with a fixed supply. The size of the position is a personal decision. The direction of the thesis has been validated by central bank balance sheets, institutional adoption, and 15 years of empirical performance.</p>
+      <div class="card card-gold" style="margin-top:28px;">
+        <h3 style="margin-bottom:10px; font-size:15px;">The Panama Structure + Bitcoin = The Full Picture</h3>
+        <p style="font-size:14px; margin-bottom:10px;">Canadian tax resident. Marginal rate 47–53%. Capital gains inclusion at 50%. Every Bitcoin gain is a taxable event.</p>
+        <p style="font-size:14px; margin-bottom:10px;">Panama tax resident. Territorial tax system. Bitcoin gains from foreign transactions: 0%.</p>
+        <p style="font-size:14px;">The combination is not a loophole. It is the legal structure of two countries applied simultaneously. The Panama Report explains how to build it.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section>
+    <div class="container" style="text-align:center; max-width:600px; margin:0 auto;">
+      <span class="eyebrow">The Next Step</span>
+      <h2>Learn Cold Storage.<br>In Panama. In Person.</h2>
+      <p style="margin-bottom:32px;">The Bitcoin Mini-Course covers the full practical picture — why self-custody matters, how hardware wallets work, and how to move your first coins off an exchange and into cold storage. Includes a Tangem hardware wallet. For professionals who want to understand what they are holding before they hold more of it.</p>
+      <div class="btn-group" style="justify-content:center;">
+        <a class="btn-primary" href="/#offers">Join the Bitcoin Mini-Course Waitlist</a>
+        <a class="btn-outline" href="/report/">Get the Panama Report</a>
+      </div>
+    </div>
+  </section>
+
+</Base>
