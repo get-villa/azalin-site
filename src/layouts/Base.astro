@@ -254,8 +254,10 @@ const finalCanonicalUrl = canonicalUrl || Astro.url.href;
       .cred-grid,
       .footer-inner { grid-template-columns: 1fr; }
 
-      .offer-step { flex-direction: column; gap: 12px; padding: 22px; }
+      .offer-step { flex-direction: column; gap: 12px; padding: 22px; overflow: hidden; }
       .offer-num { font-size: 36px; }
+      .waitlist-form { flex-direction: column; }
+      .waitlist-form input, .waitlist-form button { width: 100%; box-sizing: border-box; }
 
       .btn-group { flex-direction: column; }
       .btn-primary, .btn-outline { text-align: center; width: 100%; }
@@ -325,7 +327,7 @@ const finalCanonicalUrl = canonicalUrl || Astro.url.href;
       <div class="footer-col">
         <img src="/azalin-logo.png" alt="Azalin" style="height:80px; width:auto; margin-bottom:12px;">
         <div style="font-size:9px; color:var(--text); letter-spacing:1px; text-transform:uppercase; margin-bottom:12px;">Strategic Moves. Revealed.</div>
-        <p>Panama first. Done beside you. For Canadians earning $300K or more who are ready to build a life with genuine options.</p>
+        <p>For Canadians sending $100,000 or more to CRA every year who are ready to do something about it. Panama. Done beside you.</p>
       </div>
       <div class="footer-col">
         <h4>Navigate</h4>
