@@ -159,66 +159,51 @@ const RETREAT_WEBHOOK = import.meta.env.PUBLIC_PANAMA_RETREAT_WAITLIST_WEBHOOK;
     </div>
   </section>
 
-  <!-- Four Offers -->
-  <section class="bg2">
+  <!-- Opportunity Cost -->
+  <section>
     <div class="container">
-      <span class="eyebrow">How We Work Together</span>
-      <h2>Four Ways In.<br>One Direction.</h2>
-      <div style="margin-top:36px;">
-        <div class="offer-step">
-          <div class="offer-num">1</div>
-          <div>
-            <span class="offer-price">FREE</span>
-            <h3>The Panama Report + Blog</h3>
-            <p>A clear, honest guide to Panama's territorial tax system, the Friendly Nations Visa, corporate setup, property ownership, and what life actually looks like for a western professional earning $300K or more. No fluff. No upsell disguised as education. Start here.</p>
-            <div class="btn-group" style="margin-top:16px;"><a class="btn-primary" href="/report/">Download the Report</a></div>
-          </div>
+      <span class="eyebrow">The Cost of Staying</span>
+      <h2>The Money CRA Took This Year<br>Could Have Been Working For You.</h2>
+      <p style="max-width:660px; margin-bottom:48px; color:var(--muted);">If a $300K Canadian earner had redirected $100,000 per year — the portion sent to CRA — into an S&amp;P 500 index fund starting in 2015, here is what that capital would be worth at the end of 2024.</p>
+      <div class="grid-3" style="margin-bottom:48px;">
+        <div class="card" style="text-align:center;">
+          <div style="font-size:12px; color:var(--muted); margin-bottom:10px; text-transform:uppercase; letter-spacing:.07em;">Total Capital Sent to CRA</div>
+          <div style="font-size:40px; font-weight:700; color:var(--text); line-height:1; font-family:'Playfair Display',serif;">$1,000,000</div>
+          <div style="font-size:13px; color:var(--muted); margin-top:10px;">10 years × $100K/year</div>
         </div>
-        <div class="offer-step">
-          <div class="offer-num">2</div>
-          <div>
-            <span class="offer-price">PAID</span>
-            <h3>Bitcoin Mini-Course + Cold Storage</h3>
-            <p>Self-custody is not optional for the wealthy. This is a practical guide to Bitcoin security, hardware wallets, and how to move your first coins into cold storage. Includes a Tangem card to get you started immediately. Perfect for professionals who want to understand what they are holding.</p>
-            <form class="waitlist-form" data-webhook="bitcoin">
-              <input type="email" placeholder="your@email.com" required>
-              <button type="submit">Join Waitlist</button>
-              <div class="waitlist-success" style="display:none;">✓ You're on the list</div>
-            </form>
-          </div>
+        <div class="card card-gold" style="text-align:center;">
+          <div style="font-size:12px; color:var(--muted); margin-bottom:10px; text-transform:uppercase; letter-spacing:.07em;">What It Would Be Worth</div>
+          <div style="font-size:40px; font-weight:700; color:var(--gold); line-height:1; font-family:'Playfair Display',serif;">$2,265,650</div>
+          <div style="font-size:13px; color:var(--muted); margin-top:10px;">S&amp;P 500 total return, 2015–2024</div>
         </div>
-        <div class="offer-step">
-          <div class="offer-num">3</div>
-          <div>
-            <span class="offer-price">MID-TIER</span>
-            <h3>The Scouting Trip</h3>
-            <p>You fly to Panama. I meet you there. Over several days, I walk you through the neighbourhoods, the banks, the legal process, and the realities of daily life at your income level. You leave with a clear picture of whether Panama is the next move. Optional: add the Friendly Nations Visa application and I sit beside you through the process itself.</p>
-            <form class="waitlist-form" data-webhook="scouting">
-              <input type="email" placeholder="your@email.com" required>
-              <button type="submit">Join Waitlist</button>
-              <div class="waitlist-success" style="display:none;">✓ You're on the list</div>
-            </form>
-          </div>
-        </div>
-        <div class="offer-step">
-          <div class="offer-num">4</div>
-          <div>
-            <span class="offer-price">HIGH TICKET</span>
-            <h3>The Panama Executive Programme</h3>
-            <p>A seven-day professional development intensive in Panama City. Remote business operations practice, Bitcoin literacy and cold storage implementation, executive wellness, and cultural immersion. Structured as a corporate professional development programme — qualifying participants may expense this against their business. You leave knowing exactly how your business runs without you in the room, and whether Panama is the next move. Limited seats.</p>
-            <form class="waitlist-form" data-webhook="retreat">
-              <input type="email" placeholder="your@email.com" required>
-              <button type="submit">Join Waitlist</button>
-              <div class="waitlist-success" style="display:none;">✓ You're on the list</div>
-            </form>
-          </div>
+        <div class="card" style="text-align:center;">
+          <div style="font-size:12px; color:var(--muted); margin-bottom:10px; text-transform:uppercase; letter-spacing:.07em;">Compounding Gain Lost</div>
+          <div style="font-size:40px; font-weight:700; color:var(--text); line-height:1; font-family:'Playfair Display',serif;">$1,265,650</div>
+          <div style="font-size:13px; color:var(--muted); margin-top:10px;">Capital that never worked for you</div>
         </div>
       </div>
+      <div style="margin-bottom:40px;">
+        <div style="font-size:12px; color:var(--muted); margin-bottom:16px; text-transform:uppercase; letter-spacing:.07em;">$100K invested each year → value at end of 2024</div>
+        <div style="display:flex; flex-direction:column; gap:10px;">
+          <div style="display:flex; align-items:center; gap:12px;"><span style="font-size:13px; color:var(--muted); width:34px; flex-shrink:0;">2015</span><div style="flex:1; background:var(--bg3); border-radius:3px; height:22px;"><div style="width:100%; height:100%; background:var(--gold); border-radius:3px; opacity:.85;"></div></div><span style="font-size:13px; color:var(--gold); font-weight:600; width:82px; text-align:right; flex-shrink:0;">$342,820</span></div>
+          <div style="display:flex; align-items:center; gap:12px;"><span style="font-size:13px; color:var(--muted); width:34px; flex-shrink:0;">2016</span><div style="flex:1; background:var(--bg3); border-radius:3px; height:22px;"><div style="width:98.6%; height:100%; background:var(--gold); border-radius:3px; opacity:.85;"></div></div><span style="font-size:13px; color:var(--gold); font-weight:600; width:82px; text-align:right; flex-shrink:0;">$338,150</span></div>
+          <div style="display:flex; align-items:center; gap:12px;"><span style="font-size:13px; color:var(--muted); width:34px; flex-shrink:0;">2017</span><div style="flex:1; background:var(--bg3); border-radius:3px; height:22px;"><div style="width:88.1%; height:100%; background:var(--gold); border-radius:3px; opacity:.85;"></div></div><span style="font-size:13px; color:var(--gold); font-weight:600; width:82px; text-align:right; flex-shrink:0;">$301,990</span></div>
+          <div style="display:flex; align-items:center; gap:12px;"><span style="font-size:13px; color:var(--muted); width:34px; flex-shrink:0;">2018</span><div style="flex:1; background:var(--bg3); border-radius:3px; height:22px;"><div style="width:72.3%; height:100%; background:var(--gold); border-radius:3px; opacity:.85;"></div></div><span style="font-size:13px; color:var(--gold); font-weight:600; width:82px; text-align:right; flex-shrink:0;">$247,820</span></div>
+          <div style="display:flex; align-items:center; gap:12px;"><span style="font-size:13px; color:var(--muted); width:34px; flex-shrink:0;">2019</span><div style="flex:1; background:var(--bg3); border-radius:3px; height:22px;"><div style="width:75.6%; height:100%; background:var(--gold); border-radius:3px; opacity:.85;"></div></div><span style="font-size:13px; color:var(--gold); font-weight:600; width:82px; text-align:right; flex-shrink:0;">$259,180</span></div>
+          <div style="display:flex; align-items:center; gap:12px;"><span style="font-size:13px; color:var(--muted); width:34px; flex-shrink:0;">2020</span><div style="flex:1; background:var(--bg3); border-radius:3px; height:22px;"><div style="width:57.5%; height:100%; background:var(--gold); border-radius:3px; opacity:.85;"></div></div><span style="font-size:13px; color:var(--gold); font-weight:600; width:82px; text-align:right; flex-shrink:0;">$197,030</span></div>
+          <div style="display:flex; align-items:center; gap:12px;"><span style="font-size:13px; color:var(--muted); width:34px; flex-shrink:0;">2021</span><div style="flex:1; background:var(--bg3); border-radius:3px; height:22px;"><div style="width:48.5%; height:100%; background:var(--gold); border-radius:3px; opacity:.85;"></div></div><span style="font-size:13px; color:var(--gold); font-weight:600; width:82px; text-align:right; flex-shrink:0;">$166,410</span></div>
+          <div style="display:flex; align-items:center; gap:12px;"><span style="font-size:13px; color:var(--muted); width:34px; flex-shrink:0;">2022</span><div style="flex:1; background:var(--bg3); border-radius:3px; height:22px;"><div style="width:37.7%; height:100%; background:var(--gold); border-radius:3px; opacity:.55;"></div></div><span style="font-size:13px; color:var(--muted); font-weight:600; width:82px; text-align:right; flex-shrink:0;">$129,340</span></div>
+          <div style="display:flex; align-items:center; gap:12px;"><span style="font-size:13px; color:var(--muted); width:34px; flex-shrink:0;">2023</span><div style="flex:1; background:var(--bg3); border-radius:3px; height:22px;"><div style="width:46.1%; height:100%; background:var(--gold); border-radius:3px; opacity:.85;"></div></div><span style="font-size:13px; color:var(--gold); font-weight:600; width:82px; text-align:right; flex-shrink:0;">$157,890</span></div>
+          <div style="display:flex; align-items:center; gap:12px;"><span style="font-size:13px; color:var(--muted); width:34px; flex-shrink:0;">2024</span><div style="flex:1; background:var(--bg3); border-radius:3px; height:22px;"><div style="width:36.5%; height:100%; background:var(--gold); border-radius:3px; opacity:.85;"></div></div><span style="font-size:13px; color:var(--gold); font-weight:600; width:82px; text-align:right; flex-shrink:0;">$125,020</span></div>
+        </div>
+      </div>
+      <p style="max-width:660px; font-size:15px; line-height:1.7;">The cost of inaction is not $150,000 this year. Compounded across a decade, it is over <strong style="color:var(--gold);">$1.26 million in capital that did not work for you</strong> — on top of the $1 million already surrendered. Panama's territorial tax system is a legal, documented alternative. Every year you stay is another $100,000 that goes to CRA instead of your portfolio.</p>
+      <p style="font-size:12px; color:var(--muted); margin-top:16px; opacity:.6;">Based on S&amp;P 500 total return index (dividends reinvested), January 2015–December 2024. Assumes $100,000 invested at the start of each calendar year. Figures are illustrative. Not financial advice. Past performance does not guarantee future results.</p>
     </div>
   </section>
 
   <!-- Founder Teaser -->
-  <section>
+  <section class="bg2">
     <div class="container">
       <div class="grid-2" style="gap:56px; align-items:center;">
         <div>
@@ -235,6 +220,64 @@ const RETREAT_WEBHOOK = import.meta.env.PUBLIC_PANAMA_RETREAT_WAITLIST_WEBHOOK;
             alt="Joshua Allen — Founder of Azalin"
             style="width:100%; height:360px; object-fit:cover; object-position:center top; display:block;"
           />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Four Offers -->
+  <section>
+    <div class="container">
+      <span class="eyebrow">How We Work Together</span>
+      <h2>Four Ways In.<br>One Direction.</h2>
+      <div style="margin-top:36px;">
+        <div class="offer-step">
+          <div class="offer-num">1</div>
+          <div>
+            <span class="offer-price">FREE</span>
+            <h3>The Panama Report + Blog</h3>
+            <p>A clear, honest guide to Panama's territorial tax system, the Friendly Nations Visa, corporate setup, property ownership, and what life actually looks like for a western professional earning $300K or more. No fluff. No upsell disguised as education. Start here.</p>
+            <div class="btn-group" style="margin-top:16px;"><a class="btn-primary" href="/report/">Download the Report</a></div>
+          </div>
+        </div>
+        <div class="offer-step">
+          <div class="offer-num">2</div>
+          <div>
+            <span class="offer-price">DONE-BESIDE-YOU</span>
+            <h3>The Scouting Trip</h3>
+            <p>You fly to Panama. I meet you there. Over several days, I walk you through the neighbourhoods, the banks, the legal process, and the realities of daily life at your income level. You leave with a clear picture of whether Panama is the next move. Optional: add the Friendly Nations Visa application and I sit beside you through the process itself.</p>
+            <form class="waitlist-form" data-webhook="scouting">
+              <input type="email" placeholder="your@email.com" required>
+              <button type="submit">Join Waitlist</button>
+              <div class="waitlist-success" style="display:none;">✓ You're on the list</div>
+            </form>
+          </div>
+        </div>
+        <div class="offer-step">
+          <div class="offer-num">3</div>
+          <div>
+            <span class="offer-price">$197 · ONLINE</span>
+            <h3>Bitcoin Mini-Course + Cold Storage</h3>
+            <p>Self-custody is not optional for the wealthy. This is a practical guide to Bitcoin security, hardware wallets, and how to move your first coins into cold storage. Includes a Tangem card to get you started immediately. Perfect for professionals who want to understand what they are holding.</p>
+            <form class="waitlist-form" data-webhook="bitcoin">
+              <input type="email" placeholder="your@email.com" required>
+              <button type="submit">Join Waitlist</button>
+              <div class="waitlist-success" style="display:none;">✓ You're on the list</div>
+            </form>
+          </div>
+        </div>
+        <div class="offer-step">
+          <div class="offer-num">4</div>
+          <div>
+            <span class="offer-price">BY APPLICATION</span>
+            <h3>The Panama Executive Programme</h3>
+            <p>A seven-day professional development intensive in Panama City. Remote business operations practice, Bitcoin literacy and cold storage implementation, executive wellness, and cultural immersion. Structured as a corporate professional development programme — qualifying participants may expense this against their business. You leave knowing exactly how your business runs without you in the room, and whether Panama is the next move. Limited seats.</p>
+            <form class="waitlist-form" data-webhook="retreat">
+              <input type="email" placeholder="your@email.com" required>
+              <button type="submit">Join Waitlist</button>
+              <div class="waitlist-success" style="display:none;">✓ You're on the list</div>
+            </form>
+          </div>
         </div>
       </div>
     </div>
