@@ -1,0 +1,828 @@
+---
+import Base from '../layouts/Base.astro';
+// Add PUBLIC_LIFESTYLE_CALC_WEBHOOK to Cloudflare Pages env vars to enable silent data capture
+const CALC_WEBHOOK = import.meta.env.PUBLIC_LIFESTYLE_CALC_WEBHOOK || '';
+---
+
+<style is:global>
+
+  /* ── CALCULATOR INPUTS ── */
+  .calc-form {
+    max-width: 660px;
+    margin: 0 auto;
+  }
+
+  .calc-input-group {
+    margin-bottom: 28px;
+  }
+
+  .calc-input-group > label {
+    display: block;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 10px;
+  }
+
+  .calc-input-group .hint {
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 8px;
+    line-height: 1.6;
+  }
+
+  .revenue-wrap {
+    position: relative;
+  }
+
+  .revenue-wrap .dollar {
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--gold);
+    font-weight: 700;
+    font-size: 16px;
+    pointer-events: none;
+    line-height: 1;
+  }
+
+  .calc-text-input {
+    width: 100%;
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    color: var(--text);
+    padding: 14px 16px 14px 32px;
+    font-size: 18px;
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    transition: border-color 0.2s;
+    box-sizing: border-box;
+  }
+
+  .calc-text-input:focus {
+    outline: none;
+    border-color: var(--gold);
+  }
+
+  .calc-text-input::placeholder {
+    color: var(--muted);
+    font-weight: 400;
+  }
+
+  .calc-select {
+    width: 100%;
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    color: var(--text);
+    padding: 13px 16px;
+    font-size: 15px;
+    font-family: 'Inter', sans-serif;
+    transition: border-color 0.2s;
+    -webkit-appearance: none;
+    appearance: none;
+    cursor: pointer;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%237A9BB5' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 16px center;
+    padding-right: 40px;
+  }
+
+  .calc-select:focus {
+    outline: none;
+    border-color: var(--gold);
+  }
+
+  .calc-select option {
+    background: var(--bg2);
+  }
+
+  /* Province quick-set pills */
+  .province-pills {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 12px;
+  }
+
+  .prov-btn {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    color: var(--muted);
+    border-radius: 100px;
+    padding: 5px 14px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: 'Inter', sans-serif;
+    white-space: nowrap;
+  }
+
+  .prov-btn:hover { border-color: var(--gold); color: var(--gold); }
+  .prov-btn.active { border-color: var(--gold); color: var(--gold); background: rgba(218,165,32,.1); }
+
+  /* Slider */
+  .slider-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .slider-row input[type="range"] {
+    flex: 1;
+    -webkit-appearance: none;
+    appearance: none;
+    height: 4px;
+    background: var(--bg3);
+    border-radius: 2px;
+    outline: none;
+    cursor: pointer;
+  }
+
+  .slider-row input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 22px;
+    height: 22px;
+    background: var(--gold);
+    border-radius: 50%;
+    cursor: pointer;
+    border: 3px solid var(--bg);
+    box-shadow: 0 0 0 1px var(--gold);
+  }
+
+  .slider-row input[type="range"]::-moz-range-thumb {
+    width: 22px;
+    height: 22px;
+    background: var(--gold);
+    border-radius: 50%;
+    cursor: pointer;
+    border: 3px solid var(--bg);
+  }
+
+  .slider-val {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--gold);
+    min-width: 52px;
+    text-align: right;
+  }
+
+  /* ── CALCULATE BUTTON ── */
+  .calc-btn {
+    width: 100%;
+    padding: 18px;
+    font-size: 16px;
+    letter-spacing: 1px;
+    margin-top: 8px;
+    border: none;
+    cursor: pointer;
+    background: var(--gold);
+    color: #0B1826;
+    border-radius: var(--radius);
+    font-weight: 700;
+    font-family: 'Inter', sans-serif;
+    transition: background 0.2s;
+  }
+
+  .calc-btn:hover { background: var(--gold-lt); }
+
+  /* ── RESULTS SECTION ── */
+  .results-section {
+    margin-top: 72px;
+    padding-top: 64px;
+    border-top: 1px solid var(--border);
+  }
+
+  .results-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-top: 36px;
+  }
+
+  .result-panel {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 32px;
+  }
+
+  .result-panel.panama {
+    border-top: 3px solid var(--gold);
+  }
+
+  .rp-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 24px;
+    display: block;
+  }
+
+  .result-panel.panama .rp-label { color: var(--gold); }
+
+  .rrow {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 12px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .rrow:last-child { border-bottom: none; padding-bottom: 0; }
+  .rrow:first-of-type { padding-top: 0; }
+
+  .rrow-lbl {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.4;
+    flex-shrink: 0;
+    max-width: 55%;
+  }
+
+  .rrow-val {
+    font-family: 'Playfair Display', serif;
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--text);
+    text-align: right;
+    white-space: nowrap;
+  }
+
+  .rrow-val.gold  { color: var(--gold); }
+  .rrow-val.big   { font-size: 24px; }
+  .rrow-val.red   { color: #e05566; }
+
+  /* ── SUMMARY LINE ── */
+  .summary-box {
+    background: rgba(218,165,32,.07);
+    border: 1px solid var(--gold);
+    border-radius: var(--radius);
+    padding: 28px 36px;
+    margin-top: 32px;
+    text-align: center;
+  }
+
+  .summary-box p {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(15px, 1.8vw, 19px);
+    color: var(--text);
+    line-height: 1.75;
+  }
+
+  .summary-box strong { color: var(--gold); }
+
+  /* ── CALENDAR VISUAL ── */
+  .cal-section {
+    margin-top: 52px;
+  }
+
+  .cal-eyebrow {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-align: center;
+    display: block;
+    margin-bottom: 24px;
+  }
+
+  .cal-cols {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+
+  .cal-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px 28px;
+  }
+
+  .cal-card.cal-after { border-top: 3px solid var(--gold); }
+
+  .cal-card-title {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 20px;
+    display: block;
+  }
+
+  .cal-card.cal-after .cal-card-title { color: var(--gold); }
+
+  .cal-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 9px;
+  }
+
+  .cal-day {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--muted);
+    width: 26px;
+    flex-shrink: 0;
+  }
+
+  .cal-track {
+    flex: 1;
+    height: 22px;
+    background: var(--bg3);
+    border-radius: 3px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cal-fill-full {
+    position: absolute;
+    inset: 0;
+    background: rgba(122,155,181,.22);
+    border-radius: 3px;
+  }
+
+  .cal-fill-work {
+    position: absolute;
+    top: 0; bottom: 0;
+    /* 9am from 7am = 2/12hrs = 16.7%; width = 3hrs/12hrs = 25% */
+    left: 16.7%;
+    width: 25%;
+    background: var(--gold);
+    opacity: .88;
+    border-radius: 3px;
+  }
+
+  .cal-times {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+    padding: 0 36px 0 36px;
+    font-size: 10px;
+    color: var(--muted);
+    opacity: .55;
+  }
+
+  .cal-total {
+    margin-top: 18px;
+    text-align: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1;
+  }
+
+  .cal-card.cal-after .cal-total { color: var(--gold); }
+
+  .cal-sub {
+    text-align: center;
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 6px;
+  }
+
+  .cal-legend {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+  }
+
+  .cal-legend-item {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  .cal-dot {
+    width: 14px;
+    height: 14px;
+    border-radius: 3px;
+    flex-shrink: 0;
+  }
+
+  /* ── DISCLAIMER ── */
+  .calc-disclaimer {
+    margin-top: 36px;
+    padding: 18px 22px;
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    font-size: 11px;
+    color: var(--muted);
+    line-height: 1.75;
+    opacity: .8;
+  }
+
+  .calc-disclaimer strong { color: var(--text); }
+
+  /* ── MOBILE ── */
+  @media (max-width: 768px) {
+    .results-grid  { grid-template-columns: 1fr; }
+    .cal-cols      { grid-template-columns: 1fr; }
+    .result-panel  { padding: 22px; }
+    .summary-box   { padding: 20px; }
+    .slider-val    { font-size: 18px; min-width: 44px; }
+    .cal-times     { padding: 0 26px; }
+  }
+
+</style>
+
+<Base
+  title="Lifestyle Design Calculator"
+  description="Enter your revenue and tax rate. See your Canada Reality and Panama Alternative side by side — tax savings, monthly surplus, 10-year wealth projection, and how your week changes. No email required."
+>
+
+  <!-- Hero -->
+  <section class="hero" style="padding-bottom: 56px;">
+    <div class="container">
+      <span class="eyebrow">Lifestyle Design Calculator</span>
+      <h1 style="font-size: clamp(28px, 4vw, 46px); max-width: 640px;">Your Numbers.<br><em style="color:var(--gold);">What Panama Actually Means for You.</em></h1>
+      <p class="lead" style="margin-top: 18px; max-width: 600px;">Enter your revenue and effective tax rate. See your Canada Reality and your Panama Alternative side by side — tax savings, monthly surplus, 10-year wealth, and how your week gets redesigned. No email required. Every calculation you run is anonymous.</p>
+    </div>
+  </section>
+
+  <!-- Calculator -->
+  <section style="padding-top: 0; padding-bottom: 96px;">
+    <div class="container">
+      <div class="calc-form">
+
+        <!-- Revenue -->
+        <div class="calc-input-group">
+          <label for="c-revenue">Annual Business / Practice Revenue</label>
+          <div class="revenue-wrap">
+            <span class="dollar">$</span>
+            <input type="text" id="c-revenue" class="calc-text-input" placeholder="350,000" value="350,000" autocomplete="off">
+          </div>
+          <p class="hint">Your gross revenue before tax — consulting fees, agency revenue, practice billings.</p>
+        </div>
+
+        <!-- Effective Tax Rate -->
+        <div class="calc-input-group">
+          <label>Effective Tax Rate</label>
+          <div class="province-pills">
+            <button class="prov-btn" onclick="setRate(45, this)">Ontario · 45%</button>
+            <button class="prov-btn" onclick="setRate(43, this)">BC · 43%</button>
+            <button class="prov-btn" onclick="setRate(40, this)">Alberta · 40%</button>
+            <button class="prov-btn" onclick="setRate(49, this)">Quebec · 49%</button>
+          </div>
+          <div class="slider-row">
+            <input type="range" id="c-tax-slider" min="30" max="55" value="43" oninput="onTaxSlide(this.value)">
+            <span class="slider-val" id="c-tax-display">43%</span>
+          </div>
+          <p class="hint">Select your province for a preset, or drag the slider. Taking eligible dividends? Your effective rate is typically 10–15% lower than salary — adjust to match your actual bill.</p>
+        </div>
+
+        <!-- Panama Lifestyle Tier -->
+        <div class="calc-input-group">
+          <label for="c-tier">Panama Lifestyle Tier</label>
+          <select id="c-tier" class="calc-select">
+            <option value="3500">Modest — $3,500/month &nbsp;·&nbsp; Comfortable, local neighbourhood, eat local</option>
+            <option value="5500" selected>Professional — $5,500/month &nbsp;·&nbsp; Quality area, restaurants, gym, travel</option>
+            <option value="8000">Executive — $8,000/month &nbsp;·&nbsp; Premium building, domestic help, frequent travel</option>
+          </select>
+          <p class="hint">Panama costs significantly less than Toronto or Vancouver at every tier. These figures cover rent, food, transport, and lifestyle — not one-time setup costs.</p>
+        </div>
+
+        <!-- Family Situation -->
+        <div class="calc-input-group">
+          <label for="c-family">Family Situation</label>
+          <select id="c-family" class="calc-select">
+            <option value="solo">Solo</option>
+            <option value="couple">Couple</option>
+            <option value="family">Family with children</option>
+          </select>
+        </div>
+
+        <!-- Primary Goal -->
+        <div class="calc-input-group">
+          <label for="c-goal">Primary Goal</label>
+          <select id="c-goal" class="calc-select">
+            <option value="tax">Tax reduction — keep more of what I've built</option>
+            <option value="lifestyle">Lifestyle redesign — reclaim my time and location</option>
+            <option value="both" selected>Both — the full picture</option>
+          </select>
+        </div>
+
+        <!-- Months in Canada -->
+        <div class="calc-input-group">
+          <label>Months Per Year in Canada</label>
+          <div class="slider-row">
+            <input type="range" id="c-months" min="0" max="12" value="2" oninput="onMonthsSlide(this.value)">
+            <span class="slider-val" id="c-months-display" style="min-width:64px; font-size:17px;">2 mo.</span>
+          </div>
+          <p class="hint">Panama-based professionals typically visit Canada 1–3 months per year for family, business, and pleasure. Canada becomes a destination — not a cage. Flights are budgeted from your tax savings.</p>
+        </div>
+
+        <button class="calc-btn" onclick="runCalculation()">Run My Numbers →</button>
+
+      </div><!-- /calc-form -->
+
+      <!-- ═══ RESULTS (hidden until calculate) ═══ -->
+      <div id="results-wrap" style="display:none;">
+        <div class="calc-form"><!-- keep results same width as inputs -->
+
+          <div class="results-section">
+            <span class="eyebrow" style="text-align:center; display:block;">Your Numbers</span>
+            <h2 style="text-align:center; margin-bottom:0;">Canada vs. Panama</h2>
+
+            <div class="results-grid">
+
+              <!-- Canada Panel -->
+              <div class="result-panel">
+                <span class="rp-label">Canada Reality</span>
+
+                <div class="rrow">
+                  <span class="rrow-lbl">Annual Revenue</span>
+                  <span class="rrow-val" id="r-ca-rev">—</span>
+                </div>
+                <div class="rrow">
+                  <span class="rrow-lbl">Estimated Tax Bill</span>
+                  <span class="rrow-val red" id="r-ca-tax">—</span>
+                </div>
+                <div class="rrow">
+                  <span class="rrow-lbl">Annual Net Take-Home</span>
+                  <span class="rrow-val" id="r-ca-net">—</span>
+                </div>
+                <div class="rrow">
+                  <span class="rrow-lbl">Monthly Take-Home</span>
+                  <span class="rrow-val" id="r-ca-monthly">—</span>
+                </div>
+                <div class="rrow">
+                  <span class="rrow-lbl">Estimated Work Hours</span>
+                  <span class="rrow-val" id="r-ca-hours">—</span>
+                </div>
+              </div>
+
+              <!-- Panama Panel -->
+              <div class="result-panel panama">
+                <span class="rp-label">Panama Alternative</span>
+
+                <div class="rrow">
+                  <span class="rrow-lbl">Annual Revenue</span>
+                  <span class="rrow-val" id="r-pa-rev">—</span>
+                </div>
+                <div class="rrow">
+                  <span class="rrow-lbl">Tax on Foreign Income</span>
+                  <span class="rrow-val gold" id="r-pa-tax">—</span>
+                </div>
+                <div class="rrow">
+                  <span class="rrow-lbl">Annual Net Take-Home</span>
+                  <span class="rrow-val" id="r-pa-net">—</span>
+                </div>
+                <div class="rrow">
+                  <span class="rrow-lbl">Panama Monthly Expenses</span>
+                  <span class="rrow-val" id="r-pa-exp">—</span>
+                </div>
+                <div class="rrow">
+                  <span class="rrow-lbl">Monthly Investable Surplus</span>
+                  <span class="rrow-val gold" id="r-pa-surplus">—</span>
+                </div>
+                <div class="rrow">
+                  <span class="rrow-lbl">Annual Wealth-Building Capacity</span>
+                  <span class="rrow-val gold" id="r-pa-annual">—</span>
+                </div>
+                <div class="rrow">
+                  <span class="rrow-lbl">10-Year S&amp;P 500 Projection<br><span style="font-size:10px;font-weight:400;font-family:'Inter',sans-serif;">surplus invested at ~10.4% avg. annual return</span></span>
+                  <span class="rrow-val gold big" id="r-pa-wealth">—</span>
+                </div>
+              </div>
+
+            </div><!-- /results-grid -->
+
+            <!-- ─── CALENDAR VISUAL ─── -->
+            <div class="cal-section">
+              <span class="cal-eyebrow">Your Week. Redesigned.</span>
+              <div class="cal-cols">
+
+                <!-- Canada Before -->
+                <div class="cal-card">
+                  <span class="cal-card-title">Canada — Now</span>
+                  <div class="cal-row"><span class="cal-day">Mon</span><div class="cal-track"><div class="cal-fill-full"></div></div></div>
+                  <div class="cal-row"><span class="cal-day">Tue</span><div class="cal-track"><div class="cal-fill-full"></div></div></div>
+                  <div class="cal-row"><span class="cal-day">Wed</span><div class="cal-track"><div class="cal-fill-full"></div></div></div>
+                  <div class="cal-row"><span class="cal-day">Thu</span><div class="cal-track"><div class="cal-fill-full"></div></div></div>
+                  <div class="cal-row"><span class="cal-day">Fri</span><div class="cal-track"><div class="cal-fill-full"></div></div></div>
+                  <div class="cal-times"><span>7am</span><span>7pm</span></div>
+                  <div class="cal-total" id="r-ca-hrs-cal">~55 hrs/week</div>
+                  <div class="cal-sub">Every day. Every week.</div>
+                </div>
+
+                <!-- Panama After -->
+                <div class="cal-card cal-after">
+                  <span class="cal-card-title">Panama — Redesigned</span>
+                  <div class="cal-row"><span class="cal-day">Mon</span><div class="cal-track"></div></div>
+                  <div class="cal-row"><span class="cal-day">Tue</span><div class="cal-track"><div class="cal-fill-work"></div></div></div>
+                  <div class="cal-row"><span class="cal-day">Wed</span><div class="cal-track"><div class="cal-fill-work"></div></div></div>
+                  <div class="cal-row"><span class="cal-day">Thu</span><div class="cal-track"><div class="cal-fill-work"></div></div></div>
+                  <div class="cal-row"><span class="cal-day">Fri</span><div class="cal-track"></div></div>
+                  <div class="cal-times"><span>9am</span><span>12pm</span></div>
+                  <div class="cal-total">~12 hrs/week</div>
+                  <div class="cal-sub">High-leverage. By design.</div>
+                </div>
+
+              </div><!-- /cal-cols -->
+
+              <div class="cal-legend">
+                <div class="cal-legend-item">
+                  <div class="cal-dot" style="background:rgba(122,155,181,.3);"></div>
+                  <span>Reactive work / admin / commute</span>
+                </div>
+                <div class="cal-legend-item">
+                  <div class="cal-dot" style="background:var(--gold); opacity:.88;"></div>
+                  <span>Deep work · 3 hrs × 3 days/week</span>
+                </div>
+                <div class="cal-legend-item">
+                  <div class="cal-dot" style="background:var(--bg3); border:1px solid var(--border);"></div>
+                  <span>Free — your time</span>
+                </div>
+              </div>
+            </div><!-- /cal-section -->
+
+            <!-- Summary -->
+            <div class="summary-box">
+              <p id="r-summary">—</p>
+            </div>
+
+            <!-- Disclaimer -->
+            <div class="calc-disclaimer">
+              <strong>Important:</strong> This calculator produces illustrative figures only and does not constitute tax, legal, or financial advice. Tax estimates are approximate effective rates based on combined federal and provincial income tax on salary income; individual results will vary based on income source (salary, dividends, capital gains), corporate structure, deductions, and province. Panama's territorial tax system taxes only income earned within Panama — foreign-sourced income is subject to 0% Panamanian tax under Article 694 of the Panamanian Fiscal Code; however, Canadian departure tax and ongoing Canadian tax obligations require professional legal guidance. Panama corporate and residency maintenance estimated at $3,000/year (legal, accounting, annual fees) — one-time company formation costs (~$2,000–5,000) are not included in this calculator. S&amp;P 500 projection uses a 10.4% average annual return (historical average including dividends reinvested, 1994–2024) applied to a DCA model; past performance does not guarantee future results. Consult a qualified Canadian tax lawyer and Panamanian legal professional before making any relocation decision.
+            </div>
+
+          </div><!-- /results-section -->
+        </div><!-- /calc-form inner -->
+      </div><!-- /results-wrap -->
+
+    </div><!-- /container -->
+  </section>
+
+</Base>
+
+<script is:inline define:vars={{CALC_WEBHOOK}}>
+
+  /* ── HELPERS ── */
+  function fmt(n) {
+    // Format as dollar amount — no decimals
+    return '$' + Math.round(Math.abs(n)).toLocaleString('en-CA');
+  }
+
+  function getRevenue() {
+    const raw = document.getElementById('c-revenue').value.replace(/[$,\s]/g, '');
+    return parseFloat(raw) || 0;
+  }
+
+  /* ── SLIDER HANDLERS ── */
+  function onTaxSlide(val) {
+    document.getElementById('c-tax-display').textContent = val + '%';
+    document.querySelectorAll('.prov-btn').forEach(b => b.classList.remove('active'));
+  }
+
+  function onMonthsSlide(val) {
+    document.getElementById('c-months-display').textContent = val + ' mo.';
+  }
+
+  function setRate(rate, btn) {
+    document.getElementById('c-tax-slider').value = rate;
+    document.getElementById('c-tax-display').textContent = rate + '%';
+    document.querySelectorAll('.prov-btn').forEach(b => b.classList.remove('active'));
+    if (btn) btn.classList.add('active');
+  }
+
+  /* ── S&P 500 DCA PROJECTION ── */
+  function calcWealth10yr(annualSurplus) {
+    if (annualSurplus <= 0) return 0;
+    const r = 0.104;
+    let total = 0;
+    // Invest annual surplus at start of each year, compound for remaining years
+    for (let y = 1; y <= 10; y++) {
+      total += annualSurplus * Math.pow(1 + r, y);
+    }
+    return Math.round(total);
+  }
+
+  /* ── MAIN CALCULATION ── */
+  function runCalculation() {
+    const revenue = getRevenue();
+
+    if (revenue < 50000) {
+      alert('Please enter your annual revenue to run the calculation.');
+      document.getElementById('c-revenue').focus();
+      return;
+    }
+
+    const taxRate      = parseInt(document.getElementById('c-tax-slider').value) / 100;
+    const monthlyExp   = parseInt(document.getElementById('c-tier').value);
+    const family       = document.getElementById('c-family').value;
+    const goal         = document.getElementById('c-goal').value;
+    const monthsCan    = parseInt(document.getElementById('c-months').value);
+
+    /* Canada */
+    const caTax        = revenue * taxRate;
+    const caNet        = revenue - caTax;
+    const caMonthly    = caNet / 12;
+    const caHours      = revenue >= 600000 ? 60 : revenue >= 350000 ? 55 : 50;
+
+    /* Panama */
+    const paAdmin      = 3000;          // annual corp + residency maintenance
+    const paNet        = revenue - paAdmin;
+    const paMonthly    = paNet / 12;
+    const paSurpMo     = paMonthly - monthlyExp;
+    const paSurpAnn    = paSurpMo * 12;
+    const taxSaving    = caTax - paAdmin;
+    const wealth10yr   = calcWealth10yr(Math.max(0, paSurpAnn));
+    const hoursBack    = caHours - 12;   // Panama model: 12 hrs/week high-leverage
+
+    /* Update DOM — Canada */
+    document.getElementById('r-ca-rev').textContent     = fmt(revenue);
+    document.getElementById('r-ca-tax').textContent     = '−' + fmt(caTax);
+    document.getElementById('r-ca-net').textContent     = fmt(caNet);
+    document.getElementById('r-ca-monthly').textContent = fmt(caMonthly) + '/mo.';
+    document.getElementById('r-ca-hours').textContent   = '~' + caHours + ' hrs/week';
+    document.getElementById('r-ca-hrs-cal').textContent = '~' + caHours + ' hrs/week';
+
+    /* Update DOM — Panama */
+    document.getElementById('r-pa-rev').textContent     = fmt(revenue);
+    document.getElementById('r-pa-tax').textContent     = '$0 on foreign income';
+    document.getElementById('r-pa-net').textContent     = fmt(paNet);
+    document.getElementById('r-pa-exp').textContent     = '−' + fmt(monthlyExp) + '/mo.';
+    document.getElementById('r-pa-surplus').textContent = fmt(Math.max(0, paSurpMo)) + '/mo.';
+    document.getElementById('r-pa-annual').textContent  = fmt(Math.max(0, paSurpAnn)) + '/yr';
+    document.getElementById('r-pa-wealth').textContent  = fmt(wealth10yr);
+
+    /* Summary line */
+    document.getElementById('r-summary').innerHTML =
+      'By relocating to Panama, you could keep an additional <strong>' + fmt(taxSaving) +
+      '</strong> per year, build <strong>' + fmt(wealth10yr) +
+      '</strong> in investable wealth over 10 years, and reclaim <strong>' +
+      hoursBack + ' hours per week</strong>.';
+
+    /* Reveal and scroll */
+    const wrap = document.getElementById('results-wrap');
+    wrap.style.display = 'block';
+    setTimeout(() => {
+      wrap.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 80);
+
+    /* Silent Zapier capture — fire and forget */
+    if (CALC_WEBHOOK) {
+      fetch(CALC_WEBHOOK, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          timestamp:                new Date().toISOString(),
+          revenue:                  revenue,
+          effective_tax_rate:       taxRate,
+          monthly_expenses:         monthlyExp,
+          family_situation:         family,
+          primary_goal:             goal,
+          months_in_canada:         monthsCan,
+          calculated_tax_saving:    Math.round(taxSaving),
+          calculated_surplus_monthly: Math.round(Math.max(0, paSurpMo)),
+          calculated_10yr_wealth:   wealth10yr,
+          hours_reclaimed_weekly:   hoursBack
+        })
+      }).catch(() => { /* non-blocking — silent fail is fine */ });
+    }
+  }
+
+  /* ── INPUT FORMATTING ── */
+  document.addEventListener('DOMContentLoaded', function () {
+    const inp = document.getElementById('c-revenue');
+
+    inp.addEventListener('blur', function () {
+      const val = parseFloat(this.value.replace(/[$,\s]/g, ''));
+      if (!isNaN(val) && val > 0) {
+        this.value = Math.round(val).toLocaleString('en-CA');
+      }
+    });
+
+    inp.addEventListener('focus', function () {
+      this.value = this.value.replace(/[$,\s]/g, '');
+      this.select();
+    });
+
+    inp.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter') runCalculation();
+    });
+  });
+
+</script>

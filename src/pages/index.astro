@@ -199,11 +199,80 @@ const RETREAT_WEBHOOK = import.meta.env.PUBLIC_PANAMA_RETREAT_WAITLIST_WEBHOOK;
       </div>
       <p style="max-width:660px; font-size:15px; line-height:1.7;">The cost of inaction is not $150,000 this year. Compounded across a decade, it is over <strong style="color:var(--gold);">$1.26 million in capital that did not work for you</strong> — on top of the $1 million already surrendered. Panama's territorial tax system is a legal, documented alternative. Every year you stay is another $100,000 that goes to CRA instead of your portfolio.</p>
       <p style="font-size:12px; color:var(--muted); margin-top:16px; opacity:.6;">Based on S&amp;P 500 total return index (dividends reinvested), January 2015–December 2024. Assumes $100,000 invested at the start of each calendar year. Figures are illustrative. Not financial advice. Past performance does not guarantee future results.</p>
+      <div class="btn-group" style="margin-top:32px;">
+        <a class="btn-primary" href="/lifestyle/">Run Your Numbers →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- What the Other Side Looks Like -->
+  <section class="bg2">
+    <div class="container">
+      <span class="eyebrow">The Other Side</span>
+      <h2 style="max-width:640px;">This Is What the Calendar Looks Like<br>After You Make the Move.</h2>
+      <p style="max-width:620px; color:var(--muted); margin-bottom:48px; font-size:15px; line-height:1.7;">Same business. Same revenue. Different country. Panama's territorial tax system does not care what you earned — it cares where you earned it. Foreign-sourced income is zero-rated. The hours you recover are yours to keep.</p>
+
+      <!-- Calendar visual -->
+      <div class="cal-cols" style="max-width:760px; margin:0 auto 48px;">
+        <div class="cal-card">
+          <span class="cal-card-title">Canada — Now</span>
+          <div class="cal-row"><span class="cal-day">Mon</span><div class="cal-track"><div class="cal-fill-full"></div></div></div>
+          <div class="cal-row"><span class="cal-day">Tue</span><div class="cal-track"><div class="cal-fill-full"></div></div></div>
+          <div class="cal-row"><span class="cal-day">Wed</span><div class="cal-track"><div class="cal-fill-full"></div></div></div>
+          <div class="cal-row"><span class="cal-day">Thu</span><div class="cal-track"><div class="cal-fill-full"></div></div></div>
+          <div class="cal-row"><span class="cal-day">Fri</span><div class="cal-track"><div class="cal-fill-full"></div></div></div>
+          <div class="cal-times"><span>7am</span><span>7pm</span></div>
+          <div class="cal-total">~55 hrs/week</div>
+          <div class="cal-sub">Every day. Every week.</div>
+        </div>
+        <div class="cal-card cal-after">
+          <span class="cal-card-title">Panama — Redesigned</span>
+          <div class="cal-row"><span class="cal-day">Mon</span><div class="cal-track"></div></div>
+          <div class="cal-row"><span class="cal-day">Tue</span><div class="cal-track"><div class="cal-fill-work"></div></div></div>
+          <div class="cal-row"><span class="cal-day">Wed</span><div class="cal-track"><div class="cal-fill-work"></div></div></div>
+          <div class="cal-row"><span class="cal-day">Thu</span><div class="cal-track"><div class="cal-fill-work"></div></div></div>
+          <div class="cal-row"><span class="cal-day">Fri</span><div class="cal-track"></div></div>
+          <div class="cal-times"><span>7am</span><span>7pm</span></div>
+          <div class="cal-total">~12 hrs/week</div>
+          <div class="cal-sub">Tue–Thu · 9am–noon · Deep work only</div>
+        </div>
+      </div>
+      <div class="cal-legend" style="margin-bottom:56px;">
+        <div class="cal-legend-item"><div class="cal-dot" style="background:rgba(122,155,181,.35);"></div>Occupied</div>
+        <div class="cal-legend-item"><div class="cal-dot" style="background:var(--gold); opacity:.88;"></div>Deep work (Panama)</div>
+        <div class="cal-legend-item"><div class="cal-dot" style="background:var(--bg3);"></div>Free</div>
+      </div>
+
+      <!-- Three contrast stat cards -->
+      <div class="grid-3" style="margin-bottom:48px;">
+        <div class="card" style="text-align:center;">
+          <div style="font-size:11px; color:var(--muted); text-transform:uppercase; letter-spacing:.07em; margin-bottom:14px;">Tax Bill</div>
+          <div style="font-size:13px; color:var(--muted); margin-bottom:8px; text-decoration:line-through;">$150,000+ to CRA</div>
+          <div style="font-size:32px; font-weight:700; color:var(--gold); font-family:'Playfair Display',serif; line-height:1;">$0</div>
+          <div style="font-size:12px; color:var(--muted); margin-top:8px;">Panama territorial tax — Article 694</div>
+        </div>
+        <div class="card card-gold" style="text-align:center;">
+          <div style="font-size:11px; color:var(--muted); text-transform:uppercase; letter-spacing:.07em; margin-bottom:14px;">Your Hours</div>
+          <div style="font-size:13px; color:var(--muted); margin-bottom:8px; text-decoration:line-through;">55 hrs/week</div>
+          <div style="font-size:32px; font-weight:700; color:var(--gold); font-family:'Playfair Display',serif; line-height:1;">12 hrs</div>
+          <div style="font-size:12px; color:var(--muted); margin-top:8px;">Tue–Thu · 9am–noon · Everything else is yours</div>
+        </div>
+        <div class="card" style="text-align:center;">
+          <div style="font-size:11px; color:var(--muted); text-transform:uppercase; letter-spacing:.07em; margin-bottom:14px;">10-Year Gap</div>
+          <div style="font-size:13px; color:var(--muted); margin-bottom:8px; text-decoration:line-through;">$1,500,000 to CRA</div>
+          <div style="font-size:32px; font-weight:700; color:var(--gold); font-family:'Playfair Display',serif; line-height:1;">$2,698,000</div>
+          <div style="font-size:12px; color:var(--muted); margin-top:8px;">Investable wealth · S&amp;P 500 DCA at 10.4%</div>
+        </div>
+      </div>
+
+      <div class="btn-group">
+        <a class="btn-primary" href="/lifestyle/">Run Your Numbers →</a>
+      </div>
     </div>
   </section>
 
   <!-- Founder Teaser -->
-  <section class="bg2">
+  <section>
     <div class="container">
       <div class="grid-2" style="gap:56px; align-items:center;">
         <div>
@@ -226,7 +295,7 @@ const RETREAT_WEBHOOK = import.meta.env.PUBLIC_PANAMA_RETREAT_WAITLIST_WEBHOOK;
   </section>
 
   <!-- Four Offers -->
-  <section>
+  <section id="offers">
     <div class="container">
       <span class="eyebrow">How We Work Together</span>
       <h2>Four Ways In.<br>One Direction.</h2>

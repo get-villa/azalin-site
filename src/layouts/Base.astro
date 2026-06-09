@@ -235,6 +235,50 @@ const finalCanonicalUrl = canonicalUrl || Astro.url.href;
     .check-item .tick { color: var(--gold); font-size: 18px; margin-top: 2px; flex-shrink: 0; }
     .check-item p { margin: 0; font-size: 15px; }
 
+    /* ── CALENDAR VISUAL (shared: lifestyle.astro + index.astro) ── */
+    .cal-section { margin-top: 52px; }
+    .cal-eyebrow {
+      font-size: 11px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase;
+      color: var(--muted); text-align: center; display: block; margin-bottom: 24px;
+    }
+    .cal-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+    .cal-card {
+      background: var(--bg2); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 24px 28px;
+    }
+    .cal-card.cal-after { border-top: 3px solid var(--gold); }
+    .cal-card-title {
+      font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+      color: var(--muted); margin-bottom: 20px; display: block;
+    }
+    .cal-card.cal-after .cal-card-title { color: var(--gold); }
+    .cal-row { display: flex; align-items: center; gap: 10px; margin-bottom: 9px; }
+    .cal-day {
+      font-size: 10px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+      color: var(--muted); width: 26px; flex-shrink: 0;
+    }
+    .cal-track { flex: 1; height: 22px; background: var(--bg3); border-radius: 3px; position: relative; overflow: hidden; }
+    .cal-fill-full { position: absolute; inset: 0; background: rgba(122,155,181,.22); border-radius: 3px; }
+    .cal-fill-work {
+      position: absolute; top: 0; bottom: 0;
+      left: 16.7%; width: 25%;
+      background: var(--gold); opacity: .88; border-radius: 3px;
+    }
+    .cal-times {
+      display: flex; justify-content: space-between; margin-top: 10px;
+      padding: 0 36px; font-size: 10px; color: var(--muted); opacity: .55;
+    }
+    .cal-total {
+      margin-top: 18px; text-align: center;
+      font-family: 'Playfair Display', serif; font-size: 26px;
+      font-weight: 700; color: var(--text); line-height: 1;
+    }
+    .cal-card.cal-after .cal-total { color: var(--gold); }
+    .cal-sub { text-align: center; font-size: 12px; color: var(--muted); margin-top: 6px; }
+    .cal-legend { display: flex; justify-content: center; gap: 24px; margin-top: 20px; flex-wrap: wrap; }
+    .cal-legend-item { display: flex; align-items: center; gap: 7px; font-size: 12px; color: var(--muted); }
+    .cal-dot { width: 14px; height: 14px; border-radius: 3px; flex-shrink: 0; }
+
     /* ══════════════════════════════════════
        RESPONSIVE — MOBILE FIRST
     ══════════════════════════════════════ */
@@ -264,6 +308,8 @@ const finalCanonicalUrl = canonicalUrl || Astro.url.href;
 
       .pullquote { padding: 16px 20px; }
       .pullquote p { font-size: 16px; }
+      .cal-cols { grid-template-columns: 1fr; }
+      .cal-times { padding: 0 26px; }
 
       /* Two-col grid on tablets */
       @media (min-width: 540px) {
@@ -343,6 +389,7 @@ const finalCanonicalUrl = canonicalUrl || Astro.url.href;
         <a href="/report/">The Panama Report</a>
         <a href="/#offers">The Scouting Trip</a>
         <a href="/#offers">The Panama Executive Programme</a>
+        <a href="/lifestyle/">Lifestyle Design Calculator</a>
       </div>
     </div>
     <div class="footer-bottom">
