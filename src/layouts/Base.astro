@@ -244,7 +244,7 @@ const finalCanonicalUrl = canonicalUrl || Astro.url.href;
     .cal-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
     .cal-card {
       background: var(--bg2); border: 1px solid var(--border);
-      border-radius: var(--radius); padding: 24px 28px;
+      border-radius: var(--radius); padding: 20px 22px;
     }
     .cal-card.cal-after { border-top: 3px solid var(--gold); }
     .cal-card-title {
@@ -252,21 +252,21 @@ const finalCanonicalUrl = canonicalUrl || Astro.url.href;
       color: var(--muted); margin-bottom: 20px; display: block;
     }
     .cal-card.cal-after .cal-card-title { color: var(--gold); }
-    .cal-row { display: flex; align-items: center; gap: 10px; margin-bottom: 9px; }
+    .cal-row { display: flex; align-items: center; gap: 10px; margin-bottom: 7px; flex-wrap: nowrap; }
     .cal-day {
       font-size: 10px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
-      color: var(--muted); width: 26px; flex-shrink: 0;
+      color: var(--muted); width: 26px; flex-shrink: 0; white-space: nowrap;
     }
-    .cal-track { flex: 1; height: 22px; background: var(--bg3); border-radius: 3px; position: relative; overflow: hidden; }
-    .cal-fill-full { position: absolute; inset: 0; background: rgba(122,155,181,.22); border-radius: 3px; }
+    .cal-track { flex: 1; height: 16px; background: var(--bg3); border-radius: 3px; position: relative; overflow: hidden; }
+    .cal-fill-full { position: absolute; inset: 0; background: rgba(90,120,155,.50); border-radius: 3px; }
     .cal-fill-work {
       position: absolute; top: 0; bottom: 0;
       left: 16.7%; width: 25%;
       background: var(--gold); opacity: .88; border-radius: 3px;
     }
     .cal-times {
-      display: flex; justify-content: space-between; margin-top: 10px;
-      padding: 0 36px; font-size: 10px; color: var(--muted); opacity: .55;
+      display: flex; justify-content: space-between; margin-top: 8px;
+      padding: 0 30px; font-size: 10px; color: var(--muted); opacity: .55;
     }
     .cal-total {
       margin-top: 18px; text-align: center;
