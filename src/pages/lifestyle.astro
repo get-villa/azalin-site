@@ -420,6 +420,80 @@ const CALC_WEBHOOK = import.meta.env.PUBLIC_LIFESTYLE_CALC_WEBHOOK || '';
     flex-shrink: 0;
   }
 
+  /* ── EDUCATION ROWS ── */
+  .child-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+
+  .child-row-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--muted);
+    display: block;
+    margin-bottom: 6px;
+  }
+
+  .edu-total-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 12px;
+    margin-top: 4px;
+    border-top: 1px solid var(--border);
+    font-size: 13px;
+    color: var(--muted);
+  }
+
+  .edu-total-val {
+    font-family: 'Playfair Display', serif;
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--gold);
+  }
+
+  /* ── BUDGET PREVIEW ── */
+  .budget-preview-box {
+    background: rgba(218,165,32,.07);
+    border: 1px solid rgba(218,165,32,.3);
+    border-radius: var(--radius);
+    padding: 16px 20px;
+  }
+
+  .bp-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 7px 0;
+    border-bottom: 1px solid rgba(218,165,32,.12);
+  }
+
+  .bp-row:last-child { border-bottom: none; }
+
+  .bp-lbl {
+    font-size: 13px;
+    color: var(--muted);
+  }
+
+  .bp-val {
+    font-family: 'Playfair Display', serif;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text);
+  }
+
+  .bp-total { padding-top: 10px; }
+  .bp-total .bp-lbl { color: var(--text); font-weight: 600; }
+  .bp-total .bp-val { color: var(--gold); font-size: 20px; }
+
+  @media (max-width: 600px) {
+    .child-row { grid-template-columns: 1fr; }
+  }
+
   /* ── DISCLAIMER ── */
   .calc-disclaimer {
     margin-top: 36px;
@@ -495,25 +569,58 @@ const CALC_WEBHOOK = import.meta.env.PUBLIC_LIFESTYLE_CALC_WEBHOOK || '';
         <!-- Family Situation -->
         <div class="calc-input-group">
           <label for="c-family">Family Situation</label>
-          <select id="c-family" class="calc-select">
+          <select id="c-family" class="calc-select" onchange="onFamilyChange()">
             <option value="solo">Solo</option>
-            <option value="couple">Couple — no kids</option>
+            <option value="couple">Couple — no children</option>
             <option value="family1">Family — 1 child</option>
             <option value="family2">Family — 2 children</option>
-            <option value="family3">Family — 3+ children</option>
+            <option value="family3">Family — 3 children</option>
           </select>
-          <p class="hint">Families with children: a per-child addition (~$800/mo) is added to cover international school fees and activities. Panama's top private schools are a fraction of Canadian private school costs.</p>
+        </div>
+
+        <!-- Education Costs — revealed dynamically when family has children -->
+        <div id="education-section" class="calc-input-group" style="display:none;">
+          <label>Education Costs <em style="font-weight:400;color:var(--muted);font-style:normal;text-transform:none;letter-spacing:0;font-size:11px;margin-left:6px;">per child · Panama City schools</em></label>
+          <p class="hint" style="margin-bottom:16px;">Select each child's grade level and school tier. IB international schools in Panama are recognised by every Canadian university. Costs are added to your monthly budget automatically.</p>
+          <div id="child-rows"></div>
+          <div class="edu-total-row">
+            <span>Total education</span>
+            <span class="edu-total-val" id="edu-total-display">$0/mo</span>
+          </div>
         </div>
 
         <!-- Panama Lifestyle Tier -->
         <div class="calc-input-group">
           <label for="c-tier">Panama Lifestyle Tier</label>
-          <select id="c-tier" class="calc-select">
+          <select id="c-tier" class="calc-select" onchange="updateBudgetPreview()">
             <option value="3500">Modest — $3,500/month &nbsp;·&nbsp; Comfortable, local neighbourhood, eat local</option>
             <option value="5500" selected>Professional — $5,500/month &nbsp;·&nbsp; Quality area, restaurants, gym, travel</option>
             <option value="8000">Executive — $8,000/month &nbsp;·&nbsp; Premium building, domestic help, frequent travel</option>
           </select>
           <p class="hint">Panama costs significantly less than Toronto or Vancouver at every tier. These figures cover rent, food, transport, and lifestyle — not one-time setup costs.</p>
+        </div>
+
+        <!-- Panama Monthly Budget Preview — live updating -->
+        <div class="calc-input-group">
+          <label>Panama Monthly Budget</label>
+          <div class="budget-preview-box">
+            <div class="bp-row">
+              <span class="bp-lbl">Lifestyle tier</span>
+              <span class="bp-val" id="bp-tier">$5,500</span>
+            </div>
+            <div class="bp-row" id="bp-edu-row" style="display:none;">
+              <span class="bp-lbl">Education</span>
+              <span class="bp-val" id="bp-edu">$0</span>
+            </div>
+            <div class="bp-row">
+              <span class="bp-lbl">Panama corp + residency (annual ÷ 12)</span>
+              <span class="bp-val">$250</span>
+            </div>
+            <div class="bp-row bp-total">
+              <span class="bp-lbl">Estimated monthly total</span>
+              <span class="bp-val" id="bp-total">$5,750</span>
+            </div>
+          </div>
         </div>
 
         <!-- Primary Goal -->
@@ -693,6 +800,89 @@ const CALC_WEBHOOK = import.meta.env.PUBLIC_LIFESTYLE_CALC_WEBHOOK || '';
     slider.style.background = 'linear-gradient(to right, var(--gold) ' + pct + '%, var(--bg3) ' + pct + '%)';
   }
 
+  /* ── EDUCATION DATA ── */
+  var SCHOOL_TIERS = [
+    { value: '0',    label: 'Public school (Spanish instruction) — Free' },
+    { value: '400',  label: 'Bilingual Private — ~$400/mo (~$5,000/yr)' },
+    { value: '917',  label: 'Mid-Range International (Oxford, Isaac Rabin) — ~$917/mo (~$11,000/yr)' },
+    { value: '1500', label: 'Top-Tier IB (MET/Nord Anglia, ISP, King\'s, Knightsbridge) — ~$1,500/mo (~$18,000/yr)' },
+  ];
+
+  var GRADE_LEVELS = [
+    { value: 'prek',   label: 'Pre-K / Kindergarten (ages 3–5)' },
+    { value: 'elem',   label: 'Elementary (ages 6–11)' },
+    { value: 'middle', label: 'Middle School (ages 12–14)' },
+    { value: 'high',   label: 'High School (ages 15–18)' },
+  ];
+
+  function onFamilyChange() {
+    var family = document.getElementById('c-family').value;
+    var counts = { solo: 0, couple: 0, family1: 1, family2: 2, family3: 3 };
+    var childCount = counts[family] || 0;
+    var section = document.getElementById('education-section');
+    section.style.display = childCount > 0 ? 'block' : 'none';
+
+    var container = document.getElementById('child-rows');
+    container.innerHTML = '';
+
+    for (var i = 1; i <= childCount; i++) {
+      var gradeOpts = GRADE_LEVELS.map(function(g) {
+        var sel = (i === 1 && g.value === 'elem') ? ' selected' : '';
+        return '<option value="' + g.value + '"' + sel + '>' + g.label + '</option>';
+      }).join('');
+      var tierOpts = SCHOOL_TIERS.map(function(t) {
+        var sel = (t.value === '917') ? ' selected' : '';
+        return '<option value="' + t.value + '"' + sel + '>' + t.label + '</option>';
+      }).join('');
+      container.innerHTML +=
+        '<div class="child-row">' +
+          '<div>' +
+            '<span class="child-row-label">Child ' + i + ' — Grade Level</span>' +
+            '<select class="calc-select child-grade" onchange="updateEduTotal()">' + gradeOpts + '</select>' +
+          '</div>' +
+          '<div>' +
+            '<span class="child-row-label">School Tier</span>' +
+            '<select class="calc-select child-tier" onchange="updateEduTotal()">' + tierOpts + '</select>' +
+          '</div>' +
+        '</div>';
+    }
+
+    updateEduTotal();
+  }
+
+  function getEduMonthlyTotal() {
+    var total = 0;
+    document.querySelectorAll('.child-tier').forEach(function(s) {
+      total += parseInt(s.value) || 0;
+    });
+    return total;
+  }
+
+  function updateEduTotal() {
+    var total = getEduMonthlyTotal();
+    document.getElementById('edu-total-display').textContent = '$' + total.toLocaleString('en-CA') + '/mo';
+    updateBudgetPreview();
+  }
+
+  function updateBudgetPreview() {
+    var tier  = parseInt(document.getElementById('c-tier').value) || 5500;
+    var edu   = getEduMonthlyTotal();
+    var admin = 250; // $3,000/yr ÷ 12
+    var total = tier + edu + admin;
+
+    document.getElementById('bp-tier').textContent = '$' + tier.toLocaleString('en-CA');
+
+    var eduRow = document.getElementById('bp-edu-row');
+    if (edu > 0) {
+      eduRow.style.display = 'flex';
+      document.getElementById('bp-edu').textContent = '$' + edu.toLocaleString('en-CA');
+    } else {
+      eduRow.style.display = 'none';
+    }
+
+    document.getElementById('bp-total').textContent = '$' + total.toLocaleString('en-CA');
+  }
+
   function getRevenue() {
     const raw = document.getElementById('c-revenue').value.replace(/[$,\s]/g, '');
     return parseFloat(raw) || 0;
@@ -747,9 +937,8 @@ const CALC_WEBHOOK = import.meta.env.PUBLIC_LIFESTYLE_CALC_WEBHOOK || '';
     const goal         = document.getElementById('c-goal').value;
     const monthsCan    = parseInt(document.getElementById('c-months').value);
 
-    // Per-child addition: ~$800/mo covers international school fees + activities
-    const kidsAddon    = { solo: 0, couple: 0, family1: 800, family2: 1600, family3: 2500 };
-    const monthlyExpAdj = monthlyExp + (kidsAddon[family] || 0);
+    // Education costs: drawn from per-child tier selects in the form
+    const monthlyExpAdj = monthlyExp + getEduMonthlyTotal();
 
     /* Canada */
     const caTax        = revenue * taxRate;
@@ -808,6 +997,7 @@ const CALC_WEBHOOK = import.meta.env.PUBLIC_LIFESTYLE_CALC_WEBHOOK || '';
           revenue:                  revenue,
           effective_tax_rate:       taxRate,
           monthly_expenses:         monthlyExpAdj,
+          education_monthly:        getEduMonthlyTotal(),
           family_situation:         family,
           primary_goal:             goal,
           months_in_canada:         monthsCan,
@@ -825,6 +1015,9 @@ const CALC_WEBHOOK = import.meta.env.PUBLIC_LIFESTYLE_CALC_WEBHOOK || '';
     // Set initial slider fill states
     updateRangeFill(document.getElementById('c-tax-slider'), 30, 55);
     updateRangeFill(document.getElementById('c-months'), 0, 12);
+
+    // Initialise budget preview
+    updateBudgetPreview();
 
     const inp = document.getElementById('c-revenue');
 
