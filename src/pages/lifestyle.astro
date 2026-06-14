@@ -492,6 +492,19 @@ const CALC_WEBHOOK = import.meta.env.PUBLIC_LIFESTYLE_CALC_WEBHOOK || '';
           <p class="hint">Select your province for a preset, or drag the slider. Taking eligible dividends? Your effective rate is typically 10–15% lower than salary — adjust to match your actual bill.</p>
         </div>
 
+        <!-- Family Situation -->
+        <div class="calc-input-group">
+          <label for="c-family">Family Situation</label>
+          <select id="c-family" class="calc-select">
+            <option value="solo">Solo</option>
+            <option value="couple">Couple — no kids</option>
+            <option value="family1">Family — 1 child</option>
+            <option value="family2">Family — 2 children</option>
+            <option value="family3">Family — 3+ children</option>
+          </select>
+          <p class="hint">Families with children: a per-child addition (~$800/mo) is added to cover international school fees and activities. Panama's top private schools are a fraction of Canadian private school costs.</p>
+        </div>
+
         <!-- Panama Lifestyle Tier -->
         <div class="calc-input-group">
           <label for="c-tier">Panama Lifestyle Tier</label>
@@ -501,16 +514,6 @@ const CALC_WEBHOOK = import.meta.env.PUBLIC_LIFESTYLE_CALC_WEBHOOK || '';
             <option value="8000">Executive — $8,000/month &nbsp;·&nbsp; Premium building, domestic help, frequent travel</option>
           </select>
           <p class="hint">Panama costs significantly less than Toronto or Vancouver at every tier. These figures cover rent, food, transport, and lifestyle — not one-time setup costs.</p>
-        </div>
-
-        <!-- Family Situation -->
-        <div class="calc-input-group">
-          <label for="c-family">Family Situation</label>
-          <select id="c-family" class="calc-select">
-            <option value="solo">Solo</option>
-            <option value="couple">Couple</option>
-            <option value="family">Family with children</option>
-          </select>
         </div>
 
         <!-- Primary Goal -->
@@ -685,6 +688,11 @@ const CALC_WEBHOOK = import.meta.env.PUBLIC_LIFESTYLE_CALC_WEBHOOK || '';
     return '$' + Math.round(Math.abs(n)).toLocaleString('en-CA');
   }
 
+  function updateRangeFill(slider, min, max) {
+    const pct = (slider.value - min) / (max - min) * 100;
+    slider.style.background = 'linear-gradient(to right, var(--gold) ' + pct + '%, var(--bg3) ' + pct + '%)';
+  }
+
   function getRevenue() {
     const raw = document.getElementById('c-revenue').value.replace(/[$,\s]/g, '');
     return parseFloat(raw) || 0;
@@ -694,17 +702,21 @@ const CALC_WEBHOOK = import.meta.env.PUBLIC_LIFESTYLE_CALC_WEBHOOK || '';
   function onTaxSlide(val) {
     document.getElementById('c-tax-display').textContent = val + '%';
     document.querySelectorAll('.prov-btn').forEach(b => b.classList.remove('active'));
+    updateRangeFill(document.getElementById('c-tax-slider'), 30, 55);
   }
 
   function onMonthsSlide(val) {
     document.getElementById('c-months-display').textContent = val + ' mo.';
+    updateRangeFill(document.getElementById('c-months'), 0, 12);
   }
 
   function setRate(rate, btn) {
-    document.getElementById('c-tax-slider').value = rate;
+    const slider = document.getElementById('c-tax-slider');
+    slider.value = rate;
     document.getElementById('c-tax-display').textContent = rate + '%';
     document.querySelectorAll('.prov-btn').forEach(b => b.classList.remove('active'));
     if (btn) btn.classList.add('active');
+    updateRangeFill(slider, 30, 55);
   }
 
   /* ── S&P 500 DCA PROJECTION ── */
@@ -735,6 +747,10 @@ const CALC_WEBHOOK = import.meta.env.PUBLIC_LIFESTYLE_CALC_WEBHOOK || '';
     const goal         = document.getElementById('c-goal').value;
     const monthsCan    = parseInt(document.getElementById('c-months').value);
 
+    // Per-child addition: ~$800/mo covers international school fees + activities
+    const kidsAddon    = { solo: 0, couple: 0, family1: 800, family2: 1600, family3: 2500 };
+    const monthlyExpAdj = monthlyExp + (kidsAddon[family] || 0);
+
     /* Canada */
     const caTax        = revenue * taxRate;
     const caNet        = revenue - caTax;
@@ -745,7 +761,7 @@ const CALC_WEBHOOK = import.meta.env.PUBLIC_LIFESTYLE_CALC_WEBHOOK || '';
     const paAdmin      = 3000;          // annual corp + residency maintenance
     const paNet        = revenue - paAdmin;
     const paMonthly    = paNet / 12;
-    const paSurpMo     = paMonthly - monthlyExp;
+    const paSurpMo     = paMonthly - monthlyExpAdj;
     const paSurpAnn    = paSurpMo * 12;
     const taxSaving    = caTax - paAdmin;
     const wealth10yr   = calcWealth10yr(Math.max(0, paSurpAnn));
@@ -763,7 +779,7 @@ const CALC_WEBHOOK = import.meta.env.PUBLIC_LIFESTYLE_CALC_WEBHOOK || '';
     document.getElementById('r-pa-rev').textContent     = fmt(revenue);
     document.getElementById('r-pa-tax').textContent     = '$0 on foreign income';
     document.getElementById('r-pa-net').textContent     = fmt(paNet);
-    document.getElementById('r-pa-exp').textContent     = '−' + fmt(monthlyExp) + '/mo.';
+    document.getElementById('r-pa-exp').textContent     = '−' + fmt(monthlyExpAdj) + '/mo.';
     document.getElementById('r-pa-surplus').textContent = fmt(Math.max(0, paSurpMo)) + '/mo.';
     document.getElementById('r-pa-annual').textContent  = fmt(Math.max(0, paSurpAnn)) + '/yr';
     document.getElementById('r-pa-wealth').textContent  = fmt(wealth10yr);
@@ -791,7 +807,7 @@ const CALC_WEBHOOK = import.meta.env.PUBLIC_LIFESTYLE_CALC_WEBHOOK || '';
           timestamp:                new Date().toISOString(),
           revenue:                  revenue,
           effective_tax_rate:       taxRate,
-          monthly_expenses:         monthlyExp,
+          monthly_expenses:         monthlyExpAdj,
           family_situation:         family,
           primary_goal:             goal,
           months_in_canada:         monthsCan,
@@ -806,6 +822,10 @@ const CALC_WEBHOOK = import.meta.env.PUBLIC_LIFESTYLE_CALC_WEBHOOK || '';
 
   /* ── INPUT FORMATTING ── */
   document.addEventListener('DOMContentLoaded', function () {
+    // Set initial slider fill states
+    updateRangeFill(document.getElementById('c-tax-slider'), 30, 55);
+    updateRangeFill(document.getElementById('c-months'), 0, 12);
+
     const inp = document.getElementById('c-revenue');
 
     inp.addEventListener('blur', function () {
