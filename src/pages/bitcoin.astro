@@ -353,6 +353,65 @@ const BITCOIN_WEBHOOK = import.meta.env.PUBLIC_BITCOIN_MINI_COURSE_WEBHOOK;
       grid-column: 1 / -1;
     }
   }
+
+  /* ── Investment comparison charts ── */
+  .btc-chart-block {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 28px;
+    margin-bottom: 24px;
+  }
+  .btc-chart-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 20px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+  }
+  .btc-chart-eyebrow {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 4px;
+  }
+  .btc-chart-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--text);
+    margin: 0;
+  }
+  .btc-chart-end { text-align: right; flex-shrink: 0; }
+  .btc-chart-end-label {
+    font-size: 11px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: .07em;
+    margin-bottom: 4px;
+  }
+  .btc-chart-end-val {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    font-weight: 700;
+    line-height: 1;
+  }
+  .btc-cval-dim  { color: rgba(255,255,255,0.45); }
+  .btc-cval-mid  { color: rgba(218,165,32,0.72); }
+  .btc-cval-gold { color: var(--gold); }
+  .btc-chart-wrap {
+    position: relative;
+    width: 100%;
+    height: 240px;
+  }
+  @media (max-width: 600px) {
+    .btc-chart-wrap { height: 180px; }
+    .btc-chart-end-val { font-size: 22px; }
+    .btc-chart-block { padding: 20px; }
+  }
 </style>
 
 <Base
@@ -401,6 +460,7 @@ const BITCOIN_WEBHOOK = import.meta.env.PUBLIC_BITCOIN_MINI_COURSE_WEBHOOK;
         <a href="#protocol">⚙️ BTC Protocol</a>
         <a href="#advocates">💼 Who Holds It</a>
         <a href="#criticisms">🛡️ Objections</a>
+        <a href="#btc-charts">📊 The $100K</a>
         <a href="#accumulation">📈 Stack Sats</a>
         <a href="#faq" class="nav-faq">❓ FAQ</a>
       </nav>
@@ -919,6 +979,178 @@ const BITCOIN_WEBHOOK = import.meta.env.PUBLIC_BITCOIN_MINI_COURSE_WEBHOOK;
       </div>
     </div>
   </section>
+
+  <hr class="divider">
+
+  <!-- Investment Comparison Charts -->
+  <section id="btc-charts">
+    <div class="container" style="max-width:800px;">
+      <span class="eyebrow">The $100K Question</span>
+      <h2>What If Your Taxes Had Been<br>Invested Instead?</h2>
+      <p style="max-width:660px; margin-bottom:8px; font-size:15px; line-height:1.7;">CRA collected over $100,000 from you last year. Below is what three different allocation strategies returned if that $100,000 had been invested at the start of each year — 2015 to 2024, ten consecutive years.</p>
+      <p style="font-size:12px; color:var(--muted); margin-bottom:40px; opacity:.65;">$100K DCA at start of each year. S&amp;P 500 total return index (dividends reinvested). 90/10 rebalanced annually. BTC priced at Jan 1 open each year; Dec 31 2024 close ≈ $93K. Illustrative only — not financial advice.</p>
+
+      <!-- Chart A: 100% S&P 500 -->
+      <div class="btc-chart-block">
+        <div class="btc-chart-header">
+          <div>
+            <div class="btc-chart-eyebrow">Strategy 1</div>
+            <h3 class="btc-chart-title">100% S&amp;P 500</h3>
+          </div>
+          <div class="btc-chart-end">
+            <div class="btc-chart-end-label">10-Year Portfolio</div>
+            <div class="btc-chart-end-val btc-cval-dim">$2.26M</div>
+          </div>
+        </div>
+        <div class="btc-chart-wrap"><canvas id="btc-chart-sp"></canvas></div>
+      </div>
+
+      <!-- Chart B: 90/10 S&P / BTC -->
+      <div class="btc-chart-block">
+        <div class="btc-chart-header">
+          <div>
+            <div class="btc-chart-eyebrow">Strategy 2</div>
+            <h3 class="btc-chart-title">90% S&amp;P 500 / 10% Bitcoin</h3>
+          </div>
+          <div class="btc-chart-end">
+            <div class="btc-chart-end-label">10-Year Portfolio</div>
+            <div class="btc-chart-end-val btc-cval-mid">$4.73M</div>
+          </div>
+        </div>
+        <div class="btc-chart-wrap"><canvas id="btc-chart-mix"></canvas></div>
+        <p style="font-size:12px; color:var(--muted); margin-top:10px; opacity:.6;">90% of $100K invested in S&amp;P 500, 10% in Bitcoin at the start of each year. Portfolio rebalanced to 90/10 at year end before next year's contribution.</p>
+      </div>
+
+      <!-- Chart C: 100% Bitcoin (log scale) -->
+      <div class="btc-chart-block" style="border-top: 3px solid var(--gold);">
+        <div class="btc-chart-header">
+          <div>
+            <div class="btc-chart-eyebrow">Strategy 3 · Logarithmic Scale</div>
+            <h3 class="btc-chart-title">100% Bitcoin</h3>
+          </div>
+          <div class="btc-chart-end">
+            <div class="btc-chart-end-label">10-Year Portfolio</div>
+            <div class="btc-chart-end-val btc-cval-gold">$66.6M</div>
+          </div>
+        </div>
+        <div class="btc-chart-wrap"><canvas id="btc-chart-btc"></canvas></div>
+        <p style="font-size:12px; color:var(--muted); margin-top:10px; opacity:.6;">Logarithmic Y-axis — necessary because 2017 alone turned $100K into $937K (+1,318%). A linear scale makes every other year invisible. The 2022 drawdown is real: portfolio fell from $32.6M to $11.7M. The 2023–2024 recovery brought it to $66.6M.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Chart.js for bitcoin page -->
+  <script is:inline>
+  (function () {
+    function loadBtcCharts() {
+      if (window.BtcChartsLoaded) return;
+      window.BtcChartsLoaded = true;
+      var s = document.createElement('script');
+      s.src = 'https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js';
+      s.onload = initBtcCharts;
+      document.head.appendChild(s);
+    }
+
+    function initBtcCharts() {
+      var GOLD     = 'rgba(218,165,32,0.88)';
+      var GOLD_MID = 'rgba(218,165,32,0.52)';
+      var WHITE    = 'rgba(255,255,255,0.24)';
+      var GRID     = 'rgba(255,255,255,0.07)';
+      var TICK     = 'rgba(255,255,255,0.40)';
+      var YEARS    = ['2015','2016','2017','2018','2019','2020','2021','2022','2023','2024'];
+
+      Chart.defaults.font.family = "'Inter', sans-serif";
+      Chart.defaults.font.size   = 11;
+      Chart.defaults.color       = TICK;
+
+      function fmt(v) {
+        if (v >= 1e6)  return '$' + (v / 1e6).toFixed(2).replace(/\.?0+$/, '') + 'M';
+        if (v >= 1e3)  return '$' + Math.round(v / 1e3) + 'K';
+        return '$' + Math.round(v);
+      }
+
+      // S&P 500 annual total returns: 2015 +1.38%, 2016 +11.96%, 2017 +21.83%,
+      // 2018 -4.38%, 2019 +31.49%, 2020 +18.40%, 2021 +28.71%,
+      // 2022 -18.11%, 2023 +26.29%, 2024 +25.02%
+      var sp10k = [10138, 22542, 39659, 47484, 75570, 101315, 143280, 125523, 171171, 226481];
+      var sp100 = sp10k.map(function (v) { return Math.round(v * 10); });
+
+      // 90/10 blend: 90% S&P + 10% BTC, $100K/yr, rebalanced annually
+      var mix = [104890, 252318, 894264, 881660, 1353235, 2136235, 2947742, 2354592, 3416826, 4731742];
+
+      // 100% BTC: $100K invested at Jan 1 open price each year
+      // BTC Jan-open prices: 2015=$315, 2016=$430, 2017=$963, 2018=$13,880,
+      // 2019=$3,679, 2020=$7,185, 2021=$29,030, 2022=$46,306,
+      // 2023=$16,547, 2024=$42,249. Dec-31-2024 close ≈ $93K
+      var btc = [136510, 529695, 9074480, 2431154, 4943344, 20376553, 32663153, 11709795, 30155978, 66638530];
+
+      var sharedOpts = {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false },
+          tooltip: { callbacks: { label: function (c) { return c.dataset.label + ': ' + fmt(c.parsed.y); } } }
+        },
+        scales: {
+          x: { grid: { color: GRID }, ticks: { color: TICK } },
+          y: { grid: { color: GRID }, ticks: { color: TICK, callback: fmt } }
+        }
+      };
+
+      // Chart A: 100% S&P 500
+      new Chart(document.getElementById('btc-chart-sp').getContext('2d'), {
+        type: 'bar',
+        data: { labels: YEARS, datasets: [{ label: '100% S&P 500', data: sp100, backgroundColor: WHITE, borderRadius: 4, borderSkipped: false }] },
+        options: sharedOpts
+      });
+
+      // Chart B: 90/10 S&P / BTC
+      new Chart(document.getElementById('btc-chart-mix').getContext('2d'), {
+        type: 'bar',
+        data: { labels: YEARS, datasets: [{ label: '90% S&P / 10% Bitcoin', data: mix, backgroundColor: GOLD_MID, borderRadius: 4, borderSkipped: false }] },
+        options: sharedOpts
+      });
+
+      // Chart C: 100% Bitcoin — log scale
+      var logMajors = [10000, 50000, 100000, 500000, 1000000, 5000000, 10000000, 50000000, 100000000];
+      new Chart(document.getElementById('btc-chart-btc').getContext('2d'), {
+        type: 'bar',
+        data: { labels: YEARS, datasets: [{ label: '100% Bitcoin', data: btc, backgroundColor: GOLD, borderRadius: 4, borderSkipped: false }] },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { display: false },
+            tooltip: { callbacks: { label: function (c) { return c.dataset.label + ': ' + fmt(c.parsed.y); } } }
+          },
+          scales: {
+            x: { grid: { color: GRID }, ticks: { color: TICK } },
+            y: {
+              type: 'logarithmic',
+              grid: { color: GRID },
+              ticks: {
+                color: TICK,
+                callback: function (v) {
+                  for (var i = 0; i < logMajors.length; i++) {
+                    if (Math.abs(v - logMajors[i]) / logMajors[i] < 0.05) return fmt(logMajors[i]);
+                  }
+                  return null;
+                }
+              }
+            }
+          }
+        }
+      });
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', loadBtcCharts);
+    } else {
+      loadBtcCharts();
+    }
+  })();
+  </script>
 
   <hr class="divider">
 
