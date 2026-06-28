@@ -118,15 +118,8 @@ const ZAPIER_WEBHOOK = import.meta.env.PUBLIC_REPORT_WEBHOOK;
               </div>
 
               <div class="form-group">
-                <label>What's your current effective tax rate? <span style="color:var(--muted);font-weight:400;text-transform:none;letter-spacing:0;">(approximate — check your last tax return or ask your accountant)</span></label>
-                <select name="tax_rate" required>
-                  <option value="" disabled selected>Select a range</option>
-                  <option>Under 20%</option>
-                  <option>20–30%</option>
-                  <option>30–40%</option>
-                  <option>40–50%</option>
-                  <option>Over 50%</option>
-                </select>
+                <label>Taxes Paid Last Year <span style="color:var(--muted);font-weight:400;text-transform:none;letter-spacing:0;">(personal + corporate combined)</span></label>
+                <input type="text" name="taxes_paid" placeholder="e.g. $140,000" required>
               </div>
 
               <div class="form-group">
