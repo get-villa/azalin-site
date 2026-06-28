@@ -16,6 +16,7 @@ export async function onRequest(context) {
 
     const response = await fetch(zapierUrl, {
       method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload)
     });
 
