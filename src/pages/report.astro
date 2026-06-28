@@ -236,9 +236,7 @@ const ZAPIER_WEBHOOK = import.meta.env.PUBLIC_REPORT_WEBHOOK;
   </section>
 </Base>
 
-<script is:inline define:vars={{ZAPIER_WEBHOOK}}>
-  // ZAPIER_WEBHOOK is injected via define:vars
-
+<script is:inline>
   document.getElementById('report-form').addEventListener('submit', async function(e) {
     e.preventDefault();
     const btn = document.getElementById('submit-btn');
@@ -264,9 +262,8 @@ const ZAPIER_WEBHOOK = import.meta.env.PUBLIC_REPORT_WEBHOOK;
     };
 
     try {
-      const response = await fetch(ZAPIER_WEBHOOK, {
+      const response = await fetch('/api/submit-report', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
       });
 
