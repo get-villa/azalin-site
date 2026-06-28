@@ -251,7 +251,7 @@ const ZAPIER_WEBHOOK = import.meta.env.PUBLIC_REPORT_WEBHOOK;
       email:              form.email.value,
       country:            form.country.value,
       business_type:      form.business_type.value,
-      tax_rate:           form.tax_rate.value,
+      taxes_paid:         form.taxes_paid.value,
       income_range:       form.income_range.value,
       business_size:      form.business_size.value,
       primary_goal:       form.primary_goal.value,
@@ -266,6 +266,7 @@ const ZAPIER_WEBHOOK = import.meta.env.PUBLIC_REPORT_WEBHOOK;
     try {
       const response = await fetch(ZAPIER_WEBHOOK, {
         method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
       });
 
