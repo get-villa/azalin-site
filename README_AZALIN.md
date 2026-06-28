@@ -292,3 +292,44 @@ import Base from '../layouts/Base.astro';
 
 **Built with Astro 6 + Cloudflare Pages**  
 **Updated:** May 2026
+
+---
+
+## Session Log — 2026-06-07
+
+**Completed:**
+- Homepage hero rewrite ("You Built Something Real. Canada Is Taking Half of It Every Year.")
+- Stats updated ($150K+ anchor, 50+ FNV nations)
+- David Chen quote updated (irony/diversification framing)
+- Country pill → "Founders · Owners · Executives"
+- Opportunity cost section added (S&P 500 2015–2024, $1M → $2.27M)
+- Founder section moved above Offers
+- Offers reordered: Report → Scouting Trip → Bitcoin → Executive Programme
+- Offer labels: FREE / DONE-BESIDE-YOU / $197 · ONLINE / BY APPLICATION
+- Portrait OG image created (1080×1920, queen piece) for iMessage tall card
+- Mobile offer form stacking fixed (waitlist forms now full-width vertical on mobile)
+- Footer copy updated: "For Canadians sending $100,000 or more to CRA every year..."
+- OG image 403 investigated — was sandbox proxy issue, not real. LinkedIn preview confirmed working.
+
+**Decisions Made:**
+- Lifestyle Design Strategy approved for site integration
+- Calculator feature greenlit (interactive, no email gate, silent Zapier capture)
+- /the-model/ page planned
+- "What the Other Side Looks Like" homepage section planned
+
+**Pending / Waiting on Joshua:**
+- Answer 4 open questions in Lifestyle_Design_Calculator.md before build can start
+- Webinar registration page (not yet started)
+
+**⚠️ DO NOT FORGET — CALENDAR VISUAL:**
+Build a before/after weekly calendar visual (CSS grid or SVG):
+- LEFT: Canadian owner week — Mon–Fri fully blocked, 8am–6pm, grey
+- RIGHT: Panama model week — Tue/Wed/Thu, 3-hour gold deep work blocks, rest open
+Needed in BOTH: homepage "What the Other Side Looks Like" section AND lifestyle calculator output panel.
+
+**Next Recommended Actions (priority order):**
+1. Joshua answers 4 open questions in Lifestyle_Design_Calculator.md
+2. Build "What the Other Side Looks Like" homepage section
+3. Build webinar registration page + Zapier automation
+4. Build /lifestyle/ calculator page once Zapier webhook is ready
+5. Build /the-model/ philosophy page
