@@ -249,7 +249,7 @@ const ZAPIER_WEBHOOK = import.meta.env.PUBLIC_REPORT_WEBHOOK;
       email:              form.email.value,
       country:            form.country.value,
       business_type:      form.business_type.value,
-      taxes_paid:         form.taxes_paid.value,
+      taxes_paid:         form.taxes_paid.value.replace(/[$,]/g, ''),
       income_range:       form.income_range.value,
       business_size:      form.business_size.value,
       primary_goal:       form.primary_goal.value,
